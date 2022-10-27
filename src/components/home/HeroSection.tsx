@@ -2,8 +2,6 @@ import { Trans, useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
 import Input from '../Input';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import Button from '../Button';
 
 const HeroSection = () => {
@@ -30,7 +28,7 @@ const HeroSection = () => {
           <Input
             placeholder={t('SEARCH_INPUT_PLACEHOLDER')}
             className="rounded-full bg-mds-white w-[22.6rem]"
-            icon={<FontAwesomeIcon icon={faMagnifyingGlass} className="text-[#c5c5c5]" />}
+            icon={<i className="fa-solid fa-magnifying-glass text-[#c5c5c5]" />}
           />
           <div className="relative ml-3 h-[3.5rem] w-[3.5rem] rounded-full cursor-pointer">
             <Image src="/assets/user-avatar.svg" alt="user-avatar" layout="fill" />
