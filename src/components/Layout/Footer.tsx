@@ -7,7 +7,7 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="w-full">
+    <div className="w-full absolute bottom-0 z-50">
       <div className="h-1 w-full bg-gradient-to-r from-[#F71EFB] to-[#84ECFF] via-[#DF6EE2] " />
       <div className="flex justify-between py-8 px-24 bg-mds-gray-500">
         <div className="flex flex-col">

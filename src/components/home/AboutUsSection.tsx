@@ -3,7 +3,7 @@ import React from 'react';
 import AboutCard from './AboutCard';
 
 const AboutSection = ({ offsetY }: { offsetY: number }) => (
-  <div className="flex flex-col mb-40 ml-24 relative">
+  <div className="flex flex-col mb-96 ml-24 relative">
     <span className="font-extrabold text-[5rem] text-mds-white">About us</span>
     <p className="text-mds-white text-[3.4rem] font-semibold max-w-[56.94rem]">
       Lorem Ipsum is simply dummy text of the printing and typesetting industry.

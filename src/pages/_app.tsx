@@ -4,6 +4,23 @@ import type { AppProps } from 'next/app';
 import { appWithTranslation } from 'next-i18next';
 import { makeStore, wrapper } from '../redux/store';
 import Head from 'next/head';
+import { configureChains, chain, defaultChains, WagmiConfig, createClient } from 'wagmi';
+import { publicProvider } from 'wagmi/providers/public';
+import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
+import { InjectedConnector } from 'wagmi/connectors/injected';
+import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
+
+const { chains, provider, webSocketProvider } = configureChains(
+  [chain.mainnet, chain.polygon, chain.goerli],
+  [publicProvider()]
+);
+
+const client = createClient({
+  autoConnect: true,
+  provider,
+  webSocketProvider,
+});
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -18,7 +35,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link href="/assets/fontawesome/css/solid.css" rel="stylesheet" />
         <link href="/assets/fontawesome/css/thin.css" rel="stylesheet" />
       </Head>
-      <Component {...pageProps} />
+      <WagmiConfig client={client}>
+        <Component {...pageProps} />
+      </WagmiConfig>
     </>
   );
 }

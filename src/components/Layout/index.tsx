@@ -15,10 +15,12 @@ const Layout = ({ children }: Props) => {
   console.log(isDrawerOpen);
 
   return (
-    <div className="z-40 mx-auto w-full">
+    <div className="z-40 mx-auto w-full relative min-h-[calc(100vh_+_20rem)]">
       <Header />
-      <div className="flex">
-        {router.pathname !== '/' && <Sidebar setIsDrawerOpen={setIsDrawerOpen} />}
+      <div className="flex mb-[15rem]">
+        {router.pathname !== '/' && router.pathname !== '/account' && (
+          <Sidebar setIsDrawerOpen={setIsDrawerOpen} />
+        )}
         {router.pathname !== '/' && (
           <FilterDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
         )}
