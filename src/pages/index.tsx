@@ -1,11 +1,27 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import ExploreSection from '../components/home/ExploreSection';
+import TrendingSection from '../components/home/TrendingSection';
 import HeroSection from '../components/home/HeroSection';
 import Layout from '../components/Layout';
+import { useEffect, useState } from 'react';
+import AboutSection from '../components/home/AboutUsSection';
 
 const Home: NextPage = () => {
+  const [offsetY, setOffsetY] = useState(0);
+
+  function handleChangeOffset() {
+    setOffsetY(window.pageYOffset);
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleChangeOffset);
+
+    return () => {
+      window.removeEventListener('scroll', handleChangeOffset);
+    };
+  }, []);
+
   return (
     <div className="flex w-full min-h-screen h-full bg-mds-gray-500 overflow-x-hidden">
       <Head>
@@ -17,8 +33,9 @@ const Home: NextPage = () => {
       <span className="absolute z-10 top-[53.37rem] w-full bg-gradient-to-r from-[#8F33E7] to-[#5A0068] h-[0.25rem]"></span>
 
       <Layout>
-        <HeroSection />
-        <ExploreSection />
+        <HeroSection offsetY={offsetY} />
+        <TrendingSection offsetY={offsetY} />
+        <AboutSection offsetY={offsetY} />
       </Layout>
     </div>
   );

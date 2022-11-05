@@ -1,25 +1,10 @@
 import { Trans, useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import React, { useEffect, useState } from 'react';
-import Input from '../Input';
-import Header from '../Layout/Header';
 import Button from '../Button';
 
-const HeroSection = () => {
+const HeroSection = ({ offsetY }: { offsetY: number }) => {
   const { t } = useTranslation();
-  const [offsetY, setOffsetY] = useState(0);
-
-  function handleChangeOffset() {
-    setOffsetY(window.pageYOffset);
-  }
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleChangeOffset);
-
-    return () => {
-      window.removeEventListener('scroll', handleChangeOffset);
-    };
-  }, []);
 
   return (
     <div className="flex flex-col w-full h-[53.37rem] relative">
