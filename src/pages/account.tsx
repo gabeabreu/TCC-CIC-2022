@@ -33,9 +33,11 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <ProfileSection />
-        <div className="h-[2px] w-full bg-[#303030] mt-24 mb-20" />
-        <UserOptionsSection />
+        <div className="mb-96">
+          <ProfileSection />
+          <div className="h-[2px] w-full bg-[#303030] mt-24 mb-20" />
+          <UserOptionsSection />
+        </div>
       </Layout>
     </div>
   );

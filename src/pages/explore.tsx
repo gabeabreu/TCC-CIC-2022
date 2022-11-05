@@ -31,9 +31,11 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <TrendindSection />
-        <VerifiedSection />
-        <NotableSection />
+        <div className="ml-[-14rem] mb-32 pr-[3rem]">
+          <TrendindSection />
+          <VerifiedSection />
+          <NotableSection />
+        </div>
       </Layout>
     </div>
   );

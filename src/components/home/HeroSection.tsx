@@ -1,5 +1,6 @@
 import { Trans, useTranslation } from 'next-i18next';
 import Image from 'next/image';
+import Link from 'next/link';
 import React, { useEffect, useState } from 'react';
 import Button from '../Button';
 
@@ -16,9 +17,11 @@ const HeroSection = ({ offsetY }: { offsetY: number }) => {
           {t('HERO_SECTION_DESCRIPTION')}
         </span>
         <div className="flex mt-9 gap-x-6">
-          <Button className="button-gradient px-14 font-semibold duration-500">
-            {t('EXPLORE')}
-          </Button>
+          <Link passHref href="/explore">
+            <Button className="button-gradient px-14 font-semibold duration-500">
+              {t('EXPLORE')}
+            </Button>
+          </Link>
           <Button className="font-semibold px-14" isOutline>
             {t('CREATE')}
           </Button>

@@ -13,9 +13,13 @@ const Header = () => {
       {router?.pathname !== '/' ? (
         <div>
           <header className="flex items-center px-24 py-8 justify-between bg-black w-full">
-            <span className="font-extrabold text-[2.5rem] text-mds-white">MIDAS</span>
+            <Link passHref href="/">
+              <span className="font-extrabold text-[2.5rem] text-mds-white cursor-pointer">
+                MIDAS
+              </span>
+            </Link>
             <div className="flex items-center">
-              <Link passHref href="/">
+              <Link passHref href="/explore">
                 <a className="text-xl text-mds-white mr-5">Explore</a>
               </Link>
               <Link passHref href="/">
@@ -27,7 +31,7 @@ const Header = () => {
                 icon={<i className="fa-solid fa-magnifying-glass text-[#c5c5c5]" />}
               />
               <div className="relative ml-3 h-[2.5rem] w-[2.5rem] rounded-full cursor-pointer">
-                <Link passHref href="/">
+                <Link passHref href="/account">
                   <Image src="/assets/user-avatar-white.svg" alt="user-avatar" layout="fill" />
                 </Link>
               </div>
@@ -37,16 +41,20 @@ const Header = () => {
         </div>
       ) : (
         <header className="flex px-24 mt-11 items-center justify-between">
-          <span className="font-extrabold text-4xl text-mds-white">MIDAS</span>
+          <Link passHref href="/">
+            <span className="font-extrabold text-4xl text-mds-white cursor-pointer">MIDAS</span>
+          </Link>
           <div className="flex items-center">
             <Input
               placeholder="Search items, collections or accounts"
               className="rounded-full bg-mds-white w-[22.6rem]"
               icon={<i className="fa-solid fa-magnifying-glass text-[#c5c5c5]" />}
             />
-            <div className="relative ml-3 h-[3.5rem] w-[3.5rem] rounded-full cursor-pointer">
-              <Image src="/assets/user-avatar.svg" alt="user-avatar" layout="fill" />
-            </div>
+            <Link passHref href="/account">
+              <div className="relative ml-3 h-[3.5rem] w-[3.5rem] rounded-full cursor-pointer">
+                <Image src="/assets/user-avatar.svg" alt="user-avatar" layout="fill" />
+              </div>
+            </Link>
           </div>
         </header>
       )}
