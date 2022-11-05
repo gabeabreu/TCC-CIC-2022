@@ -9,7 +9,7 @@ const Footer = () => {
   return (
     <div className="w-full">
       <div className="h-1 w-full bg-gradient-to-r from-[#F71EFB] to-[#84ECFF] via-[#DF6EE2] " />
-      <div className="flex justify-between py-8 px-24">
+      <div className="flex justify-between py-8 px-24 bg-mds-gray-500">
         <div className="flex flex-col">
           <span className="text-[2.5rem] font-extrabold text-mds-white">MIDAS</span>
           <span className="text-mds-white text-xl">Join the community</span>

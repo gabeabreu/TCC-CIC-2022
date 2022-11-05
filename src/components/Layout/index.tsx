@@ -22,9 +22,16 @@ const Layout = ({ children }: Props) => {
         {router.pathname !== '/' && (
           <FilterDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
         )}
-        <div className="z-50 mx-auto flex flex-col px-5 duration-500 min-w-[18.75rem] sm:min-w-[25.75rem] md:min-w-[37.375rem] md:px-0 lg:min-w-[53.375rem] xl:min-w-[70rem] 2xl:min-w-[85.5rem]">
-          {children}
-        </div>
+        {router.pathname !== '/' && (
+          <div className="z-50 mx-auto flex flex-col px-5 duration-500 min-w-[18.75rem] sm:min-w-[25.75rem] md:min-w-[37.375rem] md:px-0 lg:min-w-[53.375rem] xl:min-w-[70rem] 2xl:min-w-[85.5rem]">
+            {children}
+          </div>
+        )}
+        {router.pathname === '/' && (
+          <div className="z-50 mx-auto flex flex-col px-5 duration-500 min-w-[18.75rem] sm:min-w-[25.75rem] md:min-w-[37.375rem] md:px-0 lg:min-w-[53.375rem] xl:min-w-[70rem] 2xl:min-w-[85.5rem]">
+            {children}
+          </div>
+        )}
       </div>
       <Footer />
     </div>
