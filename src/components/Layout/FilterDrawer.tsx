@@ -4,7 +4,7 @@ import { Fragment } from 'react';
 const FilterDrawer = ({ isDrawerOpen, setIsDrawerOpen }: any) => {
   return (
     <div
-      className={`z-50 relative bg-mds-gray-400 w-1/5 duration-500 ${
+      className={`z-[999999] relative bg-mds-gray-400 w-1/5 duration-500 ${
         isDrawerOpen ? '-translate-x-[3.5rem]' : '-translate-x-[30rem]'
       }`}
     >

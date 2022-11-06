@@ -15,7 +15,7 @@ const Layout = ({ children }: Props) => {
   console.log(isDrawerOpen);
 
   return (
-    <div className="z-40 mx-auto w-full relative">
+    <div className="z-30 mx-auto w-full relative">
       <Header />
       <div className="flex">
         {router.pathname !== '/' && router.pathname !== '/account' && (

@@ -1,6 +1,6 @@
 const Sidebar = ({ setIsDrawerOpen }: any) => {
   return (
-    <div className="bg-mds-gray-400 flex px-4">
+    <div className="bg-mds-gray-400 flex px-4 z-40">
       <i
         onClick={() => setIsDrawerOpen(true)}
         className="fa-solid fa-filter text-mds-white text-2xl mt-16 cursor-pointer"
