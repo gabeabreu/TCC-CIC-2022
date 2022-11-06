@@ -1,5 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
+import Carousel from '../Carousel';
+import nfts from '../../../public/mock/nfts.json';
 
 const TrendingSection = ({ offsetY }: { offsetY: number }) => {
   return (
@@ -7,7 +9,7 @@ const TrendingSection = ({ offsetY }: { offsetY: number }) => {
       <div className="z-20 flex flex-col">
         <span className="font-extrabold text-[5rem] text-mds-white">Trending products</span>
         {/* Simulando o espaço ocupado pelo carrossel  */}
-        <div className="h-[400px] w-full bg-mds-gray-300 mt-10" />
+        <Carousel data={nfts} isSmall />
       </div>
       <div
         style={{ transform: `translate(-${offsetY * 0.03}px, -${offsetY * 0.007}px)` }}
