@@ -1,0 +1,34 @@
+[
+        {
+            "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
+            "title": "Rolex",
+            "description": "lorem ipsum",
+            "availableNfts": 123,
+            "totalMinted": 234,
+            "pictureUrl": "/mockImages/rolex.svg"
+        },
+        {
+            "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
+            "title": "Nike",
+            "description": "lorem ipsum",
+            "availableNfts": 345,
+            "totalMinted": 567,
+            "pictureUrl": "/mockImages/nike.svg"
+        },
+        {
+            "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
+            "title": "Rolex",
+            "description": "lorem ipsum",
+            "availableNfts": 123,
+            "totalMinted": 234,
+            "pictureUrl": "/mockImages/rolex.svg"
+        },
+        {
+            "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
+            "title": "Nike",
+            "description": "lorem ipsum",
+            "availableNfts": 345,
+            "totalMinted": 567,
+            "pictureUrl": "/mockImages/nike.svg"
+        }
+    ]
