@@ -6,5 +6,10 @@
   "ABOUT_US_SECTION_TITLE": "About us",
   "ABOUT_US_SECTION_DESCRIPTION": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
   "EXPLORE": "Explore",
-  "CREATE": "Create"
+  "CREATE": "Create",
+  "CONNECT": "Connect",
+  "DISCONNECT": "Disconnect",
+  "MODAL_CONNECT_WALLET_TITLE": "Connect your wallet",
+  "MODAL_CONNECT_WALLET_LEARN_MORE1": "New to Ethereum? ",
+  "MODAL_CONNECT_WALLET_LEARN_MORE2": "Learn more about wallets"
 }

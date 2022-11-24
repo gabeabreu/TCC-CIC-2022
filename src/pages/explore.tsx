@@ -31,7 +31,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <div className="flex flex-col items-center ml-[-14rem] mb-32 pr-[3rem] z-10">
+        <div className="flex flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] mb-32 z-10 duration-500">
           <TrendindSection />
           <VerifiedSection />
           <NotableSection />

@@ -1,25 +1,88 @@
 /* eslint-disable @next/next/no-css-tags */
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { appWithTranslation } from 'next-i18next';
 import { makeStore, wrapper } from '../redux/store';
-import Head from 'next/head';
-import { configureChains, chain, defaultChains, WagmiConfig, createClient } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
+import { createClient, WagmiConfig, allChains, Chain, configureChains } from 'wagmi';
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect';
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet';
-import { InjectedConnector } from 'wagmi/connectors/injected';
+import { publicProvider } from 'wagmi/providers/public';
+import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
-const { chains, provider, webSocketProvider } = configureChains(
-  [chain.mainnet, chain.polygon, chain.goerli],
-  [publicProvider()]
+// const ETHEREUM_MAINNET = 1;
+const BINANCE_MAINNET = 56;
+const POLYGON_MAINNET = 137;
+
+const rpcUrl: any = {
+  // 1: 'https://eth-mainnet-public.unifra.io/',
+  56: 'https://bsc-dataseed.binance.org/',
+  137: 'https://polygon-rpc.com/',
+};
+
+// const ethereumMainnet = allChains.filter((chain) => chain.id === ETHEREUM_MAINNET);
+const polygonMainnet = allChains.filter((chain) => chain.id === POLYGON_MAINNET);
+const binanceMainnet: Chain = {
+  network: 'binance',
+  id: BINANCE_MAINNET,
+  name: 'Binance Smart Chain',
+  nativeCurrency: {
+    name: 'BNB',
+    symbol: 'BNB',
+    decimals: 18,
+  },
+  rpcUrls: {
+    default: 'https://bsc-dataseed.binance.org',
+    default2: 'https://bsc-dataseed1.defibit.io/',
+    default3: 'https://bsc-dataseed1.ninicoin.io/',
+  },
+  blockExplorers: {
+    etherscan: {
+      name: 'BNB Smart Chain Explorer',
+      url: 'https://bscscan.com',
+    },
+    default: {
+      name: 'BNB Smart Chain Explorer',
+      url: 'https://bscscan.com',
+    },
+  },
+};
+
+const { chains, provider } = configureChains(
+  [...polygonMainnet, binanceMainnet],
+  [
+    jsonRpcProvider({
+      rpc: (chain) => ({
+        http: rpcUrl[chain.id],
+      }),
+    }),
+    publicProvider(),
+  ]
 );
 
 const client = createClient({
   autoConnect: true,
   provider,
-  webSocketProvider,
+  connectors() {
+    return [
+      new MetaMaskConnector({
+        chains,
+      }),
+      new WalletConnectConnector({
+        chains,
+        options: {
+          qrcode: true,
+        },
+      }),
+      new CoinbaseWalletConnector({
+        chains,
+        options: {
+          appName: 'stackos',
+        },
+      }),
+    ];
+  },
 });
 
 function MyApp({ Component, pageProps }: AppProps) {

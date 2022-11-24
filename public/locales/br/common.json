@@ -1,5 +1,12 @@
 {
   "SEARCH_INPUT_PLACEHOLDER": "Search items, collections or accounts",
-  "EXPLORE" : "Explore",
-  "CREATE" : "Create"
+  "HERO_SECTION_TITLE": "<p>Secure</p> and profitable Blockchain <p>marketplace</p>",
+  "HERO_SECTION_DESCRIPTION": "Used to ensure the security and provenance of your assets.",
+  "EXPLORE_SECTION_TITLE": "Trending products",
+  "ABOUT_US_SECTION_TITLE": "About us",
+  "ABOUT_US_SECTION_DESCRIPTION": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
+  "EXPLORE": "Explore",
+  "CREATE": "Create",
+  "MODAL_CONNECT_WALLET_TITLE": "Connect your wallet",
+  "MODAL_CONNECT_WALLET_LEARN_MORE": "New to Ethereum? <p>Learn more about wallets</p>"
 }

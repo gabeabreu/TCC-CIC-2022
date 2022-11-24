@@ -28,7 +28,7 @@ const HeroSection = ({ offsetY }: { offsetY: number }) => {
         </div>
       </div>
       <div
-        style={{ transform: `translate(-${offsetY * 0.025}px, -${offsetY * 0.025}px)` }}
+        // style={{ transform: `translate(-${offsetY * 0.025}px, -${offsetY * 0.025}px)` }}
         className="selectDisable absolute w-[70rem] h-[46.5rem] top-[3rem] left-[25rem] xl:w-[70rem] xl:h-[46.5rem] xl:top-[3rem] xl:left-[25rem] 2xl:w-[70rem] 2xl:h-[46.5rem] 2xl:top-[3rem] 2xl:left-[38em] duration-300"
       >
         <Image src="/assets/hero-cards.png" alt="hero-cards" layout="fill" />

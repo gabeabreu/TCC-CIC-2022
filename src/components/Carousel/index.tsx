@@ -4,6 +4,7 @@ import SmallCard from './SmallCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import BigCard from './BigCard';
+import useWindowSize from '../../hooks/useWindowSize';
 
 interface Props {
   data: any;
@@ -11,9 +12,17 @@ interface Props {
 }
 
 const Carousel = ({ data, isSmall }: any) => {
+  const windowSize = useWindowSize();
+
   return isSmall ? (
-    <div className="w-[64rem] ml-20">
-      <Slider infinite={true} speed={400} slidesToShow={3} slidesToScroll={3}>
+    <div className="w-full">
+      <Slider
+        infinite={true}
+        speed={400}
+        slidesToShow={windowSize?.width && windowSize.width < 1536 ? 3 : 4}
+        slidesToScroll={windowSize?.width && windowSize.width < 1536 ? 3 : 4}
+        className="gap-x-10"
+      >
         {data.map((nft: any) => (
           <SmallCard
             likesNumber={nft.likesNumber}
@@ -27,8 +36,13 @@ const Carousel = ({ data, isSmall }: any) => {
       </Slider>
     </div>
   ) : (
-    <div className="w-[64rem]">
-      <Slider infinite={true} speed={400} slidesToShow={2} slidesToScroll={2}>
+    <div className="w-full">
+      <Slider
+        infinite={true}
+        speed={400}
+        slidesToShow={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
+        slidesToScroll={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
+      >
         {data.map((user: any) => (
           <BigCard
             availableNfts={user.availableNfts}
