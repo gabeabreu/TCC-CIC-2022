@@ -7,9 +7,9 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="w-full absolute bottom-0 z-50">
+    <div className="w-full absolute bg-mds-gray-500 bottom-0 z-50">
       <div className="h-1 w-full bg-gradient-to-r from-[#F71EFB] to-[#84ECFF] via-[#DF6EE2] " />
-      <div className="flex justify-between py-8 px-24 bg-mds-gray-500">
+      <footer className="flex mx-auto max-w-[18.75rem] sm:max-w-[25.75rem] md:max-w-[37.375rem] md:px-0 lg:max-w-[53.375rem] xl:max-w-[70rem] 2xl:max-w-[85.5rem] justify-between py-8 duration-500">
         <div className="flex flex-col">
           <span className="text-[2.5rem] font-extrabold text-mds-white">MIDAS</span>
           <span className="text-mds-white text-xl">Join the community</span>
@@ -66,7 +66,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </footer>
     </div>
   );
 };

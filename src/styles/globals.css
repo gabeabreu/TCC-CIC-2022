@@ -22,6 +22,19 @@
     background-position-x: 100%;
   }
 
+  .glass-effect {
+    box-sizing: border-box;
+    background: linear-gradient(
+      327.61deg,
+      rgba(0, 0, 0, 0.1) 10.37%,
+      rgba(41, 41, 41, 0.4) 105.04%
+    );
+    box-shadow: 0px 4px 24px 9px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 25px;
+    border: solid 3px #4f4f4f5a;
+  }
+
   .selectDisable {
     z-index: 0;
     -webkit-user-select: none;

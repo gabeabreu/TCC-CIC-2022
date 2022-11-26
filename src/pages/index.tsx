@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-sync-scripts */
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
@@ -14,13 +15,13 @@ const Home: NextPage = () => {
     setOffsetY(window.pageYOffset);
   }
 
-  useEffect(() => {
-    window.addEventListener('scroll', handleChangeOffset);
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleChangeOffset);
 
-    return () => {
-      window.removeEventListener('scroll', handleChangeOffset);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('scroll', handleChangeOffset);
+  //   };
+  // }, []);
 
   return (
     <div className="flex w-full min-h-screen h-full bg-mds-gray-500 overflow-x-hidden">

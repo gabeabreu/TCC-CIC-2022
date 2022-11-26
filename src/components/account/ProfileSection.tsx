@@ -1,9 +1,20 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import ReactS3Client from 'react-aws-s3-typescript';
+import s3config from '../../config/awsConfig';
 
 const ProfileSection = () => {
   const [formattedAddress, setFormattedAddress] = useState<string>();
   const address = '0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd';
+  const s3 = new ReactS3Client(s3config);
+
+  async function uploadProfilePicture(file: any) {
+    try {
+      const res = await s3.uploadFile(file);
+    } catch (err) {
+      console.log(err);
+    }
+  }
 
   useEffect(() => {
     setFormattedAddress(
