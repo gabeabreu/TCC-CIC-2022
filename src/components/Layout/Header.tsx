@@ -68,6 +68,14 @@ const Header = () => {
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
   const scroll = useScrollListener();
 
+  async function fetchUser() {
+    const userCheck = await fetch('http://localhost:8000/users/find', {
+      method: 'POST',
+      body: JSON.stringify({ address: address }),
+    }).then((res) => res.json);
+    console.log(userCheck);
+  }
+
   useEffect(() => {
     setHiddenHeader(false);
 
@@ -198,6 +206,7 @@ const Header = () => {
                                         } else {
                                           close();
                                           setLoginModalOpen(true);
+                                          fetchUser();
                                         }
                                       }}
                                     >

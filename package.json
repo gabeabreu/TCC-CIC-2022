@@ -11,8 +11,10 @@
   "dependencies": {
     "@headlessui/react": "1.7.3",
     "@reduxjs/toolkit": "1.8.6",
+    "cors": "^2.8.5",
     "dotenv": "16.0.3",
     "ethers": "5.7.1",
+    "firebase": "^9.14.0",
     "next": "12.3.1",
     "next-i18next": "12.1.0",
     "next-redux-wrapper": "8.0.0",
