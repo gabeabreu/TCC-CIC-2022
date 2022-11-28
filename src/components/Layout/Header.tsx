@@ -19,7 +19,7 @@ const solutions = [
   },
   {
     name: 'Create',
-    href: '/mint',
+    href: '/create',
     icon: 'fa-square-plus',
   },
   {
@@ -88,10 +88,14 @@ const Header = () => {
               </Link>
               <div className="items-center hidden md:flex">
                 <Link passHref href="/explore">
-                  <a className="text-lg text-mds-white mr-5">Explore</a>
+                  <a className="text-lg text-mds-gray-100 hover:text-mds-white duration-300 mr-5">
+                    Explore
+                  </a>
                 </Link>
-                <Link passHref href="/">
-                  <a className="text-lg text-mds-white mr-4">Create</a>
+                <Link passHref href="/create">
+                  <a className="text-lg text-mds-gray-100 hover:text-mds-white duration-300 mr-4">
+                    Create
+                  </a>
                 </Link>
                 <div className="hidden lg:flex">
                   <Input
