@@ -2,6 +2,7 @@ import React, { ReactNode } from 'react';
 
 type Props = {
   className?: string;
+  type?: 'button' | 'reset' | 'submit';
   children: ReactNode;
   isOutline?: boolean;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
@@ -14,11 +15,12 @@ const Button = ({
   isOutline = false,
   onClick = () => null,
   disabled = false,
+  type = 'button',
 }: Props) => (
   <button
-    type="button"
     onClick={onClick}
     disabled={disabled}
+    type={type}
     className={`${className} ${
       isOutline
         ? 'border-4 border-mds-white bg-transparent text-mds-white hover:bg-mds-white hover:text-mds-black'

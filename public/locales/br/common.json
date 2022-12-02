@@ -18,5 +18,9 @@
   "CREATE_SECTION_ITEMS_TITLE2": "Items",
   "CREATE_SECTION_ITEMS_SUBTITLE": "Generate A.I. NFT Image",
   "CREATE_SECTION_ITEMS_DESCRIPTION1": "For each product it is necessary to have an ERC-721 token collection, where the product will be represented by an amount of NFT that you choose.",
-  "CREATE_SECTION_ITEMS_DESCRIPTION2": "Read more about NFT's collections"
+  "CREATE_SECTION_ITEMS_DESCRIPTION2": "Read more about NFT's collections",
+  "FORM_ERROR_MUST_BE_GREATER": "Field must be greater than {{maxNum}} characters",
+  "FORM_ERROR_MUST_BE_LESS": "Field must be less than {{maxNum}} characters",
+  "FORM_ERROR_ONLY_LETTERS": "Field must have only letters",
+  "FORM_ERROR_REQUIRED": "Field required"
 }

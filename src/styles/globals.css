@@ -7,15 +7,15 @@
 
 @layer components {
   .create-section-title {
-    @apply text-mds-white font-semibold text-5xl;
+    @apply text-mds-white font-semibold lg:text-[2.43rem] xl:text-[3.2rem] 2xl:text-[3.9rem];
   }
 
   .create-section-subtitle {
-    @apply text-mds-white font-semibold text-3xl;
+    @apply text-mds-white font-semibold text-2xl;
   }
 
   .create-section-description {
-    @apply text-mds-gray-100 mt-2 text-2xl;
+    @apply text-mds-gray-100 mt-2 text-xl;
   }
   .create-section-description a {
     @apply text-mds-cyan ml-2 cursor-pointer;
@@ -33,6 +33,10 @@
     transition: 0.01s;
     background: linear-gradient(to right top, #ff05e6, #c47dfd, #83f0ff);
     background-size: 160%;
+  }
+
+  .button-gradient:hover {
+    background-position-x: 60%;
   }
 
   .border-gradient {
@@ -57,10 +61,6 @@
     border-radius: 38px;
   }
 
-  .button-gradient:hover {
-    background-position-x: 100%;
-  }
-
   .glass-effect {
     box-sizing: border-box;
     background: linear-gradient(
@@ -74,7 +74,7 @@
     border: solid 3px #4f4f4f5a;
   }
 
-  .selectDisable {
+  .select-disable {
     z-index: 0;
     -webkit-user-select: none;
     -khtml-user-select: none;

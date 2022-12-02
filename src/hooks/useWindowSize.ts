@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { debounce } from '../helpers';
+import { utils } from '../helpers';
 
 interface Dimensions {
   width?: number;
@@ -14,7 +14,7 @@ function useWindowSize(config?: { debounceTime?: number }) {
 
   const interval = config?.debounceTime ? config?.debounceTime : 100;
 
-  const handleResize = debounce(() => {
+  const handleResize = utils.debounce(() => {
     setWindowSize({
       width: window.innerWidth,
       height: window.innerHeight,

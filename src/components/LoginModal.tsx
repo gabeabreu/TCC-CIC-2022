@@ -2,7 +2,7 @@ import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect } from 'react';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
-import { connectWallets } from '../helpers/data';
+import { connectWallets } from '../helpers/staticData';
 
 import Modal from './Modal';
 

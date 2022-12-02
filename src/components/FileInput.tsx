@@ -1,42 +1,108 @@
-import React from 'react';
+import { useFormikContext } from 'formik';
+import React, { useState } from 'react';
 
 interface Props {
-  example: string;
+  autoFocus?: any;
+  className?: string;
+  type?: string;
+  name: string;
+  label?: string;
+  width?: number;
+  placeholder?: string;
+  disableErrorMessage?: boolean;
+  multiline?: boolean;
+  secureTextEntry?: boolean;
+  description?: string;
+  mask?: string;
+  descriptionMarginBottom?: number;
+  textArea?: boolean;
+  rows?: number;
+  required?: boolean;
+  disabled?: boolean;
+  pattern?: string;
+  autoComplete?: boolean;
+  resize?: boolean;
 }
 
-const FileInput = ({ example }: Props) => (
-  <div>
-    <label className="block text-sm font-medium text-gray-700">Cover photo</label>
-    <div className="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6">
-      <div className="space-y-1 text-center">
+const FileInput = ({
+  required,
+  className,
+  autoFocus,
+  name,
+  label,
+  placeholder,
+  disableErrorMessage,
+  secureTextEntry,
+  description,
+  rows = 1,
+  disabled,
+  type,
+  pattern,
+  textArea,
+  autoComplete,
+  resize,
+}: Props) => {
+  const { values, errors, touched, setErrors } = useFormikContext<any>();
+  const [focus, setFocus] = useState<boolean>(false);
+  const [pressed, setPress] = useState<boolean>(false);
+
+  const error = errors[name];
+  const showError = touched[name] && !!error;
+
+  const showContent = secureTextEntry && pressed;
+
+  return (
+    <div className="flex flex-col">
+      {label && (
+        <label className="mb-2 block text-lg font-medium text-mds-white">
+          {label}
+          {required && <span className="ml-1 text-mds-red">*</span>}
+        </label>
+      )}
+      <div
+        className={`${className} py-20 flex flex-col items-center w-full rounded-md border-2 border-dashed bg-mds-gray-500 border-mds-gray-200`}
+      >
         <svg
-          className="mx-auto h-12 w-12 text-gray-400"
-          stroke="currentColor"
+          width="34"
+          height="36"
+          viewBox="0 0 34 36"
           fill="none"
-          viewBox="0 0 48 48"
-          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
-            strokeWidth={2}
-            strokeLinecap="round"
-            strokeLinejoin="round"
+            d="M8.6663 24.6667C7.02466 24.6685 5.44006 24.0646 4.21608 22.9705C2.99211 21.8765 2.21483 20.3693 2.03315 18.7378C1.85148 17.1062 2.27819 15.465 3.23153 14.1285C4.18487 12.7921 5.5978 11.8543 7.19964 11.495C6.73617 9.33349 7.15034 7.07639 8.35105 5.22025C9.55175 3.36411 11.4406 2.06097 13.6021 1.5975C15.7637 1.13404 18.0207 1.54821 19.8769 2.74892C21.733 3.94962 23.0362 5.83849 23.4996 8H23.6663C25.7329 7.99793 27.7265 8.76381 29.2602 10.149C30.7939 11.5341 31.7581 13.4397 31.9658 15.4958C32.1735 17.552 31.6098 19.6119 30.3841 21.2758C29.1584 22.9397 27.3582 24.0888 25.333 24.5M21.9996 19.6667L16.9996 14.6667M16.9996 14.6667L11.9996 19.6667M16.9996 14.6667V34.6667"
+            stroke="white"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
           />
         </svg>
-        <div className="flex text-sm text-gray-600">
+
+        <div className="flex mt-2 text-sm">
           <label
-            htmlFor="file-upload"
-            className="relative cursor-pointer rounded-md bg-white font-medium text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:text-indigo-500"
+            htmlFor={`fileupload` + name}
+            className="relative cursor-pointer rounded-md font-medium text-mds-white outline-none hover:text-mds-purple duration-300"
           >
-            <span>Upload a file</span>
-            <input id="file-upload" name="file-upload" type="file" className="sr-only" />
+            <span>Click to upload</span>
+            <input
+              id={`fileupload` + name}
+              name={name}
+              type="file"
+              className="sr-only"
+              onClick={() => {
+                setFocus(true);
+                const newErrors = { ...errors };
+                delete newErrors[name];
+                setErrors(newErrors);
+              }}
+            />
           </label>
-          <p className="pl-1">or drag and drop</p>
+          <p className="pl-1 text-mds-gray-100">or drag and drop</p>
         </div>
-        <p className="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+        <p className="mt-1 text-xs text-mds-gray-200">SVG, PNG, JPG or GIF (MAX. 620x500px)</p>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default FileInput;

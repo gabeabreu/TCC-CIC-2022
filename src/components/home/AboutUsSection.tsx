@@ -17,7 +17,7 @@ const AboutSection = ({ offsetY }: { offsetY: number }) => (
       className="selectDisable absolute w-[4.2rem] h-[4.2rem] top-[0rem] left-[-4rem] duration-200"
     >
       <Image
-        src="/assets/landing/bg-about1.svg"
+        src="/assets/landingPage/bg-about1.svg"
         alt="just aesthetical image"
         layout="fill"
         priority
@@ -28,7 +28,7 @@ const AboutSection = ({ offsetY }: { offsetY: number }) => (
       className="selectDisable absolute w-[4.2rem] h-[4.2rem] bottom-[-4rem] right-[2rem] duration-200"
     >
       <Image
-        src="/assets/landing/bg-about2.svg"
+        src="/assets/landingPage/bg-about2.svg"
         alt="just aesthetical image"
         layout="fill"
         priority
