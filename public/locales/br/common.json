@@ -8,5 +8,15 @@
   "EXPLORE": "Explore",
   "CREATE": "Create",
   "MODAL_CONNECT_WALLET_TITLE": "Connect your wallet",
-  "MODAL_CONNECT_WALLET_LEARN_MORE": "New to Ethereum? <p>Learn more about wallets</p>"
+  "MODAL_CONNECT_WALLET_LEARN_MORE": "New to Ethereum? <p>Learn more about wallets</p>",
+  "CREATE_SECTION_TITLE1": "Create",
+  "CREATE_SECTION_TITLE2": "Collection",
+  "CREATE_SECTION_SUBTITLE": "New Collection",
+  "CREATE_SECTION_DESCRIPTION1": "For each product it is necessary to have an ERC-721 token collection, where the product will be represented by an amount of NFT that you choose.",
+  "CREATE_SECTION_DESCRIPTION2": "Read more about NFT's collections",
+  "CREATE_SECTION_ITEMS_TITLE1": "Collection",
+  "CREATE_SECTION_ITEMS_TITLE2": "Items",
+  "CREATE_SECTION_ITEMS_SUBTITLE": "Generate A.I. NFT Image",
+  "CREATE_SECTION_ITEMS_DESCRIPTION1": "For each product it is necessary to have an ERC-721 token collection, where the product will be represented by an amount of NFT that you choose.",
+  "CREATE_SECTION_ITEMS_DESCRIPTION2": "Read more about NFT's collections"
 }

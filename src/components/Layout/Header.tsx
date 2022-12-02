@@ -100,12 +100,12 @@ const Header = () => {
                 <div className="hidden lg:flex">
                   <Input
                     placeholder="Search items, collections or accounts"
-                    className="rounded-full bg-mds-white w-[22.6rem] py-[0.35rem]"
+                    className="placeholder:text-sm rounded-full bg-mds-white w-[22.5rem] py-[0.35rem]"
                     icon={<i className="fa-solid fa-magnifying-glass text-[#c5c5c5]" />}
                   />
                 </div>
 
-                <div className="relative ml-3 h-[2.3rem] w-[2.5rem] rounded-full cursor-pointer">
+                <div className="relative ml-4 h-[2.3rem] w-[2.5rem] rounded-full cursor-pointer">
                   <Popover.Group as="nav" className="hidden space-x-10 md:flex">
                     <Popover className="relative">
                       {({ open, close }) => (

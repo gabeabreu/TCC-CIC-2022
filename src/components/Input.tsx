@@ -46,7 +46,7 @@ const Input = ({
           {label}
         </span>
       )} */}
-      {icon ? <div className="absolute text-base ml-5">{icon}</div> : null}
+      {icon ? <div className="absolute text-base ml-6 mt-[0.14rem]">{icon}</div> : null}
       <input
         defaultValue={defaultValue}
         value={value}
@@ -56,7 +56,7 @@ const Input = ({
         className={`${className} ${
           disabled ? 'bg-stk-blue-400 text-stk-grey-300' : 'bg-transparent text-stk-white'
         } ${
-          icon ? 'pl-12' : ''
+          icon ? 'pl-14' : ''
         } w-full border px-[0.9rem] py-2 outline-none duration-500 placeholder:text-stk-grey-600`}
         disabled={disabled}
         required={required}
