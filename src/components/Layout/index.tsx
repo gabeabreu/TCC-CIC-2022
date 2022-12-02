@@ -16,7 +16,7 @@ const Layout = ({ children }: Props) => {
   return (
     <div className="z-20 mx-auto w-full relative">
       <Header />
-      <div className="flex">
+      <div className="flex mb-[12rem]">
         {router.pathname === '/explore' && <Sidebar setIsDrawerOpen={setIsDrawerOpen} />}
         {router.pathname !== '/' && router.pathname !== '/account' && (
           <FilterDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />

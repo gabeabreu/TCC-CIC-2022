@@ -49,7 +49,7 @@ const ProfileSection = () => {
     <div className="relative flex flex-col w-full">
       <div className="overflow-hidden relative w-screen h-[35rem]">
         <Image
-          src="/assets/account/banner.svg"
+          src="/assets/accountPage/banner.svg"
           layout="fill"
           objectFit="cover"
           alt="Background image"
@@ -67,7 +67,7 @@ const ProfileSection = () => {
         </button> */}
         <div className="overflow-hidden relative w-52 h-52 rounded-3xl border-[0.5rem] border-mds-gray-300">
           <Image
-            // src="/assets/account/profilePicture.svg"
+            // src="/assets/accountPage/profilePicture.svg"
             src={
               address
                 ? 'https://firebasestorage.googleapis.com/v0/b/midas-dd47f.appspot.com/o/files%2FScreen%20Shot%202022-11-25%20at%2012.22.02%20(2).png?alt=media&token=1230cd70-9c7e-4312-b5b7-29d589fc0f39'

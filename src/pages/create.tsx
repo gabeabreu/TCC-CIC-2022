@@ -8,7 +8,7 @@ import VerifiedSection from '../components/explore/VerifiedSection';
 import NotableSection from '../components/explore/NotableSection';
 import ProfileSection from '../components/account/ProfileSection';
 import UserOptionsSection from '../components/account/UserOptionsSection';
-import CreateSection from '@/components/create/CreateSection';
+import CreateSection from '@/components/create/CreateSection/CreateSection';
 
 const Home: NextPage = () => {
   return (
@@ -20,7 +20,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <div className="flex flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] mb-32 z-10 duration-500">
+        <div className="flex flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] z-10 duration-500">
           <CreateSection />
         </div>
       </Layout>

@@ -1,8 +1,12 @@
 import { Field, useFormikContext } from 'formik';
+import { useTranslation } from 'next-i18next';
 import React, { useState, useRef, useEffect } from 'react';
+import Button from './Button';
 
 interface Props {
   autoFocus?: any;
+  className?: string;
+  withButton?: boolean;
   type?: string;
   name: string;
   label?: string;
@@ -21,10 +25,13 @@ interface Props {
   pattern?: string;
   autoComplete?: boolean;
   resize?: boolean;
+  onSubmit?: (value?: any) => void;
 }
 
 const InputFormik: React.FC<Props> = ({
   required,
+  className,
+  withButton,
   autoFocus,
   name,
   label,
@@ -32,7 +39,6 @@ const InputFormik: React.FC<Props> = ({
   disableErrorMessage,
   secureTextEntry,
   description,
-  descriptionMarginBottom,
   rows = 1,
   disabled,
   type,
@@ -40,7 +46,9 @@ const InputFormik: React.FC<Props> = ({
   textArea,
   autoComplete,
   resize,
+  onSubmit = () => null,
 }) => {
+  const { t } = useTranslation();
   const { values, errors, touched, setFieldValue, setErrors } = useFormikContext<any>();
   const [focus, setFocus] = useState<boolean>(false);
   const [pressed, setPress] = useState<boolean>(false);
@@ -50,34 +58,23 @@ const InputFormik: React.FC<Props> = ({
 
   const showContent = secureTextEntry && pressed;
 
-  const inputRef = useRef<any>(null);
-
-  const onFocusHandler = () => {
-    inputRef.current && inputRef.current.focus();
-  };
-
-  useEffect(() => {
-    if (autoFocus) onFocusHandler();
-  }, []);
-
   return (
-    <>
+    <div className="flex flex-col w-full">
       {label && (
-        <label className="mb-1 block text-sm font-medium text-gray-700">
+        <label className="mb-2 block text-lg font-medium text-mds-white">
           {label}
-          {required && <span className="ml-1 text-red-300">*</span>}
+          {required && <span className="ml-1 text-mds-red">*</span>}
         </label>
       )}
-      <div className={`${error ? '' : 'pb-6'}`}>
+      <div className={`${error ? '' : 'pb-6'} relative`}>
         <Field
-          className={`${!resize && 'resize-none'} ${
-            disabled ? 'text-gray-500 bg-gray-100' : 'text-gray-600'
+          className={`${className} ${!resize && 'resize-none'} ${
+            disabled ? 'text-gray-500 bg-gray-100' : 'text-mds-white'
           } ${
-            error ? 'border-red-300' : 'border-gray-300'
-          } appearance-none block w-full px-3 py-2 border rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm`}
+            error ? 'border-mds-red' : 'border-mds-gray-200'
+          } bg-mds-gray-500 appearance-none block w-full px-3 py-[0.64rem] border rounded-md shadow-sm focus:shadow placeholder:text-mds-gray-200 outline-none focus:border-mds-purple sm:text-sm duration-500`}
           name={name}
           error={!disableErrorMessage ? error : undefined}
-          ref={inputRef}
           onFocus={() => {
             setFocus(true);
             const newErrors = { ...errors };
@@ -96,12 +93,27 @@ const InputFormik: React.FC<Props> = ({
           rows={rows}
           as={textArea ? 'textarea' : 'input'}
         />
-
+        {withButton && (
+          <div className="absolute top-0 right-0">
+            <Button
+              onClick={() =>
+                required && values[name]
+                  ? onSubmit(values[name])
+                  : setErrors({ ...errors, [name]: 'FORM_ERROR_REQUIRED' })
+              }
+              className="rounded-none rounded-r-md py-[0.45rem] button-gradient"
+            >
+              <span>Generate</span>
+            </Button>
+          </div>
+        )}
         {error || description ? (
-          <div className="text-red-300 text-xs pb-2">{`${error || description || ''}`}</div>
+          <p className="text-mds-red pt-[0.5em] text-xs mb-[0.1rem]">{`${
+            t(String(error)) || description || ''
+          }`}</p>
         ) : null}
       </div>
-    </>
+    </div>
   );
 };
 
