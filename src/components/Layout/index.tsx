@@ -17,14 +17,12 @@ const Layout = ({ children }: Props) => {
     <div className="z-20 mx-auto w-full relative">
       <Header />
       <div className="flex">
-        {router.pathname !== '/' && router.pathname !== '/account' && (
-          <Sidebar setIsDrawerOpen={setIsDrawerOpen} />
-        )}
+        {router.pathname === '/explore' && <Sidebar setIsDrawerOpen={setIsDrawerOpen} />}
         {router.pathname !== '/' && router.pathname !== '/account' && (
           <FilterDrawer isDrawerOpen={isDrawerOpen} setIsDrawerOpen={setIsDrawerOpen} />
         )}
         {router.pathname !== '/' && (
-          <div className="z-30 mx-auto flex flex-col px-5 duration-500 min-w-[18.75rem] sm:min-w-[25.75rem] md:min-w-[37.375rem] md:px-0 lg:min-w-[53.375rem] xl:min-w-[70rem] 2xl:min-w-[85.5rem]">
+          <div className="z-30 pt-[4.5rem] mx-auto flex flex-col px-5 duration-500 min-w-[18.75rem] sm:min-w-[25.75rem] md:min-w-[37.375rem] md:px-0 lg:min-w-[53.375rem] xl:min-w-[70rem] 2xl:min-w-[85.5rem]">
             {children}
           </div>
         )}

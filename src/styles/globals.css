@@ -5,9 +5,26 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer components {
+  .create-section-title {
+    @apply text-mds-white font-semibold text-5xl;
+  }
+
+  .create-section-subtitle {
+    @apply text-mds-white font-semibold text-3xl;
+  }
+
+  .create-section-description {
+    @apply text-mds-gray-100 mt-2 text-2xl;
+  }
+  .create-section-description a {
+    @apply text-mds-cyan ml-2 cursor-pointer;
+  }
+}
+
 @layer base {
   html {
-    font-family: 'Inter';
+    font-family: 'Sora';
     overflow: unset !important;
     padding-right: 0 !important;
   }
@@ -16,6 +33,28 @@
     transition: 0.01s;
     background: linear-gradient(to right top, #ff05e6, #c47dfd, #83f0ff);
     background-size: 160%;
+  }
+
+  .border-gradient {
+    position: relative;
+    border: 4 solid transparent;
+    background: linear-gradient(239.75deg, #141118 3.24%, #1e152b 98.25%);
+    background-clip: padding-box;
+    border-radius: 35px;
+  }
+
+  .border-gradient::after {
+    content: '';
+    opacity: 0.5;
+    position: absolute;
+    top: -5px;
+    bottom: -5px;
+    left: -5px;
+    right: -5px;
+
+    background: linear-gradient(45deg, #ff05e6, #83f0ff);
+    z-index: -1;
+    border-radius: 38px;
   }
 
   .button-gradient:hover {
