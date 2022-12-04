@@ -29,6 +29,7 @@ export interface NFTItem {
 }
 
 export interface Rarity {
+  id?: number;
   src?: string;
   rarity?: string;
 }

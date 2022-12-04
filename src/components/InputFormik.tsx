@@ -86,7 +86,9 @@ const InputFormik: React.FC<Props> = ({
           disabled={disabled}
           onBlur={() => setFocus(false)}
           value={
-            type === 'currency' ? values[name] && Number(values[name]).toFixed(2) : values[name]
+            type === 'currency'
+              ? values[name] && Number(values[name]).toFixed(2)
+              : values[name] || ''
           }
           placeholder={placeholder}
           pattern={pattern}
@@ -97,9 +99,9 @@ const InputFormik: React.FC<Props> = ({
           <div className="absolute top-0 right-0">
             <Button
               onClick={() =>
-                required && values[name]
+                values[name]
                   ? onSubmit(values[name])
-                  : setErrors({ ...errors, [name]: 'FORM_ERROR_REQUIRED' })
+                  : required && setErrors({ ...errors, [name]: 'FORM_ERROR_REQUIRED' })
               }
               className="rounded-none rounded-r-md py-[0.45rem] button-gradient"
             >

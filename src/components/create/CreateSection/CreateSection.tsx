@@ -3,6 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
+import { useState } from 'react';
 
 import Button from '../../Button';
 import FileInput from '../../FileInput';
@@ -39,20 +40,20 @@ const CreateSection = () => {
   //   };
   // }
 
+  const [generatedImages, setGeneratedImages] = useState([
+    { id: 1, rarity: 'Common', src: '' },
+    { id: 2, rarity: 'Rare', src: '' },
+    { id: 3, rarity: 'Super Rare', src: '' },
+    { id: 3, rarity: 'Epic', src: '' },
+    { id: 4, rarity: 'Legend', src: '' },
+  ]);
+
   const initialValues: NFTCollection = {
     name: '',
     royaltyAmount: '',
     royaltyAddressReceiver: '',
     description: '',
-    item: {
-      images: [
-        { rarity: 'Common' },
-        { rarity: 'Rare' },
-        { rarity: 'Super Rare' },
-        { rarity: 'Epic' },
-        { rarity: 'Legend' },
-      ],
-    },
+    item: {},
   };
 
   const rarityColors = [
@@ -70,9 +71,18 @@ const CreateSection = () => {
   const { t } = useTranslation();
 
   async function generateImage(prompt: string) {
-    const data: AxiosResponse = await axios.get('/api/openai/generate', { params: { prompt } });
-  }
+    const { data }: AxiosResponse = await axios.get('/api/openai/generate', { params: { prompt } });
 
+    const newGeneratedImages = [...generatedImages];
+
+    console.log(data.data);
+    setGeneratedImages(
+      newGeneratedImages.map((image) => {
+        return { ...image, src: data.data[image.id - 1].url };
+      })
+    );
+  }
+  console.log(generatedImages);
   return (
     <div className="flex flex-col">
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
@@ -143,16 +153,17 @@ const CreateSection = () => {
                 </span>
                 <div className="mt-6">
                   <InputFormik
+                    required
                     name="prompt"
                     className="bg-mds-gray-300"
                     label="Give a detailed description of your product"
                     placeholder="flying rolex watch digital art"
                     withButton
-                    onSubmit={(value: any) => console.log(value)}
+                    onSubmit={(value: any) => generateImage(value)}
                   />
                 </div>
                 <ul className="flex flex-wrap w-full justify-center mt-6 gap-6 2xl:gap-10 duration-500">
-                  {values.item?.images?.map((image) => (
+                  {generatedImages.map((image) => (
                     <li key={image.rarity} className="flex flex-col items-center">
                       <span
                         style={{
@@ -163,13 +174,39 @@ const CreateSection = () => {
                       >
                         {image.rarity}
                       </span>
-                      <div className="flex flex-col justify-center items-center w-[13.4rem] h-[13.4rem] lg:w-[13.4rem] lg:h-[13.4rem] xl:w-[19rem] xl:h-[19rem] 2xl:w-[23.2rem] 2xl:h-[23.2rem] rounded-md border-2 border-dashed bg-mds-gray-500 border-mds-gray-200 duration-500">
-                        <i className="fa-solid fa-image text-mds-gray-200 text-xl lg:text-3xl xl:text-4xl 2xl:text-5xl duration-500" />
+
+                      <div className="flex flex-col p-4 justify-center items-center w-[13.4rem] h-[13.4rem] lg:w-[13.4rem] lg:h-[13.4rem] xl:w-[19rem] xl:h-[19rem] 2xl:w-[23.2rem] 2xl:h-[23.2rem] rounded-xl border-2 border-dashed bg-mds-gray-500 border-mds-gray-200 duration-500">
+                        {image.src ? (
+                          <div className="relative flex w-full h-full rounded-lg overflow-hidden">
+                            <Image alt={image.rarity} src={image.src} layout="fill" />
+                          </div>
+                        ) : (
+                          <i className="fa-solid fa-image text-mds-gray-200 text-xl lg:text-3xl xl:text-4xl 2xl:text-5xl duration-500" />
+                        )}
                       </div>
                     </li>
                   ))}
                 </ul>
-                <Button type="submit" className="mt-16">
+                <div className="mt-10 flex w-full gap-x-6 2xl:gap-x-10">
+                  <InputFormik required name="itemName" label="Name" placeholder="Bored ape" />
+                  <InputFormik required name="itemSupply" label="Supply" placeholder="500" />
+                </div>
+                <InputFormik
+                  name="itemLink"
+                  label="External link"
+                  placeholder="https://dominio.com"
+                />
+                <InputFormik
+                  name="itemDescription"
+                  label="Description"
+                  placeholder="This item is about..."
+                  textArea
+                  rows={5}
+                />
+                <Button
+                  type="submit"
+                  className="bg-mds-purple hover:bg-mds-dark-purple w-[15rem] ml-auto rounded-md mt-10"
+                >
                   <span>{t('CREATE')}</span>
                 </Button>
               </>
