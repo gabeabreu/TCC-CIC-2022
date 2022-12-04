@@ -5,13 +5,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { prompt } = req.query;
-
     const { data } = await axios.post(
       'https://api.openai.com/v1/images/generations',
       {
         prompt,
-        n: 4,
-        size: '256x256',
+        n: 5,
+        size: '512x512',
       },
       {
         headers: {
