@@ -33,7 +33,7 @@ const LoginModal = ({ showModal, onCloseModal = () => null }: Props) => {
   }, [isWalletConnected, connectError]);
 
   return (
-    <Modal closeButton showModal={showModal} bgGlass onCloseModal={onCloseModal}>
+    <Modal showModal={showModal} className="glass-effect" onCloseModal={onCloseModal}>
       <div className="flex flex-col justify-center items-center px-28 py-12">
         <h2 className="text-mds-white font-semibold text-[2.5rem] mb-10">
           {t('MODAL_CONNECT_WALLET_TITLE')}

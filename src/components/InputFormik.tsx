@@ -71,7 +71,7 @@ const InputFormik: React.FC<Props> = ({
           className={`${className} ${!resize && 'resize-none'} ${
             disabled ? 'text-gray-500 bg-gray-100' : 'text-mds-white'
           } ${
-            error ? 'border-mds-red' : 'border-mds-gray-200'
+            error ? 'border-mds-dark-red' : 'border-mds-gray-200'
           } bg-mds-gray-500 appearance-none block w-full px-3 py-[0.64rem] border rounded-md shadow-sm focus:shadow placeholder:text-mds-gray-200 outline-none focus:border-mds-purple sm:text-sm duration-500`}
           name={name}
           error={!disableErrorMessage ? error : undefined}
@@ -110,7 +110,7 @@ const InputFormik: React.FC<Props> = ({
           </div>
         )}
         {error || description ? (
-          <p className="text-mds-red pt-[0.5em] text-xs mb-[0.1rem]">{`${
+          <p className="text-mds-dark-red pt-[0.5em] text-xs mb-[0.1rem]">{`${
             t(String(error)) || description || ''
           }`}</p>
         ) : null}

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
+import './MidasToken.sol';
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol';
 import '@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
@@ -27,8 +27,8 @@ contract MidasFactory is Ownable {
         // collections.push(token);
         // console.log(token);
         // emit NewCollection("Created");
-        bytes memory bytecode = type(ERC721).creationCode;
-        bytecode = abi.encodePacked(bytecode, abi.encode('MidasToken', 'MTK'));
+        bytes memory bytecode = type(MidasToken).creationCode;
+        // bytecode = abi.encodePacked(bytecode, abi.encode('MidasToken', 'MTK'));
 
         assembly {
             addr := create(callvalue(), add(bytecode, 0x20), mload(bytecode))

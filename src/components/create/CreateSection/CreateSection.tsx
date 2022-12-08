@@ -8,6 +8,7 @@ import { useState } from 'react';
 import Button from '../../Button';
 import FileInput from '../../FileInput';
 import InputFormik from '../../InputFormik';
+import RarityCardImage from '../RarityCardImage';
 import formSchema from './formSchema';
 
 const CreateSection = () => {
@@ -48,21 +49,12 @@ const CreateSection = () => {
     { id: 4, rarity: 'Legend', src: '' },
   ]);
 
-  const initialValues: NFTCollection = {
-    name: '',
-    royaltyAmount: '',
-    royaltyAddressReceiver: '',
-    description: '',
-    item: {},
+  const initialValues: any = {
+    collectionImage: '/assets/coinbase.svg',
+    name: 'MyTestCollection',
+    itemSupply: 100,
+    itemName: 'MyTestNFT',
   };
-
-  const rarityColors = [
-    { value: 'Common', color: '#FFFFFF' },
-    { value: 'Rare', color: '#C5F2A2' },
-    { value: 'Super Rare', color: '#D8A2F2' },
-    { value: 'Epic', color: '#F2A2A2' },
-    { value: 'Legend', color: '#F2CDA2' },
-  ];
 
   function handleSubmit(values: NFTCollection) {
     console.log(values);
@@ -81,7 +73,6 @@ const CreateSection = () => {
       })
     );
   }
-
   return (
     <div className="flex flex-col">
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
@@ -106,7 +97,6 @@ const CreateSection = () => {
           {...formSchema}
         >
           {({ values, errors }) => {
-            console.log(errors);
             return (
               <Form className="flex flex-col mt-10">
                 <>
@@ -115,7 +105,7 @@ const CreateSection = () => {
                       required
                       label="Upload cover image"
                       name="collectionImage"
-                      className="w-[25rem] h-[18.15rem]"
+                      className="w-[18rem] h-[18rem]"
                     />
                     <div className="flex flex-col w-full gap-y-5">
                       <InputFormik required name="name" label="Name" placeholder="Bored ape" />
@@ -165,26 +155,8 @@ const CreateSection = () => {
                   </div>
                   <ul className="flex flex-wrap w-full justify-center mt-6 gap-6 2xl:gap-10 duration-500">
                     {generatedImages.map((image) => (
-                      <li key={image.rarity} className="flex flex-col items-center">
-                        <span
-                          style={{
-                            color: rarityColors.find((rarity) => rarity.value === image.rarity)
-                              ?.color,
-                          }}
-                          className={`mb-3 font-semibold text-xl`}
-                        >
-                          {image.rarity}
-                        </span>
-
-                        <div className="flex flex-col p-4 justify-center items-center w-[13.4rem] h-[13.4rem] lg:w-[13.4rem] lg:h-[13.4rem] xl:w-[19rem] xl:h-[19rem] 2xl:w-[23.2rem] 2xl:h-[23.2rem] rounded-xl border-2 border-dashed bg-mds-gray-500 border-mds-gray-200 duration-500">
-                          {image.src ? (
-                            <div className="relative flex w-full h-full rounded-lg overflow-hidden">
-                              <Image alt={image.rarity} src={image.src} layout="fill" />
-                            </div>
-                          ) : (
-                            <i className="fa-solid fa-image text-mds-gray-200 text-xl lg:text-3xl xl:text-4xl 2xl:text-5xl duration-500" />
-                          )}
-                        </div>
+                      <li key={image.rarity}>
+                        <RarityCardImage image={image} />
                       </li>
                     ))}
                   </ul>
