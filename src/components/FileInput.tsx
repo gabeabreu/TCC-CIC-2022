@@ -174,6 +174,11 @@ const FileInput = ({
       <Modal
         title="Crop image"
         showModal={isCropModalOpen}
+        footerButtonTitle="Crop"
+        onSubmit={() => {
+          cropImageNow();
+          setCropModalOpen(false);
+        }}
         onCloseModal={() => setCropModalOpen(false)}
       >
         <div className="flex flex-col relative w-full justify-center">
@@ -198,7 +203,7 @@ const FileInput = ({
               </div>
             </ReactCrop>
           </div>
-          <Button
+          {/* <Button
             onClick={() => {
               cropImageNow();
               setCropModalOpen(false);
@@ -206,7 +211,7 @@ const FileInput = ({
             className="mt-6 bg-mds-purple hover:bg-mds-dark-purple"
           >
             <span>{t('CROP')}</span>
-          </Button>
+          </Button> */}
         </div>
       </Modal>
 
