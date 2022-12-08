@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 import TrendindSection from '../components/explore/TrendingSection';
 import VerifiedSection from '../components/explore/VerifiedSection';
 import NotableSection from '../components/explore/NotableSection';
-import ProfileSection from '../components/account/ProfileSection';
+import ProfileSection from '../components/account/ProfileSection.tsx/ProfileSection';
 import UserOptionsSection from '../components/account/UserOptionsSection';
 import CreateSection from '@/components/create/CreateSection/CreateSection';
 

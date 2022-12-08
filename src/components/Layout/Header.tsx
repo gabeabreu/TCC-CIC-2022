@@ -10,6 +10,10 @@ import { Popover, Transition } from '@headlessui/react';
 import Input from '../Input';
 import LoginModal from '../LoginModal';
 import { useAccount, useDisconnect } from 'wagmi';
+import { Modal } from '..';
+import { useDispatch } from 'react-redux';
+import { resetStateUser, setUserData } from '@/redux/user/actions';
+import { useSelector } from '@/redux/hooks';
 
 const solutions = [
   {
@@ -57,24 +61,40 @@ const resources = [
   },
 ];
 
-const Header = () => {
+const Header = ({ props }: any) => {
   const { t } = useTranslation();
   const router = useRouter();
+
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state);
 
   const { disconnect } = useDisconnect();
   const { address, isConnected } = useAccount();
 
   const [hiddenHeader, setHiddenHeader] = useState(false);
   const [isLoginModalOpen, setLoginModalOpen] = useState(false);
+  const [isAccountModalOpen, setAccountModalOpen] = useState(true);
+
   const scroll = useScrollListener();
 
   async function fetchUser() {
-    const userCheck = await fetch('http://localhost:8000/users/find', {
-      method: 'POST',
-      body: JSON.stringify({ address: address }),
-    }).then((res) => res.json);
-    console.log(userCheck);
+    const user = await fetch(
+      `/api/users/login?` +
+        new URLSearchParams({
+          address: address || '',
+        })
+    ).then((res) => res.json());
+    dispatch(setUserData(user));
+    return user;
   }
+
+  useEffect(() => {
+    if (address) {
+      const user = fetchUser();
+    } else {
+      dispatch(resetStateUser());
+    }
+  }, [address]);
 
   useEffect(() => {
     setHiddenHeader(false);
@@ -210,7 +230,6 @@ const Header = () => {
                                         } else {
                                           close();
                                           setLoginModalOpen(true);
-                                          fetchUser();
                                         }
                                       }}
                                     >
