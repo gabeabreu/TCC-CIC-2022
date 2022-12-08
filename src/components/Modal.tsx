@@ -1,26 +1,31 @@
 import { Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import Button from './Button';
 
 interface Props {
   className?: string;
   title?: string;
+  footerButtonTitle?: string;
   showModal: boolean;
   children?: ReactNode;
   closeButton?: boolean;
   dataCy?: string | number;
   clickOutsideClose?: boolean;
+  onSubmit?: () => void;
   onCloseModal?: () => void;
 }
 
 const Modal = ({
   className,
   title,
+  footerButtonTitle,
   showModal,
-  onCloseModal = () => null,
   children,
   closeButton = true,
   dataCy,
   clickOutsideClose = true,
+  onSubmit = () => null,
+  onCloseModal = () => null,
 }: Props) => (
   <Transition.Root show={showModal} as={Fragment}>
     <Dialog
@@ -67,11 +72,22 @@ const Modal = ({
               )}
               {title && (
                 <>
-                  <span className="absolute -ml-12 top-[5.4rem] h-[0.2rem] w-full bg-[#292929]"></span>
+                  <span className="absolute -ml-12 top-[5.4rem] h-[0.15rem] w-full bg-[#292929]"></span>
                   <div className="pb-14 text-mds-white font-semibold text-3xl">{title}</div>
                 </>
               )}
               {children}
+              {footerButtonTitle && (
+                <div>
+                  <span className="absolute -ml-12 bottom-[5.8rem] h-[0.15rem] w-full bg-[#292929]"></span>
+                  <Button
+                    onClick={onSubmit}
+                    className="flex ml-auto mt-16 bg-mds-purple hover:bg-mds-dark-purple"
+                  >
+                    {footerButtonTitle}
+                  </Button>
+                </div>
+              )}
             </Dialog.Panel>
           </Transition.Child>
         </div>
