@@ -11,17 +11,17 @@ import { publicProvider } from 'wagmi/providers/public';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 
-// const ETHEREUM_MAINNET = 1;
+const ETHEREUM_MAINNET = 1;
 const BINANCE_MAINNET = 56;
 const POLYGON_MAINNET = 137;
 
 const rpcUrl: any = {
-  // 1: 'https://eth-mainnet-public.unifra.io/',
+  1: 'https://eth-mainnet-public.unifra.io/',
   56: 'https://bsc-dataseed.binance.org/',
   137: 'https://polygon-rpc.com/',
 };
 
-// const ethereumMainnet = allChains.filter((chain) => chain.id === ETHEREUM_MAINNET);
+const ethereumMainnet = allChains.filter((chain) => chain.id === ETHEREUM_MAINNET);
 const polygonMainnet = allChains.filter((chain) => chain.id === POLYGON_MAINNET);
 const binanceMainnet: Chain = {
   network: 'binance',
@@ -50,7 +50,7 @@ const binanceMainnet: Chain = {
 };
 
 const { chains, provider } = configureChains(
-  [...polygonMainnet, binanceMainnet],
+  [...polygonMainnet, binanceMainnet, ...ethereumMainnet],
   [
     jsonRpcProvider({
       rpc: (chain) => ({
