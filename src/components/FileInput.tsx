@@ -222,8 +222,16 @@ const FileInput = ({
         } flex p-4 flex-col items-center justify-center w-full rounded-md border-2 border-dashed bg-mds-gray-500 duration-500`}
       >
         {values[name] ? (
-          <div className="flex relative w-full h-full rounded-lg overflow-hidden">
+          <div className="flex group relative w-full h-full rounded-lg overflow-hidden">
             <Image alt={name} src={values[name]} layout="fill" />
+            <span className="z-10 flex w-full bg-[#000000a4] opacity-0 group-hover:opacity-100 justify-center items-center duration-500">
+              <div
+                className="text-mds-white cursor-pointer"
+                onClick={() => setValues({ ...values, [name]: '' })}
+              >
+                <i className="fa-regular fa-xmark text-4xl text-stk-grey-400" />
+              </div>
+            </span>
           </div>
         ) : (
           <>
