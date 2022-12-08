@@ -2,11 +2,15 @@ import * as Yup from 'yup';
 import { formErrors } from '../../../helpers';
 
 const validationSchema = Yup.object().shape({
-  file: Yup.string().required(formErrors.errorMessages.required),
+  collectionImage: Yup.string().required(formErrors.errorMessages.required),
   name: Yup.string().required(formErrors.errorMessages.required),
   royaltyAmount: Yup.string(),
   royaltyAddressReceiver: Yup.string(),
   description: Yup.string(),
+  itemName: Yup.string().required(formErrors.errorMessages.required),
+  itemSupply: Yup.string().required(formErrors.errorMessages.required),
+  itemLink: Yup.string(),
+  itemDescription: Yup.string(),
   // item: Yup.array().required(formErrors.errorMessages.required),
 
   // cnpj: Yup.string()
