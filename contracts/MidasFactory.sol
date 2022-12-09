@@ -21,14 +21,18 @@ contract MidasFactory is Ownable {
 
     event NewCollection(address contractAddress);
 
-    function newCollection(address _owner) external payable returns (address addr) {
+    function newCollection(address _owner, string memory _name)
+        external
+        payable
+        returns (address addr)
+    {
         // uint256 tokenId = _tokenIdCounter.current();
         // address contractAddress = new ERC721("MidasToken", "MTK");
         // collections.push(token);
         // console.log(token);
         // emit NewCollection("Created");
         bytes memory bytecode = type(MidasToken).creationCode;
-        // bytecode = abi.encodePacked(bytecode, abi.encode('MidasToken', 'MTK'));
+        bytecode = abi.encodePacked(bytecode, abi.encode(_name));
 
         assembly {
             addr := create(callvalue(), add(bytecode, 0x20), mload(bytecode))
