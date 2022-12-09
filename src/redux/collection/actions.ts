@@ -1,6 +1,10 @@
 import { action } from 'typesafe-actions';
-import { GeneralActionTypes, GeneralTypes } from './types';
+import { CollectionActionTypes, CollectionTypes, NFTCollection } from './types';
 
-export function resetStateGeneral(): GeneralActionTypes {
-  return action(GeneralTypes.RESET_STATE);
+export function resetStateCollection(): CollectionActionTypes {
+  return action(CollectionTypes.RESET_STATE);
+}
+
+export function setCreateData(data: NFTCollection): CollectionActionTypes {
+  return action(CollectionTypes.SET_CREATE_DATA, { data });
 }

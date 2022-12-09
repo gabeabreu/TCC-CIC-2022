@@ -1,9 +1,22 @@
+import Modal from '@/components/Modal';
+import useDebounce from '@/hooks/useDebounce';
+import { setCreateData } from '@/redux/collection/actions';
 import { NFTCollection } from '@/redux/collection/types';
+import { useSelector } from '@/redux/hooks';
+import { factoryABI } from '@/utils/contractInterfaces/factoryABI';
 import axios, { AxiosResponse } from 'axios';
 import { Form, Formik } from 'formik';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import {
+  useAccount,
+  useContractWrite,
+  useNetwork,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from 'wagmi';
 
 import Button from '../../Button';
 import FileInput from '../../FileInput';
@@ -12,34 +25,12 @@ import RarityCardImage from '../RarityCardImage';
 import formSchema from './formSchema';
 
 const CreateSection = () => {
-  // function getBase64(file: any) {
-  //   var reader = new FileReader();
-  //   reader.readAsArrayBuffer(file);
-  //   reader.onload = function () {
-  //     const file = reader.result as any;
-  //     file.name = 'image.png';
-
-  //     axios.post(
-  //       'https://api.openai.com/v1/images/variations',
-  //       {
-  //         image: reader.result,
-  //         n: 1,
-  //         size: '256x256',
-  //       },
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${process.env.NEXT_PUBLIC_OPENAI_API_KEY}`,
-  //           'OpenAI-Organization': 'org-4lZnvA6eULOBKFuFSj6SzFlP',
-  //           'Content-Type': 'multipart/form-data',
-  //         },
-  //       }
-  //     );
-  //   };
-
-  //   reader.onerror = function (error) {
-  //     console.log('Error: ', error);
-  //   };
-  // }
+  const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const { collection } = useSelector((state) => state);
+  const { createData } = collection;
+  const { chain } = useNetwork();
+  const { address } = useAccount();
 
   const [generatedImages, setGeneratedImages] = useState([
     { id: 1, rarity: 'Common', src: '' },
@@ -48,6 +39,8 @@ const CreateSection = () => {
     { id: 3, rarity: 'Epic', src: '' },
     { id: 4, rarity: 'Legend', src: '' },
   ]);
+  const [enableNewCollection, setEnableNewCollection] = useState(false);
+  const [isCreatingModalOpen, setCreatingModalOpen] = useState(false);
 
   const initialValues: any = {
     collectionImage: '/assets/coinbase.svg',
@@ -57,10 +50,10 @@ const CreateSection = () => {
   };
 
   function handleSubmit(values: NFTCollection) {
-    console.log(values);
+    dispatch(setCreateData(values));
+    setEnableNewCollection(true);
+    // refetch();
   }
-
-  const { t } = useTranslation();
 
   async function generateImage(prompt: string) {
     const { data }: AxiosResponse = await axios.get('/api/openai/generate', { params: { prompt } });
@@ -73,8 +66,38 @@ const CreateSection = () => {
       })
     );
   }
+
+  const { config: newCollectionConfig, status: newCollectionStatus } = usePrepareContractWrite({
+    address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    abi: factoryABI,
+    functionName: 'newCollection',
+    args: [address, createData.data?.name || ''],
+    enabled: enableNewCollection,
+  });
+
+  const { data: newCollectionData, write: newCollectionWrite } =
+    useContractWrite(newCollectionConfig);
+
+  const { isLoading, isSuccess, data } = useWaitForTransaction({
+    hash: newCollectionData?.hash,
+  });
+
+  useEffect(() => {
+    if (newCollectionStatus === 'success' && enableNewCollection) {
+      newCollectionWrite?.();
+    }
+  }, [newCollectionStatus, enableNewCollection]);
+
+  useEffect(() => {
+    if (isLoading) setCreatingModalOpen(true);
+  }, [isLoading]);
+
+  console.log(data);
   return (
     <div className="flex flex-col">
+      <Modal showModal={isCreatingModalOpen}>
+        <div>Transaçao em andamento</div>
+      </Modal>
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
         <span className="absolute -top-[2.45rem] left-[6.5rem] w-[29.6rem] lg:left-[5.45rem] lg:w-[23.9rem] xl:left-[7.1rem] xl:w-[31.35rem] 2xl:left-[8.7rem] 2xl:w-[38rem] h-10 px-4 bg-mds-gray-500 duration-500" />
         <h1 className="absolute -top-8 lg:-top-8 xl:-top-11 2xl:-top-14 lg:left-[6.5rem] xl:left-[8.5rem] 2xl:left-[10.4rem] create-section-title duration-500">
