@@ -1,11 +1,15 @@
+import LoadingSpinner from '@/components/LoadingSpinner';
 import Modal from '@/components/Modal';
+import { formatAddres } from '@/helpers/utils';
 import useDebounce from '@/hooks/useDebounce';
 import { setCreateData } from '@/redux/collection/actions';
 import { NFTCollection } from '@/redux/collection/types';
 import { useSelector } from '@/redux/hooks';
 import { factoryABI } from '@/utils/contractInterfaces/factoryABI';
 import axios, { AxiosResponse } from 'axios';
+import BN from 'bn.js';
 import { Form, Formik } from 'formik';
+import fs from 'fs';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
@@ -23,6 +27,13 @@ import FileInput from '../../FileInput';
 import InputFormik from '../../InputFormik';
 import RarityCardImage from '../RarityCardImage';
 import formSchema from './formSchema';
+
+const statusColor = {
+  error: '#F2A2A2',
+  idle: '#A1A1A1',
+  success: '#C5F2A2',
+  loading: '#F2CDA2',
+};
 
 const CreateSection = () => {
   const { t } = useTranslation();
@@ -49,10 +60,40 @@ const CreateSection = () => {
     itemName: 'MyTestNFT',
   };
 
-  function handleSubmit(values: NFTCollection) {
-    dispatch(setCreateData(values));
+  function handleSubmit(values: any) {
+    // const formData = new FormData();
+    // const src = 'path/to/file.png';
+
+    // const file = fs.createReadStream(src);
+    // formData.append('file', file);
+
+    // const metadata = JSON.stringify({
+    //   name: 'image',
+    // });
+    // formData.append('pinataMetadata', metadata);
+
+    // const options = JSON.stringify({
+    //   cidVersion: 0,
+    // });
+    // formData.append('pinataOptions', options);
+
+    dispatch(
+      setCreateData({
+        name: values.name,
+        image: values.collectionImage,
+        royaltyAmount: values.royaltyAmount || 0,
+        royaltyAddressReceiver: values.royaltyAddressReceiver,
+        description: values.description,
+        item: {
+          name: values.itemName,
+          supply: values.itemSupply,
+          externalLink: values.itemLink,
+          description: values.itemDescription,
+          images: generatedImages,
+        },
+      })
+    );
     setEnableNewCollection(true);
-    // refetch();
   }
 
   async function generateImage(prompt: string) {
@@ -75,28 +116,90 @@ const CreateSection = () => {
     enabled: enableNewCollection,
   });
 
-  const { data: newCollectionData, write: newCollectionWrite } =
-    useContractWrite(newCollectionConfig);
+  const { data: newCollectionData, write: newCollectionWrite } = useContractWrite(
+    newCollectionConfig as any
+  );
 
-  const { isLoading, isSuccess, data } = useWaitForTransaction({
+  const {
+    isLoading,
+    isSuccess,
+    status,
+    data: trasactionData,
+  } = useWaitForTransaction({
     hash: newCollectionData?.hash,
   });
 
   useEffect(() => {
     if (newCollectionStatus === 'success' && enableNewCollection) {
       newCollectionWrite?.();
+      // setCreatingModalOpen(true);
     }
   }, [newCollectionStatus, enableNewCollection]);
 
   useEffect(() => {
     if (isLoading) setCreatingModalOpen(true);
+    else if (isSuccess) console.log('sucessu');
   }, [isLoading]);
 
-  console.log(data);
+  console.log(isLoading);
   return (
     <div className="flex flex-col">
-      <Modal showModal={isCreatingModalOpen}>
-        <div>Transaçao em andamento</div>
+      <Modal
+        showModal={isCreatingModalOpen}
+        title="Transaction"
+        footer={
+          <Button
+            disabled={isLoading}
+            onClick={() => setCreatingModalOpen(false)}
+            className={`${
+              isLoading ? '' : 'hover:bg-black'
+            } flex w-full items-center justify-center h-11 bg-mds-black`}
+          >
+            {isLoading ? <LoadingSpinner size={16} /> : t('CLOSE')}
+          </Button>
+        }
+        onCloseModal={() => setCreatingModalOpen(false)}
+      >
+        <div className="flex w-full items-center gap-x-5 rounded-xl px-8 py-5 bg-[#43186B]">
+          <div className="relative flex w-[7rem] h-[7rem]">
+            <Image src={createData.data?.image || ''} layout="fill" alt="region-divisor" />
+          </div>
+          <div className="flex flex-col">
+            <span className="text-[#ffffffaf] text-lg">Name</span>
+            <span className="text-mds-white text-xl">{createData.data?.name}</span>
+          </div>
+          <i className="fa-regular fa-arrow-right text-[#ffffff68] text-xl mx-5" />
+          <div className="flex flex-col">
+            <span className="text-[#ffffffaf] text-lg">Address</span>
+            <span className="text-mds-white text-xl">{formatAddres(address || '')}</span>
+          </div>
+        </div>
+        <div className="flex flex-col gap-y-3 mt-10">
+          <div className="flex w-full justify-between">
+            <span className="text-mds-gray-200 text-base">Item name</span>
+            <span className="text-mds-gray-100 text-base">{createData.data?.item?.name}</span>
+          </div>
+          <div className="flex w-full justify-between">
+            <span className="text-mds-gray-200 text-base">Supply</span>
+            <span className="text-mds-gray-100 text-base">{createData.data?.item?.supply}</span>
+          </div>
+          <div className="flex w-full justify-between">
+            <span className="text-mds-gray-200 text-base">Royalty</span>
+            <span className="text-mds-gray-100 text-base">{`${createData.data?.royaltyAmount}%`}</span>
+          </div>
+          <div className="flex w-full justify-between">
+            <span className="text-mds-gray-200 text-base">Network fee</span>
+            <span className="text-mds-gray-100 text-base">
+              {trasactionData?.gasUsed?.toString() || '1000'}
+            </span>
+          </div>
+          <div className="flex w-full justify-between">
+            <span className="text-mds-gray-200 text-base">Status</span>
+            <span style={{ color: statusColor[status] }}>
+              {status.charAt(0).toUpperCase() + status.slice(1)}
+            </span>
+          </div>
+        </div>
       </Modal>
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
         <span className="absolute -top-[2.45rem] left-[6.5rem] w-[29.6rem] lg:left-[5.45rem] lg:w-[23.9rem] xl:left-[7.1rem] xl:w-[31.35rem] 2xl:left-[8.7rem] 2xl:w-[38rem] h-10 px-4 bg-mds-gray-500 duration-500" />

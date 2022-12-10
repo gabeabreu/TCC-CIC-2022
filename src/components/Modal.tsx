@@ -1,11 +1,10 @@
 import { Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
-import Button from './Button';
 
 interface Props {
   className?: string;
   title?: string;
-  footerButtonTitle?: string;
+  footer?: ReactNode;
   showModal: boolean;
   children?: ReactNode;
   closeButton?: boolean;
@@ -18,7 +17,7 @@ interface Props {
 const Modal = ({
   className,
   title,
-  footerButtonTitle,
+  footer,
   showModal,
   children,
   closeButton = true,
@@ -72,20 +71,15 @@ const Modal = ({
               )}
               {title && (
                 <>
-                  <span className="absolute -ml-12 top-[5.4rem] h-[0.15rem] w-full bg-[#292929]"></span>
+                  <span className="absolute -ml-12 top-[5.4rem] h-[0.13rem] w-full bg-[#292929]"></span>
                   <div className="pb-14 text-mds-white font-semibold text-3xl">{title}</div>
                 </>
               )}
               {children}
-              {footerButtonTitle && (
-                <div>
-                  <span className="absolute -ml-12 bottom-[5.8rem] h-[0.15rem] w-full bg-[#292929]"></span>
-                  <Button
-                    onClick={onSubmit}
-                    className="flex ml-auto mt-16 bg-mds-purple hover:bg-mds-dark-purple"
-                  >
-                    {footerButtonTitle}
-                  </Button>
+              {footer && (
+                <div className="mt-16">
+                  <span className="absolute -ml-12 bottom-[5.8rem] h-[0.13rem] w-full bg-[#292929]"></span>
+                  {footer}
                 </div>
               )}
             </Dialog.Panel>
