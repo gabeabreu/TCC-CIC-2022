@@ -15,13 +15,16 @@ export interface SetUserData {
 export type UserActionTypes = ResetState | SetUserData;
 
 export interface User {
-  address: string | null,
-  name: string | null,
-  bio: string | null,
-  email: string | null,
+  address: string,
+  name: string,
+  bio: string,
+  discord: string,
+  website: string,
+  twitter: string,
+  instagram: string,
   isVerified: false,
-  profilePictureUrl: string | null,
-  bannerPictureUrl: string | null,
+  profilePictureUrl: string,
+  bannerPictureUrl: string,
 }
 
 export interface UserState {

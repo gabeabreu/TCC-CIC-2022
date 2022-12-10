@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import TrendindSection from '../components/explore/TrendingSection';
 import VerifiedSection from '../components/explore/VerifiedSection';
 import NotableSection from '../components/explore/NotableSection';
-import ProfileSection from '../components/account/ProfileSection';
-import UserOptionsSection from '../components/account/UserOptionsSection';
+import ProfileSection from '../components/account/ProfileSection/ProfileSection';
+import UserTabsSection from '../components/account/UserTabsSection';
 
 const Home: NextPage = () => {
   const [offsetY, setOffsetY] = useState(0);
@@ -35,8 +35,7 @@ const Home: NextPage = () => {
       <Layout>
         <div className="mb-96">
           <ProfileSection />
-          <div className="h-[2px] w-full bg-[#303030] mt-24 mb-20" />
-          <UserOptionsSection />
+          <UserTabsSection />
         </div>
       </Layout>
     </div>

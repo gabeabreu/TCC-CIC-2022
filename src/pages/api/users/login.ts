@@ -4,10 +4,10 @@ export default async function createUser(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-  const { address } = req.query;
+  const { address, name, bio, instagram, twitter, website, discord  } = req.query;
   const user = await fetch("http://localhost:8001/users", {
     method: "POST",
-    body: JSON.stringify({address: address, isVerified: false}),
+    body: JSON.stringify({address: address, name: "", bio: "", instagram: "", twitter: "", website: "", discord: "", isVerified: false}),
     headers: {
       'Accept': 'application/json, text/plain, /',
       'Content-Type': 'application/json'
