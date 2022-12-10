@@ -4,3 +4,4 @@ export { default as Modal } from './Modal';
 export { default as Carousel } from './Carousel';
 export { default as LoginModal } from './LoginModal';
 export { default as FileInput } from './FileInput';
+export { default as LoadingSpinner } from './LoadingSpinner';

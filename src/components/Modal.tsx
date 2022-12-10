@@ -2,25 +2,29 @@ import { Fragment, ReactNode } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 
 interface Props {
+  className?: string;
+  title?: string;
+  footer?: ReactNode;
   showModal: boolean;
-  bgGlass?: boolean;
-  bgColor?: string;
-  onCloseModal?: () => void;
   children?: ReactNode;
   closeButton?: boolean;
   dataCy?: string | number;
   clickOutsideClose?: boolean;
+  onSubmit?: () => void;
+  onCloseModal?: () => void;
 }
 
 const Modal = ({
+  className,
+  title,
+  footer,
   showModal,
-  bgGlass,
-  bgColor,
-  onCloseModal = () => null,
   children,
-  closeButton,
+  closeButton = true,
   dataCy,
   clickOutsideClose = true,
+  onSubmit = () => null,
+  onCloseModal = () => null,
 }: Props) => (
   <Transition.Root show={showModal} as={Fragment}>
     <Dialog
@@ -53,20 +57,31 @@ const Modal = ({
             leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
           >
             <Dialog.Panel
-              style={{ backgroundColor: bgColor || '' }}
               className={`${
-                bgGlass ? 'glass-effect' : 'rounded-lg shadow-xl'
-              } relative p-[1.75rem] text-left transition-all`}
+                className || 'bg-mds-gray-400 lg:min-w-[40rem]'
+              } rounded-3xl max-w-[40rem] lg:max-w-[45rem] xl:max-w-[48rem] 2xl:max-w-[55rem] relative py-7 px-12 text-left transition-all duration-500`}
             >
               {closeButton && (
                 <div
-                  className="text-mds-white absolute top-8 right-10 cursor-pointer"
+                  className="text-mds-white absolute top-8 right-12 cursor-pointer"
                   onClick={() => onCloseModal()}
                 >
                   <i className="fa-solid fa-xmark text-xl text-stk-grey-400" />
                 </div>
               )}
+              {title && (
+                <>
+                  <span className="absolute -ml-12 top-[5.4rem] h-[0.13rem] w-full bg-[#292929]"></span>
+                  <div className="pb-14 text-mds-white font-semibold text-3xl">{title}</div>
+                </>
+              )}
               {children}
+              {footer && (
+                <div className="mt-16">
+                  <span className="absolute -ml-12 bottom-[5.8rem] h-[0.13rem] w-full bg-[#292929]"></span>
+                  {footer}
+                </div>
+              )}
             </Dialog.Panel>
           </Transition.Child>
         </div>

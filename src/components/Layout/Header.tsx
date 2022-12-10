@@ -230,6 +230,7 @@ const Header = ({ props }: any) => {
                                         } else {
                                           close();
                                           setLoginModalOpen(true);
+                                          // fetchUser();
                                         }
                                       }}
                                     >
