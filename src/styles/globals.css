@@ -29,6 +29,10 @@
     padding-right: 0 !important;
   }
 
+  .spinner-color {
+    background: conic-gradient(#464646, #c47dfd, #ff05e6);
+  }
+
   .button-gradient {
     transition: 0.01s;
     background: linear-gradient(to right top, #ff05e6, #c47dfd, #83f0ff);

@@ -8,6 +8,7 @@
   "EXPLORE": "Explore",
   "CREATE": "Create",
   "CROP": "Crop",
+  "CLOSE": "Close",
   "CONNECT": "Connect",
   "DISCONNECT": "Disconnect",
   "MODAL_CONNECT_WALLET_TITLE": "Connect your wallet",

@@ -210,7 +210,7 @@ const Header = () => {
                                         } else {
                                           close();
                                           setLoginModalOpen(true);
-                                          fetchUser();
+                                          // fetchUser();
                                         }
                                       }}
                                     >

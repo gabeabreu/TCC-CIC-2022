@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-css-tags */
 import '../styles/globals.css';
+import 'react-activity/dist/library.css';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { appWithTranslation } from 'next-i18next';
@@ -14,15 +15,19 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask';
 const ETHEREUM_MAINNET = 1;
 const BINANCE_MAINNET = 56;
 const POLYGON_MAINNET = 137;
+const LOCAL_HOST = 1337;
 
 const rpcUrl: any = {
   1: 'https://eth-mainnet-public.unifra.io/',
   56: 'https://bsc-dataseed.binance.org/',
   137: 'https://polygon-rpc.com/',
+  1337: 'http://127.0.0.1:8545/',
 };
 
 const ethereumMainnet = allChains.filter((chain) => chain.id === ETHEREUM_MAINNET);
 const polygonMainnet = allChains.filter((chain) => chain.id === POLYGON_MAINNET);
+const localHost = allChains.filter((chain) => chain.id === LOCAL_HOST);
+
 const binanceMainnet: Chain = {
   network: 'binance',
   id: BINANCE_MAINNET,
@@ -50,7 +55,7 @@ const binanceMainnet: Chain = {
 };
 
 const { chains, provider } = configureChains(
-  [...polygonMainnet, binanceMainnet, ...ethereumMainnet],
+  [...polygonMainnet, binanceMainnet, ...ethereumMainnet, ...localHost],
   [
     jsonRpcProvider({
       rpc: (chain) => ({

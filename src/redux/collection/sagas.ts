@@ -1,12 +1,12 @@
 import { all, takeLatest } from 'redux-saga/effects';
-import { GeneralTypes } from './types';
+import { CollectionTypes } from './types';
 
 function* resetState() {
   console.log('resetState');
 }
 
-function* generalSaga() {
-  yield all([takeLatest(GeneralTypes.RESET_STATE, resetState)]);
+function* collectionSaga() {
+  yield all([takeLatest(CollectionTypes.RESET_STATE, resetState)]);
 }
 
-export default generalSaga;
+export default collectionSaga;
