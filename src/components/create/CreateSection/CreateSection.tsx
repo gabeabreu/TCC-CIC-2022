@@ -14,6 +14,7 @@ import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { ref, getDownloadURL, uploadBytesResumable } from 'firebase/storage';
 import {
   useAccount,
   useContractEvent,
@@ -28,6 +29,7 @@ import FileInput from '../../FileInput';
 import InputFormik from '../../InputFormik';
 import RarityCardImage from '../RarityCardImage';
 import formSchema from './formSchema';
+import { storage } from '@/config/firebase';
 
 const statusColor = {
   error: '#F2A2A2',
@@ -256,6 +258,17 @@ const CreateSection = () => {
       setEnableNewCollection(false);
     }
   }, [status]);
+
+  useContractEvent({
+    address: '0x84C1bb1e70CB52A7f880366030479dd7283c0504',
+    abi: factoryABI,
+    eventName: 'NewCollection',
+    listener(node, label, owner) {
+      console.log(node, label, owner);
+      //TODO CREATE COLLECTION BE
+      //newCollectionArgs[3]   ---- url foto da coleção para mandar pro be
+    },
+  });
 
   return (
     <div className="flex flex-col">

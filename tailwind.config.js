@@ -39,5 +39,6 @@ module.exports = {
       addVariant('child-hover', '& > *:hover');
     },
     require('@tailwindcss/typography'),
+    require('@tailwindcss/line-clamp'),
   ],
 };

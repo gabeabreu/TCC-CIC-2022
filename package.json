@@ -12,6 +12,7 @@
     "@headlessui/react": "1.7.3",
     "@openzeppelin/contracts": "^4.8.0",
     "@reduxjs/toolkit": "1.8.6",
+    "@tailwindcss/line-clamp": "^0.4.2",
     "@thirdweb-dev/contracts": "^3.2.8",
     "axios": "^1.2.0",
     "bn.js": "^5.2.1",
