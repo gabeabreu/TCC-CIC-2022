@@ -5,3 +5,4 @@ export { default as Carousel } from './Carousel';
 export { default as LoginModal } from './LoginModal';
 export { default as FileInput } from './FileInput';
 export { default as LoadingSpinner } from './LoadingSpinner';
+export { default as TransactionModal } from './TransactionModal';
