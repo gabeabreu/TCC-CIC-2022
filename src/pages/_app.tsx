@@ -16,6 +16,7 @@ const ETHEREUM_MAINNET = 1;
 const BINANCE_MAINNET = 56;
 const POLYGON_MAINNET = 137;
 const LOCAL_HOST = 1337;
+const GOERLI = 5;
 
 const rpcUrl: any = {
   1: 'https://eth-mainnet-public.unifra.io/',
@@ -27,6 +28,7 @@ const rpcUrl: any = {
 const ethereumMainnet = allChains.filter((chain) => chain.id === ETHEREUM_MAINNET);
 const polygonMainnet = allChains.filter((chain) => chain.id === POLYGON_MAINNET);
 const localHost = allChains.filter((chain) => chain.id === LOCAL_HOST);
+const ethereumTestnet = allChains.filter((chain) => chain.id === GOERLI);
 
 const binanceMainnet: Chain = {
   network: 'binance',
@@ -55,7 +57,7 @@ const binanceMainnet: Chain = {
 };
 
 const { chains, provider } = configureChains(
-  [...polygonMainnet, binanceMainnet, ...ethereumMainnet, ...localHost],
+  [...polygonMainnet, binanceMainnet, ...ethereumMainnet, ...localHost, ...ethereumTestnet],
   [
     jsonRpcProvider({
       rpc: (chain) => ({
