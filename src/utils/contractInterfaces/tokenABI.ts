@@ -1,8 +1,104 @@
-export const factoryABI = [
+const tokenABI = [
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: '_supply',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: '_collectionURI',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '_itemsQuantities',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'string[]',
+        name: '_itemsURIs',
+        type: 'string[]',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'constructor',
+  },
+  {
+    inputs: [],
+    name: 'ApprovalCallerNotOwnerNorApproved',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'ApprovalQueryForNonexistentToken',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'BalanceQueryForZeroAddress',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'MintERC2309QuantityExceedsLimit',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'MintToZeroAddress',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'MintZeroQuantity',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'OwnerQueryForNonexistentToken',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'OwnershipNotInitializedForExtraData',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'TransferCallerNotOwnerNorApproved',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'TransferFromIncorrectOwner',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'TransferToNonERC721ReceiverImplementer',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'TransferToZeroAddress',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'URIQueryForNonexistentToken',
+    type: 'error',
   },
   {
     anonymous: false,
@@ -59,6 +155,37 @@ export const factoryABI = [
     inputs: [
       {
         indexed: true,
+        internalType: 'uint256',
+        name: 'fromTokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'toTokenId',
+        type: 'uint256',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'to',
+        type: 'address',
+      },
+    ],
+    name: 'ConsecutiveTransfer',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
         internalType: 'address',
         name: 'previousOwner',
         type: 'address',
@@ -99,6 +226,71 @@ export const factoryABI = [
     type: 'event',
   },
   {
+    inputs: [],
+    name: 'COMMON',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'EPIC',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'LEGEND',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'RARE',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'SUPER_RARE',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -113,7 +305,7 @@ export const factoryABI = [
     ],
     name: 'approve',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -130,6 +322,19 @@ export const factoryABI = [
         internalType: 'uint256',
         name: '',
         type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'contractURI',
+    outputs: [
+      {
+        internalType: 'string',
+        name: '',
+        type: 'string',
       },
     ],
     stateMutability: 'view',
@@ -234,24 +439,6 @@ export const factoryABI = [
     inputs: [
       {
         internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
-        internalType: 'string',
-        name: 'uri',
-        type: 'string',
-      },
-    ],
-    name: 'safeMint',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
         name: 'from',
         type: 'address',
       },
@@ -268,7 +455,7 @@ export const factoryABI = [
     ],
     name: 'safeTransferFrom',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -290,13 +477,13 @@ export const factoryABI = [
       },
       {
         internalType: 'bytes',
-        name: 'data',
+        name: '_data',
         type: 'bytes',
       },
     ],
     name: 'safeTransferFrom',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -369,6 +556,19 @@ export const factoryABI = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -388,7 +588,7 @@ export const factoryABI = [
     ],
     name: 'transferFrom',
     outputs: [],
-    stateMutability: 'nonpayable',
+    stateMutability: 'payable',
     type: 'function',
   },
   {
@@ -405,3 +605,5 @@ export const factoryABI = [
     type: 'function',
   },
 ];
+
+export default tokenABI;

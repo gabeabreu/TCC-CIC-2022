@@ -26,7 +26,7 @@ const Button = ({
         ? 'border-4 border-mds-white bg-transparent text-mds-white hover:bg-mds-white hover:text-mds-black'
         : 'bg-mds-black text-mds-white outline-none'
     } ${
-      disabled ? 'opacity-30' : 'hover:bg-stk-white'
+      disabled ? 'opacity-100' : 'hover:bg-stk-white'
     } rounded-full px-8 py-2 text-lg duration-300`}
   >
     {children}
