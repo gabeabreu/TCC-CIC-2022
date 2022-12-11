@@ -6,6 +6,7 @@ import { setCreateData } from '@/redux/collection/actions';
 import { NFTCollection } from '@/redux/collection/types';
 import { useSelector } from '@/redux/hooks';
 import factoryABI from '@/utils/contractInterfaces/factoryABI';
+import { networkConfig } from '@/utils/networkConfig';
 import axios, { AxiosResponse } from 'axios';
 import BN from 'bn.js';
 import { Form, Formik } from 'formik';
@@ -54,9 +55,15 @@ const CreateSection = () => {
   ]);
   const [newCollectionArgs, setNewCollectionArgs] = useState<any>([]);
 
+  const [selectedNetworkConfig, setSelectedNetworkConfig] = useState(networkConfig[0]);
   const [enableNewCollection, setEnableNewCollection] = useState(false);
   const [isCreatingModalOpen, setCreatingModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+
+  useEffect(() => {
+    // @ts-ignore
+    if (chain) setSelectedNetworkConfig(networkConfig[chain.id]);
+  }, [chain]);
 
   const initialValues: any = {
     collectionImage: '',
@@ -136,7 +143,7 @@ const CreateSection = () => {
         params: {
           name: data.name,
           description: data.description,
-          image: `https://ipfs.io/ipfs/${collectionImageData.IpfsHash}`,
+          image: `https://gateway.pinata.cloud/ipfs/${collectionImageData.IpfsHash}`,
           external_link: data.externalLink,
         },
       }
@@ -154,7 +161,7 @@ const CreateSection = () => {
           rarity: data.item?.images?.[i].rarity,
         },
       });
-      itensIPFS.push(`https://ipfs.io/ipfs/${itemMetadata.IpfsHash}`);
+      itensIPFS.push(`https://gateway.pinata.cloud/ipfs/${itemMetadata.IpfsHash}`);
     }
 
     const itemQuantities = getRandomRarity(data.item?.supply as number);
@@ -163,8 +170,8 @@ const CreateSection = () => {
       address,
       data.name,
       data.item?.supply,
-      `https://ipfs.io/ipfs/${collectionMetadata.IpfsHash}`,
-      itemQuantities,
+      `https://gateway.pinata.cloud/ipfs/${collectionMetadata.IpfsHash}`,
+      [4, 3, 1, 1, 1],
       [itensIPFS[0], itensIPFS[1], itensIPFS[2], itensIPFS[3], itensIPFS[3]],
     ]);
 
@@ -198,13 +205,15 @@ const CreateSection = () => {
   }
 
   async function generateImage(prompt: string) {
-    const { data }: AxiosResponse = await axios.get('/api/openai/generate', { params: { prompt } });
+    const { data }: AxiosResponse = await axios.get('/api/openai/generate', {
+      params: { prompt },
+    });
 
     const newGeneratedImages = [...generatedImages];
-
+    console.log(data);
     setGeneratedImages(
       newGeneratedImages.map((image) => {
-        return { ...image, src: data.data[image.id - 1].url };
+        return { ...image, src: data[image.id - 1] };
       })
     );
   }
@@ -214,13 +223,13 @@ const CreateSection = () => {
     status: newCollectionStatus,
     data,
   } = usePrepareContractWrite({
-    address: '0x84C1bb1e70CB52A7f880366030479dd7283c0504',
+    address: selectedNetworkConfig.midasFactoryAddress,
     abi: factoryABI,
     functionName: 'newCollection',
     args: [...newCollectionArgs],
     enabled: enableNewCollection,
   });
-  console.log(data);
+
   const { data: newCollectionData, write: newCollectionWrite } = useContractWrite(
     newCollectionConfig as any
   );
@@ -232,6 +241,9 @@ const CreateSection = () => {
     data: trasactionData,
   } = useWaitForTransaction({
     hash: newCollectionData?.hash,
+    onSuccess(data) {
+      console.log('Success', data);
+    },
   });
 
   useEffect(() => {
@@ -243,8 +255,9 @@ const CreateSection = () => {
   useEffect(() => {
     if (status === 'success' || status === 'error') {
       setLoading(false);
+      setEnableNewCollection(false);
     }
-  }, [isLoading]);
+  }, [status]);
 
   useContractEvent({
     address: '0x84C1bb1e70CB52A7f880366030479dd7283c0504',
@@ -365,10 +378,8 @@ const CreateSection = () => {
                   </div>
                   <InputFormik
                     name="externalUrl"
-                    label="Description"
-                    placeholder="This collection is about..."
-                    textArea
-                    rows={5}
+                    label="External link"
+                    placeholder="https://dominio.com"
                   />
                   <InputFormik
                     name="description"
