@@ -5,7 +5,7 @@ import SmallCard from '../Carousel/SmallCard';
 
 const CollectionCard = () => {
   return (
-    <div className="flex">
+    <div className="flex w-full">
       {/* left side */}
       <div className="flex flex-col items-start justify-between bg-mds-white rounded-l-3xl max-w-sm py-12 pl-12 pr-9">
         <div className="flex flex-col">
@@ -32,8 +32,8 @@ const CollectionCard = () => {
         </div>
       </div>
       {/* right side */}
-      <div className="items-end flex flex-col gap-y-10 py-12 pr-12 pl-9 rounded-r-3xl from-[#ffffff55] to-[#ffffff22] bg-gradient-to-br">
-        <div className="flex gap-x-8">
+      <div className="items-end flex flex-col w-full gap-y-10 py-12 pr-12 pl-20 rounded-r-3xl from-[#ffffff55] to-[#ffffff22] bg-gradient-to-br">
+        <div className="flex justify-between w-full">
           {verifiedUsers.slice(0, 3).map((item, idx) => (
             <SmallCard
               key={idx}
