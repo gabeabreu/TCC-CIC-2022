@@ -27,7 +27,7 @@ const Home: NextPage = () => {
   return (
     <div className="flex w-full min-h-screen h-full bg-mds-gray-500 overflow-x-hidden">
       <Head>
-        <title>Midas</title>
+        <title>Profile - Midas</title>
         <meta name="Midas" content="The highend products NFT platform" />
         <link rel="icon" href="/favicon.ico" />
       </Head>

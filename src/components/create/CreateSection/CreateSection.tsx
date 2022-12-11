@@ -1,5 +1,6 @@
 import LoadingSpinner from '@/components/LoadingSpinner';
 import Modal from '@/components/Modal';
+import TransactionModal from '@/components/TransactionModal';
 import { formatAddres } from '@/helpers/utils';
 import useDebounce from '@/hooks/useDebounce';
 import { setCreateData } from '@/redux/collection/actions';
@@ -30,13 +31,6 @@ import InputFormik from '../../InputFormik';
 import RarityCardImage from '../RarityCardImage';
 import formSchema from './formSchema';
 import { storage } from '@/config/firebase';
-
-const statusColor = {
-  error: '#F2A2A2',
-  idle: '#A1A1A1',
-  success: '#C5F2A2',
-  loading: '#F2CDA2',
-};
 
 const CreateSection = () => {
   const { t } = useTranslation();
@@ -259,80 +253,36 @@ const CreateSection = () => {
     }
   }, [status]);
 
-  useContractEvent({
-    address: '0x84C1bb1e70CB52A7f880366030479dd7283c0504',
-    abi: factoryABI,
-    eventName: 'NewCollection',
-    listener(node, label, owner) {
-      console.log(node, label, owner);
-      //TODO CREATE COLLECTION BE
-      //newCollectionArgs[3]   ---- url foto da coleção para mandar pro be
-    },
-  });
+  // useContractEvent({
+  //   address: selectedNetworkConfig.midasFactoryAddress,
+  //   abi: factoryABI,
+  //   eventName: 'NewCollection',
+  //   chainId: 5,
+  //   listener(node, label, owner) {
+  //     console.log(node, label, owner);
+  //     //TODO CREATE COLLECTION BE
+  //     //newCollectionArgs[3]   ---- url foto da coleção para mandar pro be
+  //   },
+  // });
 
   return (
     <div className="flex flex-col">
-      <Modal
+      <TransactionModal
+        isLoading={isLoading}
         showModal={isCreatingModalOpen}
-        title="Transaction"
-        footer={
-          <Button
-            disabled={isLoading}
-            onClick={() => setCreatingModalOpen(false)}
-            className={`${
-              isLoading ? '' : 'hover:bg-black'
-            } flex w-full items-center justify-center h-11 bg-mds-black`}
-          >
-            {isLoading ? <LoadingSpinner size={16} /> : t('CLOSE')}
-          </Button>
-        }
         onCloseModal={() => setCreatingModalOpen(false)}
-      >
-        <div className="flex w-full items-center gap-x-5 rounded-xl px-8 py-5 bg-[#43186B]">
-          <div className="relative flex w-[7rem] h-[7rem] rounded-lg overflow-hidden">
-            <Image
-              src={(createData.data?.image as string) || ''}
-              layout="fill"
-              alt="region-divisor"
-            />
-          </div>
-          <div className="flex flex-col">
-            <span className="text-[#ffffffaf] text-lg">Name</span>
-            <span className="text-mds-white text-xl">{createData.data?.name}</span>
-          </div>
-          <i className="fa-regular fa-arrow-right text-[#ffffff68] text-xl mx-5" />
-          <div className="flex flex-col">
-            <span className="text-[#ffffffaf] text-lg">Address</span>
-            <span className="text-mds-white text-xl">{formatAddres(address || '')}</span>
-          </div>
-        </div>
-        <div className="flex flex-col gap-y-3 mt-10">
-          <div className="flex w-full justify-between">
-            <span className="text-mds-gray-200 text-base">Item name</span>
-            <span className="text-mds-gray-100 text-base">{createData.data?.item?.name}</span>
-          </div>
-          <div className="flex w-full justify-between">
-            <span className="text-mds-gray-200 text-base">Supply</span>
-            <span className="text-mds-gray-100 text-base">{createData.data?.item?.supply}</span>
-          </div>
-          <div className="flex w-full justify-between">
-            <span className="text-mds-gray-200 text-base">Royalty</span>
-            <span className="text-mds-gray-100 text-base">{`${createData.data?.royaltyAmount}%`}</span>
-          </div>
-          <div className="flex w-full justify-between">
-            <span className="text-mds-gray-200 text-base">Network fee</span>
-            <span className="text-mds-gray-100 text-base">
-              {trasactionData?.gasUsed?.toString() || '1000'}
-            </span>
-          </div>
-          <div className="flex w-full justify-between">
-            <span className="text-mds-gray-200 text-base">Status</span>
-            <span style={{ color: statusColor[status] }}>
-              {status.charAt(0).toUpperCase() + status.slice(1)}
-            </span>
-          </div>
-        </div>
-      </Modal>
+        data={{
+          name: createData.data?.name || '',
+          image: (createData.data?.image as string) || '',
+          status,
+          details: [
+            { name: 'Item name', value: createData.data?.item?.name },
+            { name: 'Supply', value: createData.data?.item?.supply },
+            { name: 'Royalty', value: `${createData.data?.royaltyAmount}%` },
+            { name: 'Network fee', value: trasactionData?.gasUsed?.toString() || 'Calculating...' },
+          ],
+        }}
+      />
 
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
         <span className="absolute -top-[2.45rem] left-[6.5rem] w-[29.6rem] lg:left-[5.45rem] lg:w-[23.9rem] xl:left-[7.1rem] xl:w-[31.35rem] 2xl:left-[8.7rem] 2xl:w-[38rem] h-10 px-4 bg-mds-gray-500 duration-500" />

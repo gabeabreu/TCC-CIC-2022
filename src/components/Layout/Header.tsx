@@ -83,14 +83,15 @@ const Header = ({ props }: any) => {
         new URLSearchParams({
           address: address || '',
         })
-    ).then((res) => res.json());
+    )
+      .then((res) => res.json())
+      .catch((err) => console.log(err.mesage));
     dispatch(setUserData(user));
-    return user;
   }
 
   useEffect(() => {
     if (address) {
-      const user = fetchUser();
+      fetchUser();
     } else {
       dispatch(resetStateUser());
     }
