@@ -166,7 +166,7 @@ const ProfileSection = () => {
       </Modal>
       <div className="relative flex flex-col w-full">
         <div className="overflow-hidden relative w-screen h-[35rem]">
-          <div className="z-30 absolute cursor-pointer right-2 bottom-2">
+          <div className="z-30 absolute cursor-pointer right-4 bottom-2">
             <label
               htmlFor="bannerPic"
               className="bg-[#000000aa] px-2 py-1 flex items-center justify-center rounded-xl"
