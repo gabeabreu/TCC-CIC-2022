@@ -171,7 +171,7 @@ const ProfileSection = () => {
         </Formik>
       </Modal>
       <div className="relative flex flex-col w-full">
-        <div className="overflow-hidden relative w-screen h-[35rem]">
+        <div className="overflow-hidden relative w-screen h-[25rem]">
           <div className="z-30 absolute cursor-pointer right-4 bottom-2">
             <label
               htmlFor="bannerPic"
@@ -199,14 +199,14 @@ const ProfileSection = () => {
           />
         </div>
         <div className="h-1 w-screen overflow-hidden bg-gradient-to-r from-[#8D32E6] to-[#5A0068] via-[#7319A7] " />
-        <div className="absolute top-[28.5rem] left-56 shadow-xl">
+        <div className="absolute top-[17.5rem] left-80 shadow-xl">
           <div className="overflow-hidden relative w-52 h-52 rounded-3xl border-[0.5rem] border-mds-gray-300">
             <div className="z-30 absolute cursor-pointer right-2 bottom-2">
               <label
                 htmlFor="profilePic"
                 className="bg-[#000000aa] px-2 py-1 flex items-center justify-center rounded-xl"
               >
-                <i className="fa-light fa-pen-to-square text-white text-2xl ml-[0.1rem] mb-[0.1rem]" />
+                <i className="fa-light fa-pen-to-square text-white text-xl ml-[0.1rem] mb-[0.1rem]" />
               </label>
               <input
                 accept="image/*"
@@ -228,16 +228,18 @@ const ProfileSection = () => {
             />
           </div>
         </div>
-        <div className="flex mt-32 ml-56 justify-between">
+        <div className="flex mt-24 ml-80 justify-between">
           <div>
             <div className="flex items-center gap-x-3">
               <span className="font-semibold text-[2.625rem] text-mds-white">
-                {isTrulyConnected ? user.data.name : 'Connect your wallet'}
+                {isTrulyConnected ? user.data.name || 'Unnamed' : 'Connect your wallet'}
               </span>
-              <div className="relative -mb-1">
-                <i className="fa-solid fa-certificate text-mds-purple text-3xl" />
-                <i className="fa-solid fa-check text-mds-black text-xl absolute left-[0.33rem] top-[0.28rem]" />
-              </div>
+              {isTrulyConnected && user.data.isVerified && (
+                <div className="relative -mb-1">
+                  <i className="fa-solid fa-certificate text-mds-purple text-3xl" />
+                  <i className="fa-solid fa-check text-mds-black text-xl absolute left-[0.33rem] top-[0.28rem]" />
+                </div>
+              )}
             </div>
             {isTrulyConnected && (
               <div className="flex items-center gap-x-2">
@@ -257,12 +259,12 @@ const ProfileSection = () => {
               </div>
             )}
           </div>
-          <div className="flex gap-x-5 mr-48 items-center">
+          <div className="flex gap-x-5 mr-80 items-center">
             <a
               target="blank"
               href={address ? user.data.discord || 'https://discord.com/' : 'https://discord.com/'}
             >
-              <i className="fa-brands fa-discord text-mds-white text-4xl cursor-pointer" />
+              <i className="fa-brands fa-discord text-mds-white text-3xl cursor-pointer" />
             </a>
             <a
               target="blank"
@@ -272,7 +274,7 @@ const ProfileSection = () => {
                   : 'https://www.google.com.br/'
               }
             >
-              <i className="fa-sharp fa-solid fa-globe text-mds-white text-4xl cursor-pointer" />
+              <i className="fa-sharp fa-solid fa-globe text-mds-white text-3xl cursor-pointer" />
             </a>
             <a
               target="blank"
@@ -282,7 +284,7 @@ const ProfileSection = () => {
                   : 'https://twitter.com/home'
               }
             >
-              <i className="fa-brands fa-twitter text-mds-white text-4xl cursor-pointer" />
+              <i className="fa-brands fa-twitter text-mds-white text-3xl cursor-pointer" />
             </a>
             <a
               target="blank"
@@ -292,11 +294,11 @@ const ProfileSection = () => {
                   : 'https://www.instagram.com/'
               }
             >
-              <i className="fa-brands fa-instagram text-mds-white text-4xl cursor-pointer" />
+              <i className="fa-brands fa-instagram text-mds-white text-3xl cursor-pointer" />
             </a>
-            <div className="w-px bg-mds-gray-200 h-3/4" />
+            <div className="w-px bg-mds-gray-200 h-2/4" />
             <i
-              className="fa-solid fa-gear text-mds-white text-4xl cursor-pointer"
+              className="fa-solid fa-gear text-mds-white text-3xl cursor-pointer"
               onClick={() => setIsSettingsOpen(true)}
             />
           </div>

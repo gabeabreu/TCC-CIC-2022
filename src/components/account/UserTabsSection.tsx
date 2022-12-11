@@ -7,7 +7,7 @@ import CollectionCard from './CollectionCard';
 
 const UserTabsSection = () => {
   return (
-    <div className="relative flex flex-col justify-center mt-32 ml-56 pr-48">
+    <div className="relative flex flex-col justify-center mt-32 ml-80 pr-80">
       <div className="flex flex-row gap-x-10">
         <div className="flex items-center justify-center gap-x-2 relative text-mds-purple">
           <i className="fa-cards-blank fa-solid" />
