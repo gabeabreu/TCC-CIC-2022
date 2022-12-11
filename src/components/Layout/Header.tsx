@@ -384,7 +384,7 @@ const Header = ({ props }: any) => {
                           >
                             <Popover.Panel
                               focus
-                              className="absolute cursor-auto right-0 top-12 origin-top-right transform transition w-[20rem]"
+                              className="absolute cursor-auto -right-16 top-16 origin-top-right transform transition w-[20rem]"
                             >
                               <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="relative px-6 pt-5 pb-6">

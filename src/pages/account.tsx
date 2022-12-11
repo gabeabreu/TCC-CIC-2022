@@ -7,7 +7,7 @@ import TrendindSection from '../components/explore/TrendingSection';
 import VerifiedSection from '../components/explore/VerifiedSection';
 import NotableSection from '../components/explore/NotableSection';
 import ProfileSection from '../components/account/ProfileSection/ProfileSection';
-import UserTabsSection from '../components/account/UserTabsSection';
+import UserTabsSection from '@/components/account/UserTabsSection';
 
 const Home: NextPage = () => {
   const [offsetY, setOffsetY] = useState(0);

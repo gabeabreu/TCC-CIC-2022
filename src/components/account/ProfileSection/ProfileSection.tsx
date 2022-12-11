@@ -19,6 +19,7 @@ const ProfileSection = () => {
   const { address, status } = useAccount();
   const [formattedAddress, setFormattedAddress] = useState<string>();
   const [isCopied, setIsCopied] = useState(false);
+  const [isTrulyConnected, setIsTrulyConnected] = useState(false);
   const [percent, setPercent] = useState(0);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
@@ -32,9 +33,14 @@ const ProfileSection = () => {
   };
 
   useEffect(() => {
-    setFormattedAddress(
-      `${address?.substring(0, 5)}...${address?.substring(address.length - 6, address.length)}`
-    );
+    if (address) {
+      setIsTrulyConnected(true);
+      setFormattedAddress(
+        `${address?.substring(0, 5)}...${address?.substring(address.length - 6, address.length)}`
+      );
+    } else {
+      setIsTrulyConnected(false);
+    }
   }, [address]);
 
   const handleCopyText = () => {
@@ -226,14 +232,14 @@ const ProfileSection = () => {
           <div>
             <div className="flex items-center gap-x-3">
               <span className="font-semibold text-[2.625rem] text-mds-white">
-                {status === 'connected' ? user.data.name : 'Connect your wallet'}
+                {isTrulyConnected ? user.data.name : 'Connect your wallet'}
               </span>
               <div className="relative -mb-1">
                 <i className="fa-solid fa-certificate text-mds-purple text-3xl" />
                 <i className="fa-solid fa-check text-mds-black text-xl absolute left-[0.33rem] top-[0.28rem]" />
               </div>
             </div>
-            {status === 'connected' && (
+            {isTrulyConnected && (
               <div className="flex items-center gap-x-2">
                 <span
                   className={`font-semibold text-2xl mt-1 duration-300 ${
