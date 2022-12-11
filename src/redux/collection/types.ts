@@ -24,8 +24,9 @@ export interface CollectionState {
 
 export interface NFTCollection {
   name: string;
-  image?: string;
+  image?: string | Blob;
   royaltyAmount?: string;
+  externalLink?: string;
   royaltyAddressReceiver?: string;
   description?: string;
   item?: NFTItem;

@@ -1,28 +1,4 @@
-export const factoryABI = [
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-      {
-        internalType: 'string',
-        name: '_name',
-        type: 'string',
-      },
-    ],
-    name: 'newCollection',
-    outputs: [
-      {
-        internalType: 'address',
-        name: 'addr',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'payable',
-    type: 'function',
-  },
+const factoryABI = [
   {
     anonymous: false,
     inputs: [
@@ -56,26 +32,6 @@ export const factoryABI = [
     type: 'event',
   },
   {
-    inputs: [],
-    name: 'renounceOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
-      },
-    ],
-    name: 'transferOwnership',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
@@ -95,6 +51,50 @@ export const factoryABI = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_owner',
+        type: 'address',
+      },
+      {
+        internalType: 'string',
+        name: '_name',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256',
+        name: '_supply',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: '_collectionURI',
+        type: 'string',
+      },
+      {
+        internalType: 'uint256[]',
+        name: '_itemsQuantities',
+        type: 'uint256[]',
+      },
+      {
+        internalType: 'string[]',
+        name: '_itemsURIs',
+        type: 'string[]',
+      },
+    ],
+    name: 'newCollection',
+    outputs: [
+      {
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'payable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'owner',
     outputs: [
@@ -107,4 +107,26 @@ export const factoryABI = [
     stateMutability: 'view',
     type: 'function',
   },
+  {
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'newOwner',
+        type: 'address',
+      },
+    ],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
 ];
+
+export default factoryABI;

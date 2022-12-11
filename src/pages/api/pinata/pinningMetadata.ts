@@ -4,14 +4,20 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { prompt } = req.query;
+    const { name, description, external_url, image, rarity } = req.query;
+
+    const metadata: any = {};
+    if (description) metadata.description = description;
+    if (external_url) metadata.external_url = external_url;
+    if (image) metadata.image = image;
+    if (name) metadata.name = name;
+    if (rarity) metadata.attributes = [{ rarity }];
+
     const { data } = await axios.post(
       'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-      {
-        name,
-        description,
-        size: '512x512',
-      },
+      JSON.stringify({
+        pinataContent: metadata,
+      }),
       {
         headers: {
           'Content-Type': 'application/json',
@@ -20,7 +26,8 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
         },
       }
     );
-    console.log(data);
+
+    console.log('return:', data.IpfsHash);
     res.status(200).json(data);
   } catch (err) {
     res.status(500).json({ error: (err as Error).message });

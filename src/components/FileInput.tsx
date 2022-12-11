@@ -62,7 +62,6 @@ const FileInput = ({
   const [imgSrc, setImgSrc] = useState('');
   const [isCropModalOpen, setCropModalOpen] = useState(false);
   const [crop, setCrop] = useState<Crop>();
-  const [output, setOutput] = useState('');
 
   function centerAspectCrop(mediaWidth: number, mediaHeight: number, aspect: number) {
     return centerCrop(
@@ -174,11 +173,17 @@ const FileInput = ({
       <Modal
         title="Crop image"
         showModal={isCropModalOpen}
-        footerButtonTitle="Crop"
-        onSubmit={() => {
-          cropImageNow();
-          setCropModalOpen(false);
-        }}
+        footer={
+          <Button
+            onClick={() => {
+              cropImageNow();
+              setCropModalOpen(false);
+            }}
+            className="bg-mds-purple hover:bg-mds-dark-purple flex w-full items-center justify-center h-11"
+          >
+            {t('CROP')}
+          </Button>
+        }
         onCloseModal={() => setCropModalOpen(false)}
       >
         <div className="flex flex-col relative w-full justify-center">

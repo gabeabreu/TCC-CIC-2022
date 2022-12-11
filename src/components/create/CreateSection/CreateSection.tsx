@@ -5,17 +5,17 @@ import useDebounce from '@/hooks/useDebounce';
 import { setCreateData } from '@/redux/collection/actions';
 import { NFTCollection } from '@/redux/collection/types';
 import { useSelector } from '@/redux/hooks';
-import { factoryABI } from '@/utils/contractInterfaces/factoryABI';
+import factoryABI from '@/utils/contractInterfaces/factoryABI';
 import axios, { AxiosResponse } from 'axios';
 import BN from 'bn.js';
 import { Form, Formik } from 'formik';
-import fs from 'fs';
 import { useTranslation } from 'next-i18next';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import {
   useAccount,
+  useContractEvent,
   useContractWrite,
   useNetwork,
   usePrepareContractWrite,
@@ -47,53 +47,152 @@ const CreateSection = () => {
     { id: 1, rarity: 'Common', src: '' },
     { id: 2, rarity: 'Rare', src: '' },
     { id: 3, rarity: 'Super Rare', src: '' },
-    { id: 3, rarity: 'Epic', src: '' },
-    { id: 4, rarity: 'Legend', src: '' },
+    { id: 4, rarity: 'Epic', src: '' },
+    { id: 5, rarity: 'Legend', src: '' },
   ]);
+  const [newCollectionArgs, setNewCollectionArgs] = useState<any>([]);
+
   const [enableNewCollection, setEnableNewCollection] = useState(false);
   const [isCreatingModalOpen, setCreatingModalOpen] = useState(false);
+  const [isLoading, setLoading] = useState(false);
 
   const initialValues: any = {
-    collectionImage: '/assets/coinbase.svg',
+    collectionImage: '',
     name: 'MyTestCollection',
     itemSupply: 100,
     itemName: 'MyTestNFT',
   };
 
-  function handleSubmit(values: any) {
-    // const formData = new FormData();
-    // const src = 'path/to/file.png';
+  function getRandomRarity(quantity: number) {
+    let common = 0;
+    let rare = 0;
+    let superRare = 0;
+    let epic = 0;
+    let legend = 0;
 
-    // const file = fs.createReadStream(src);
-    // formData.append('file', file);
+    for (let i = 0; i < quantity; i++) {
+      const randomNUmber = Math.random();
+      if (randomNUmber > 0.135) {
+        common += 1;
+      } else if (randomNUmber > 0.075) {
+        rare += 1;
+      } else if (randomNUmber > 0.035) {
+        superRare += 1;
+      } else if (randomNUmber > 0.005) {
+        epic += 1;
+      } else {
+        legend += 1;
+      }
+    }
 
-    // const metadata = JSON.stringify({
-    //   name: 'image',
-    // });
-    // formData.append('pinataMetadata', metadata);
+    return [common, rare, superRare, epic, legend];
+  }
 
-    // const options = JSON.stringify({
-    //   cidVersion: 0,
-    // });
-    // formData.append('pinataOptions', options);
+  function dataURLtoFile(dataurl: any, filename: any) {
+    var arr = dataurl.split(','),
+      mime = arr[0].match(/:(.*?);/)[1],
+      bstr = atob(arr[1]),
+      n = bstr.length,
+      u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new File([u8arr], filename, { type: mime });
+  }
 
-    dispatch(
-      setCreateData({
-        name: values.name,
-        image: values.collectionImage,
-        royaltyAmount: values.royaltyAmount || 0,
-        royaltyAddressReceiver: values.royaltyAddressReceiver,
-        description: values.description,
-        item: {
-          name: values.itemName,
-          supply: values.itemSupply,
-          externalLink: values.itemLink,
-          description: values.itemDescription,
-          images: generatedImages,
+  async function sendMetadataToIPFS(data: NFTCollection) {
+    const formData = new FormData();
+
+    const file = dataURLtoFile(data.image, 'image.jpg');
+    formData.append('file', file);
+
+    const metadata = JSON.stringify({
+      name: 'image',
+    });
+    formData.append('pinataMetadata', metadata);
+
+    const options = JSON.stringify({
+      cidVersion: 0,
+    });
+    formData.append('pinataOptions', options);
+
+    const { data: collectionImageData }: AxiosResponse = await axios.post(
+      'https://api.pinata.cloud/pinning/pinFileToIPFS',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          pinata_api_key: process.env.NEXT_PUBLIC_PINATA_KEY,
+          pinata_secret_api_key: process.env.NEXT_PUBLIC_PINATA_SECRET,
         },
-      })
+      }
     );
-    setEnableNewCollection(true);
+
+    const { data: collectionMetadata }: AxiosResponse = await axios.get(
+      '/api/pinata/pinningMetadata',
+      {
+        params: {
+          name: data.name,
+          description: data.description,
+          image: `https://ipfs.io/ipfs/${collectionImageData.IpfsHash}`,
+          external_link: data.externalLink,
+        },
+      }
+    );
+
+    const itensIPFS = [];
+
+    for (let i = 0; i < Number(data.item?.images?.length); i++) {
+      const { data: itemMetadata }: AxiosResponse = await axios.get('/api/pinata/pinningMetadata', {
+        params: {
+          name: data.item?.name,
+          description: data.item?.description,
+          image: data.item?.images?.[i].src,
+          external_link: data.item?.externalLink,
+          rarity: data.item?.images?.[i].rarity,
+        },
+      });
+      itensIPFS.push(`https://ipfs.io/ipfs/${itemMetadata.IpfsHash}`);
+    }
+
+    const itemQuantities = getRandomRarity(data.item?.supply as number);
+
+    setNewCollectionArgs([
+      address,
+      data.name,
+      data.item?.supply,
+      `https://ipfs.io/ipfs/${collectionMetadata.IpfsHash}`,
+      itemQuantities,
+      [itensIPFS[0], itensIPFS[1], itensIPFS[2], itensIPFS[3], itensIPFS[3]],
+    ]);
+
+    setTimeout(() => {
+      setEnableNewCollection(true);
+    }, 500);
+  }
+
+  function handleSubmit(values: any) {
+    const data = {
+      name: values.name,
+      image: values.collectionImage,
+      royaltyAmount: values.royaltyAmount || 0,
+      royaltyAddressReceiver: values.royaltyAddressReceiver,
+      description: values.description,
+      item: {
+        name: values.itemName,
+        supply: values.itemSupply,
+        externalLink: values.itemLink,
+        description: values.itemDescription,
+        images: generatedImages,
+      },
+    };
+
+    dispatch(setCreateData(data));
+
+    setCreatingModalOpen(true);
+    setLoading(true);
+
+    sendMetadataToIPFS(data);
   }
 
   async function generateImage(prompt: string) {
@@ -108,20 +207,24 @@ const CreateSection = () => {
     );
   }
 
-  const { config: newCollectionConfig, status: newCollectionStatus } = usePrepareContractWrite({
-    address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+  const {
+    config: newCollectionConfig,
+    status: newCollectionStatus,
+    data,
+  } = usePrepareContractWrite({
+    address: '0x84C1bb1e70CB52A7f880366030479dd7283c0504',
     abi: factoryABI,
     functionName: 'newCollection',
-    args: [address, createData.data?.name || ''],
+    args: [...newCollectionArgs],
     enabled: enableNewCollection,
   });
-
+  console.log(data);
   const { data: newCollectionData, write: newCollectionWrite } = useContractWrite(
     newCollectionConfig as any
   );
 
   const {
-    isLoading,
+    isLoading: isTxLoading,
     isSuccess,
     status,
     data: trasactionData,
@@ -132,16 +235,15 @@ const CreateSection = () => {
   useEffect(() => {
     if (newCollectionStatus === 'success' && enableNewCollection) {
       newCollectionWrite?.();
-      // setCreatingModalOpen(true);
     }
   }, [newCollectionStatus, enableNewCollection]);
 
   useEffect(() => {
-    if (isLoading) setCreatingModalOpen(true);
-    else if (isSuccess) console.log('sucessu');
+    if (status === 'success' || status === 'error') {
+      setLoading(false);
+    }
   }, [isLoading]);
 
-  console.log(isLoading);
   return (
     <div className="flex flex-col">
       <Modal
@@ -161,8 +263,12 @@ const CreateSection = () => {
         onCloseModal={() => setCreatingModalOpen(false)}
       >
         <div className="flex w-full items-center gap-x-5 rounded-xl px-8 py-5 bg-[#43186B]">
-          <div className="relative flex w-[7rem] h-[7rem]">
-            <Image src={createData.data?.image || ''} layout="fill" alt="region-divisor" />
+          <div className="relative flex w-[7rem] h-[7rem] rounded-lg overflow-hidden">
+            <Image
+              src={(createData.data?.image as string) || ''}
+              layout="fill"
+              alt="region-divisor"
+            />
           </div>
           <div className="flex flex-col">
             <span className="text-[#ffffffaf] text-lg">Name</span>
@@ -201,6 +307,7 @@ const CreateSection = () => {
           </div>
         </div>
       </Modal>
+
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
         <span className="absolute -top-[2.45rem] left-[6.5rem] w-[29.6rem] lg:left-[5.45rem] lg:w-[23.9rem] xl:left-[7.1rem] xl:w-[31.35rem] 2xl:left-[8.7rem] 2xl:w-[38rem] h-10 px-4 bg-mds-gray-500 duration-500" />
         <h1 className="absolute -top-8 lg:-top-8 xl:-top-11 2xl:-top-14 lg:left-[6.5rem] xl:left-[8.5rem] 2xl:left-[10.4rem] create-section-title duration-500">
@@ -243,6 +350,13 @@ const CreateSection = () => {
                       />
                     </div>
                   </div>
+                  <InputFormik
+                    name="externalUrl"
+                    label="Description"
+                    placeholder="This collection is about..."
+                    textArea
+                    rows={5}
+                  />
                   <InputFormik
                     name="description"
                     label="Description"
