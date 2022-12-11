@@ -8,6 +8,7 @@ import '@openzeppelin/contracts/access/Ownable.sol';
 import 'hardhat/console.sol';
 
 // 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, MyCol,  10, comLink, rarLink, srarLink, epcLink, lgnLink
+// 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, Collection, 10, https://gateway.pinata.cloud/ipfs/QmZBeXNzrTnuk7EYEZhKGiyQPmWdrfu6E5tt7TpkkVpjtv, [4,3,1,1,1], [https://gateway.pinata.cloud/ipfs/QmZsbkdNUiAAJE9j4yVVfS2cwSdozkZk5STiY8tDV7oe4j,https://gateway.pinata.cloud/ipfs/Qmao3QxDsPaf5Tjb6AfLXLLQjsTid51d1967jdWUSQ6PLC,https://gateway.pinata.cloud/ipfs/QmZiCTwr7YvcYUyEo9HuHPcEMGHncf11NUPVKu1g79GZA1,https://gateway.pinata.cloud/ipfs/Qmcw3PDeDVG9iQ8Cg6QswXpvoBd1X8ujgn4bTMJKPYr1FH,https://ipfs.io/ipfs/QmXL8JS8dRY8NarE2CkWet6429YQpKggUJjhKHwZnyn8dR]
 
 contract MidasToken is ERC721A, ERC721AURIStorage, Ownable {
     uint256 public constant COMMON = 0;
@@ -36,19 +37,19 @@ contract MidasToken is ERC721A, ERC721AURIStorage, Ownable {
             _setTokenURI(idCount, _itemsURIs[0]);
             idCount += 1;
         }
-        for (uint256 i = 0 + 1; i < _itemsQuantities[1]; i++) {
+        for (uint256 i = 0; i < _itemsQuantities[1]; i++) {
             _setTokenURI(idCount, _itemsURIs[1]);
             idCount += 1;
         }
-        for (uint256 i = 0 + 1; i < _itemsQuantities[2]; i++) {
+        for (uint256 i = 0; i < _itemsQuantities[2]; i++) {
             _setTokenURI(idCount, _itemsURIs[2]);
             idCount += 1;
         }
-        for (uint256 i = 0 + 1; i < _itemsQuantities[3]; i++) {
+        for (uint256 i = 0; i < _itemsQuantities[3]; i++) {
             _setTokenURI(idCount, _itemsURIs[3]);
             idCount += 1;
         }
-        for (uint256 i = 0 + 1; i < _itemsQuantities[4]; i++) {
+        for (uint256 i = 0; i < _itemsQuantities[4]; i++) {
             _setTokenURI(idCount, _itemsURIs[4]);
             idCount += 1;
         }
