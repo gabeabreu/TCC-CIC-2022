@@ -16,7 +16,7 @@ const TrendingSection = ({ offsetY }: { offsetY: number }) => {
         className="selectDisable absolute w-[14.625rem] h-[14.625rem] top-[26rem] right-[59rem] duration-200"
       >
         <Image
-          src="/assets/landing/bg-trending1.svg"
+          src="/assets/landingPage/bg-trending1.svg"
           alt="just aesthetical image"
           layout="fill"
           priority
@@ -27,7 +27,7 @@ const TrendingSection = ({ offsetY }: { offsetY: number }) => {
         className="selectDisable absolute w-[14.625rem] h-[14.625rem] top-[4rem] right-[43rem] duration-200"
       >
         <Image
-          src="/assets/landing/bg-trending2.svg"
+          src="/assets/landingPage/bg-trending2.svg"
           alt="just aesthetical image"
           layout="fill"
           priority
@@ -38,7 +38,7 @@ const TrendingSection = ({ offsetY }: { offsetY: number }) => {
         className="selectDisable absolute w-[18.5rem] h-[18.5rem] top-[14rem] right-[15rem] duration-200"
       >
         <Image
-          src="/assets/landing/bg-trending3.svg"
+          src="/assets/landingPage/bg-trending3.svg"
           alt="just aesthetical image"
           layout="fill"
           priority
@@ -49,7 +49,7 @@ const TrendingSection = ({ offsetY }: { offsetY: number }) => {
         className="selectDisable absolute w-[4.625rem] h-[4.625rem] top-[8.8rem] right-[-4rem] duration-200"
       >
         <Image
-          src="/assets/landing/bg-trending4.svg"
+          src="/assets/landingPage/bg-trending4.svg"
           alt="just aesthetical image"
           layout="fill"
           priority

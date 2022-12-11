@@ -15,13 +15,13 @@ const Home: NextPage = () => {
     setOffsetY(window.pageYOffset);
   }
 
-  // useEffect(() => {
-  //   window.addEventListener('scroll', handleChangeOffset);
+  useEffect(() => {
+    window.addEventListener('scroll', handleChangeOffset);
 
-  //   return () => {
-  //     window.removeEventListener('scroll', handleChangeOffset);
-  //   };
-  // }, []);
+    return () => {
+      window.removeEventListener('scroll', handleChangeOffset);
+    };
+  }, []);
 
   return (
     <div className="flex w-full min-h-screen h-full bg-mds-gray-500 overflow-x-hidden">
@@ -34,9 +34,11 @@ const Home: NextPage = () => {
       <span className="absolute z-10 top-[53.37rem] w-full bg-gradient-to-r from-[#8F33E7] to-[#5A0068] h-[0.25rem]"></span>
 
       <Layout>
-        <HeroSection offsetY={offsetY} />
-        <TrendingSection offsetY={offsetY} />
-        <AboutSection offsetY={offsetY} />
+        <div className="flex flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] mb-32 z-10 duration-500">
+          <HeroSection offsetY={offsetY} />
+          <TrendingSection offsetY={offsetY} />
+          <AboutSection offsetY={offsetY} />
+        </div>
       </Layout>
     </div>
   );
