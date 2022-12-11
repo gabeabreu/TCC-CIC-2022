@@ -49,7 +49,7 @@ const RedeemSection = () => {
 
   const [selectedNetworkConfig, setSelectedNetworkConfig] = useState(networkConfig[0]);
   const [enableNewCollection, setEnableNewCollection] = useState(false);
-  const [isCreatingModalOpen, setCreatingModalOpen] = useState(false);
+  const [isRedeemModalOpen, setCreatingModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -114,8 +114,8 @@ const RedeemSection = () => {
   return (
     <div className="flex flex-col">
       <TransactionModal
-        isLoading={false}
-        showModal={true}
+        isLoading={isLoading}
+        showModal={isRedeemModalOpen}
         data={{ name: 'Test', image: '/assets/coinbase.svg', status: 'loading' }}
       />
       <div className="flex flex-col p-[5rem] my-32 border-gradient">

@@ -253,16 +253,17 @@ const CreateSection = () => {
     }
   }, [status]);
 
-  useContractEvent({
-    address: '0x84C1bb1e70CB52A7f880366030479dd7283c0504',
-    abi: factoryABI,
-    eventName: 'NewCollection',
-    listener(node, label, owner) {
-      console.log(node, label, owner);
-      //TODO CREATE COLLECTION BE
-      //newCollectionArgs[3]   ---- url foto da coleção para mandar pro be
-    },
-  });
+  // useContractEvent({
+  //   address: selectedNetworkConfig.midasFactoryAddress,
+  //   abi: factoryABI,
+  //   eventName: 'NewCollection',
+  //   chainId: 5,
+  //   listener(node, label, owner) {
+  //     console.log(node, label, owner);
+  //     //TODO CREATE COLLECTION BE
+  //     //newCollectionArgs[3]   ---- url foto da coleção para mandar pro be
+  //   },
+  // });
 
   return (
     <div className="flex flex-col">
