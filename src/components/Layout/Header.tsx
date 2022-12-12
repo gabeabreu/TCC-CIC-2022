@@ -15,7 +15,7 @@ import { useDispatch } from 'react-redux';
 import { resetStateUser, setUserData } from '@/redux/user/actions';
 import { useSelector } from '@/redux/hooks';
 
-const solutions = [
+const userDropdownOptions = [
   {
     name: 'Profile',
     href: '/account',
@@ -38,26 +38,18 @@ const solutions = [
   },
 ];
 
-const resources = [
+const headerPages = [
   {
-    name: 'Help Center',
-    description: 'Get all of your questions answered in our forums or contact support.',
-    href: '#',
+    name: 'Explore',
+    href: '/explore',
   },
   {
-    name: 'Guides',
-    description: 'Learn how to maximize our platform to get the most out of it.',
-    href: '#',
+    name: 'Create',
+    href: '/create',
   },
   {
-    name: 'Events',
-    description: 'See what meet-ups and other events we might be planning near you.',
-    href: '#',
-  },
-  {
-    name: 'Security',
-    description: 'Understand how we take your privacy seriously.',
-    href: '#',
+    name: 'Redeeem',
+    href: '/redeem',
   },
 ];
 
@@ -117,13 +109,18 @@ const Header = ({ props }: any) => {
               </Link>
               <div className="items-center hidden md:flex">
                 <Link passHref href="/explore">
-                  <a className="text-lg text-mds-gray-100 hover:text-mds-white duration-300 mr-5">
+                  <a className="text-lg text-mds-gray-100 hover:text-mds-white duration-300 mr-4">
                     Explore
                   </a>
                 </Link>
                 <Link passHref href="/create">
                   <a className="text-lg text-mds-gray-100 hover:text-mds-white duration-300 mr-4">
                     Create
+                  </a>
+                </Link>
+                <Link passHref href="/redeem">
+                  <a className="text-lg text-mds-gray-100 hover:text-mds-white duration-300 mr-4">
+                    Redeem
                   </a>
                 </Link>
                 <div className="hidden lg:flex">
@@ -171,17 +168,24 @@ const Header = ({ props }: any) => {
                                   <Popover.Button className="absolute top-5 right-6 outline-none">
                                     <i className="fa-solid fa-xmark text-mds-gray-200 text-2xl cursor-pointer" />
                                   </Popover.Button>
-                                  {/* <div className="flex relative h-full w-full"></div> */}
+
                                   <div className="mt-2 mr-12">
                                     <nav className="grid gap-y-5">
-                                      {solutions.map((item) => (
+                                      {userDropdownOptions.map((item) => (
                                         <a
                                           key={item.name}
-                                          href={item.href}
-                                          className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
+                                          onClick={() => {
+                                            if (address) {
+                                              router.push(item.href);
+                                            } else {
+                                              // setLoginModalOpen(true);
+                                              setLoginModalOpen(true);
+                                            }
+                                          }}
+                                          className="cursor-pointer -m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
                                         >
                                           <i
-                                            className={`${item.icon} fa-solid text-mds-black text-2xl cursor-pointer`}
+                                            className={`${item.icon} fa-solid text-mds-black text-2xl`}
                                           />
 
                                           <span className="ml-3 text-base font-semibold text-mds-black">
@@ -194,20 +198,7 @@ const Header = ({ props }: any) => {
                                 </div>
                                 <div className="py-6 px-5">
                                   <div className="md:hidden mb-6 grid grid-cols-2 gap-y-4 gap-x-8">
-                                    <a
-                                      href="#"
-                                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                                    >
-                                      Pricing
-                                    </a>
-
-                                    <a
-                                      href="#"
-                                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                                    >
-                                      Docs
-                                    </a>
-                                    {resources.map((item) => (
+                                    {userDropdownOptions.map((item) => (
                                       <a
                                         key={item.name}
                                         href={item.href}
@@ -281,7 +272,7 @@ const Header = ({ props }: any) => {
                   </div>
                   <div className="mt-6">
                     <nav className="grid gap-y-8">
-                      {solutions.map((item) => (
+                      {userDropdownOptions.map((item) => (
                         <a
                           key={item.name}
                           href={item.href}
@@ -301,14 +292,7 @@ const Header = ({ props }: any) => {
                 </div>
                 <div className="space-y-6 py-6 px-5">
                   <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                    <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                      Pricing
-                    </a>
-
-                    <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                      Docs
-                    </a>
-                    {resources.map((item) => (
+                    {userDropdownOptions.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -321,16 +305,23 @@ const Header = ({ props }: any) => {
                   <div>
                     <a
                       href="#"
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                      className={`${
+                        address
+                          ? 'bg-mds-red hover:bg-mds-dark-red'
+                          : 'bg-mds-purple hover:bg-mds-dark-purple '
+                      } flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm duration-300`}
+                      onClick={() => {
+                        if (address) {
+                          disconnect();
+                        } else {
+                          close();
+                          setLoginModalOpen(true);
+                          // fetchUser();
+                        }
+                      }}
                     >
-                      Sign up
+                      {t(address ? 'DISCONNECT' : 'CONNECT')}
                     </a>
-                    <p className="mt-6 text-center text-base font-medium text-gray-500">
-                      Existing customer?{' '}
-                      <a href="#" className="text-indigo-600 hover:text-indigo-500">
-                        Sign in
-                      </a>
-                    </p>
                   </div>
                 </div>
               </div>
@@ -395,7 +386,7 @@ const Header = ({ props }: any) => {
                                   {/* <div className="flex relative h-full w-full"></div> */}
                                   <div className="mt-2 mr-12">
                                     <nav className="grid gap-y-5">
-                                      {solutions.map((item) => (
+                                      {userDropdownOptions.map((item) => (
                                         <a
                                           key={item.name}
                                           href={item.href}
@@ -428,7 +419,7 @@ const Header = ({ props }: any) => {
                                     >
                                       Docs
                                     </a>
-                                    {resources.map((item) => (
+                                    {headerPages.map((item) => (
                                       <a
                                         key={item.name}
                                         href={item.href}
@@ -501,7 +492,7 @@ const Header = ({ props }: any) => {
                   </div>
                   <div className="mt-6">
                     <nav className="grid gap-y-8">
-                      {solutions.map((item) => (
+                      {userDropdownOptions.map((item) => (
                         <a
                           key={item.name}
                           href={item.href}
@@ -521,14 +512,7 @@ const Header = ({ props }: any) => {
                 </div>
                 <div className="space-y-6 py-6 px-5">
                   <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                    <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                      Pricing
-                    </a>
-
-                    <a href="#" className="text-base font-medium text-gray-900 hover:text-gray-700">
-                      Docs
-                    </a>
-                    {resources.map((item) => (
+                    {headerPages.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}

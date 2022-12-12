@@ -7,6 +7,7 @@ import { setCreateData } from '@/redux/collection/actions';
 import { NFTCollection } from '@/redux/collection/types';
 import { useSelector } from '@/redux/hooks';
 import factoryABI from '@/utils/contractInterfaces/factoryABI';
+import tokenABI from '@/utils/contractInterfaces/tokenABI';
 import { networkConfig } from '@/utils/networkConfig';
 import axios, { AxiosResponse } from 'axios';
 import BN from 'bn.js';
@@ -48,9 +49,13 @@ const RedeemSection = () => {
   const [newCollectionArgs, setNewCollectionArgs] = useState<any>([]);
 
   const [selectedNetworkConfig, setSelectedNetworkConfig] = useState(networkConfig[0]);
-  const [enableNewCollection, setEnableNewCollection] = useState(false);
-  const [isRedeemModalOpen, setCreatingModalOpen] = useState(false);
+  const [enableTransfer, setEnableTransfer] = useState(false);
+  const [generalStatus, setGeneralStatus] = useState('idle');
+  const [isRedeemModalOpen, setRedeemModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+
+  const [fromAddress, setFromAddress] = useState('');
+  const [tokenId, setTokenId] = useState(0);
 
   useEffect(() => {
     // @ts-ignore
@@ -61,93 +66,89 @@ const RedeemSection = () => {
     tokenHash: '',
   };
 
-  function handleSubmit(values: any) {
-    console.log(values);
+  function handleSubmit(value: string) {
+    setFromAddress(value.substring(0, 42));
+    setTokenId(Number(value.substring(42)));
 
-    // dispatch(setCreateData(data));
-
-    // setCreatingModalOpen(true);
-    // setLoading(true);
+    setTimeout(() => {
+      setEnableTransfer(true);
+      setLoading(true);
+      setRedeemModalOpen(true);
+    }, 500);
   }
 
-  const {
-    config: newCollectionConfig,
-    status: newCollectionStatus,
-    data,
-  } = usePrepareContractWrite({
+  //0xe6f6f753bf16f0f9d86c720dba320aa7cc25a7db003
+  // APPROVE TOKENS HOOK CALLS
+  const { config: transferConfig, status: transferStatus } = usePrepareContractWrite({
     address: selectedNetworkConfig.midasFactoryAddress,
     abi: factoryABI,
-    functionName: 'newCollection',
-    args: [...newCollectionArgs],
-    enabled: enableNewCollection,
+    functionName: 'redeemToken',
+    args: [fromAddress, address, tokenId],
+    enabled: enableTransfer,
   });
 
-  const { data: newCollectionData, write: newCollectionWrite } = useContractWrite(
-    newCollectionConfig as any
-  );
+  const { data: transferData, write: transferWrite } = useContractWrite(transferConfig as any);
 
-  const {
-    isLoading: isTxLoading,
-    isSuccess,
-    status,
-    data: trasactionData,
-  } = useWaitForTransaction({
-    hash: newCollectionData?.hash,
-    onSuccess(data) {
-      console.log('Success', data);
-    },
+  const { status: transferTxStatus, data: transferTxData } = useWaitForTransaction({
+    hash: transferData?.hash,
   });
 
   useEffect(() => {
-    if (newCollectionStatus === 'success' && enableNewCollection) {
-      newCollectionWrite?.();
+    if (transferStatus === 'success' && enableTransfer) {
+      transferWrite?.();
+      setGeneralStatus('transfering');
     }
-  }, [newCollectionStatus, enableNewCollection]);
+  }, [transferStatus, enableTransfer]);
 
   useEffect(() => {
-    if (status === 'success' || status === 'error') {
+    if (transferTxStatus === 'success' || transferTxStatus === 'error') {
       setLoading(false);
-      setEnableNewCollection(false);
+      setEnableTransfer(false);
+      setGeneralStatus('success');
     }
-  }, [status]);
+  }, [transferTxStatus]);
 
   return (
     <div className="flex flex-col">
       <TransactionModal
         isLoading={isLoading}
         showModal={isRedeemModalOpen}
-        data={{ name: 'Test', image: '/assets/coinbase.svg', status: 'loading' }}
+        onCloseModal={() => setRedeemModalOpen(false)}
+        data={{ name: 'Test', image: '/assets/coinbase.svg', status: generalStatus }}
       />
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
-        <span className="absolute -top-[2.45rem] left-[6.5rem] w-[29.6rem] lg:left-[5.45rem] lg:w-[23.9rem] xl:left-[7.1rem] xl:w-[31.35rem] 2xl:left-[8.7rem] 2xl:w-[38rem] h-10 px-4 bg-mds-gray-500 duration-500" />
+        <span className="absolute -top-[2.45rem] left-[6.5rem] w-[29.6rem] lg:left-[5.45rem] lg:w-[20.5rem] xl:left-[7.1rem] xl:w-[26.75rem] 2xl:left-[8.7rem] 2xl:w-[32.5rem] h-10 px-4 bg-mds-gray-500 duration-500" />
         <h1 className="absolute -top-8 lg:-top-8 xl:-top-11 2xl:-top-14 lg:left-[6.5rem] xl:left-[8.5rem] 2xl:left-[10.4rem] create-section-title duration-500">
           <span className="mr-2 text-transparent bg-clip-text bg-gradient-to-r from-[#8F33E7] to-[#F81DFB]">
-            {t('CREATE_SECTION_TITLE1')}
+            {t('REDEEM_SECTION_TITLE1')}
           </span>
-          {t('CREATE_SECTION_TITLE2')}
+          {t('REDEEM_SECTION_TITLE2')}
         </h1>
-        <h2 className="create-section-subtitle">{t('CREATE_SECTION_SUBTITLE')}</h2>
+        <h2 className="create-section-subtitle">{t('REDEEM_SECTION_SUBTITLE')}</h2>
         <span className="create-section-description">
-          {t('CREATE_SECTION_DESCRIPTION1')}
+          {t('REDEEM_SECTION_DESCRIPTION1')}
           <a href="https://ethereum.org/pt-br/nft/" target="blank">
-            {t('CREATE_SECTION_DESCRIPTION2')}
+            {t('REDEEM_SECTION_DESCRIPTION2')}
             <i className="fa-regular fa-arrow-up-right-from-square ml-2" />
           </a>
         </span>
+
         <Formik
           initialValues={initialValues}
           onSubmit={(values) => handleSubmit({ ...values })}
           {...formSchema}
         >
-          <InputFormik
-            required
-            name="prompt"
-            className="bg-mds-gray-300"
-            label="Give a detailed description of your product"
-            placeholder="flying rolex watch digital art"
-            withButton
-            onSubmit={(value: any) => console.log(value)}
-          />
+          <Form className="mt-6">
+            <InputFormik
+              required
+              name="tokenHash"
+              className="bg-mds-gray-300"
+              label="Redeem hash"
+              placeholder="e4fa1555ad877bf0...0a93eff2f95a6198"
+              withButton
+              onSubmit={(value: any) => handleSubmit(value)}
+            />
+          </Form>
         </Formik>
       </div>
     </div>

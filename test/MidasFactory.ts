@@ -18,23 +18,28 @@ describe('MidasFactory', function () {
       let tx;
 
       tx = await factory.newCollection(
-        owner.address,
-        'MyCollection',
-        10,
-        'https://ipfs.io/ipfs/QmTRwtJvoP44qghiiwBQtqQzSHNG8xWmd7yW7qBfPNYbEd',
-        'commonLink',
-        'rareLink',
-        'superRareLink',
-        'epicLink',
-        'legendLink'
+        addr1.address,
+        'Collection',
+        2,
+        'https://gateway.pinata.cloud/ipfs/QmZBeXNzrTnuk7EYEZhKGiyQPmWdrfu6E5tt7TpkkVpjtv',
+        [2, 0, 0, 0, 0],
+        [
+          'https://gateway.pinata.cloud/ipfs/QmZsbkdNUiAAJE9j4yVVfS2cwSdozkZk5STiY8tDV7oe4j',
+          'https://gateway.pinata.cloud/ipfs/Qmao3QxDsPaf5Tjb6AfLXLLQjsTid51d1967jdWUSQ6PLC',
+          'https://gateway.pinata.cloud/ipfs/QmZiCTwr7YvcYUyEo9HuHPcEMGHncf11NUPVKu1g79GZA1',
+          'https://gateway.pinata.cloud/ipfs/Qmcw3PDeDVG9iQ8Cg6QswXpvoBd1X8ujgn4bTMJKPYr1FH',
+          'https://ipfs.io/ipfs/QmXL8JS8dRY8NarE2CkWet6429YQpKggUJjhKHwZnyn8dR',
+        ]
       );
 
       const { events: firstEvents } = await tx.wait();
       console.log('\nAddresses:');
       console.log('Deployer address:', owner.address);
+      console.log('Account 1 address:', addr1.address);
       console.log('Account 2 address:', addr2.address);
       console.log('Factory address:', factory.address);
 
+      // factory.getOwnerAndAprovall();
       // const ownerAddress = await factory.collections(String(firstEvents?.[0].address));
       // expect(ownerAddress).to.equal(owner.address);
       // const { events: seccondEvents } = await tx.wait();
@@ -47,9 +52,9 @@ describe('MidasFactory', function () {
       console.log('Owner of Collection:', tx);
       tx = await Token.ownerOf(1);
       console.log('\nOwner of NFT item 1 before transfer:', tx);
-      tx = await Token.transferFrom(owner.address, addr2.address, 1);
-      tx = await Token.ownerOf(1);
-      console.log('Owner of NFT item 1 after transfer:', tx);
+      // tx = await Token.transferFrom(addr1.address, addr2.address, 1);
+      // tx = await Token.ownerOf(1);
+      // console.log('Owner of NFT item 1 after transfer:', tx);
       // events = await tx.wait();
     });
   });
