@@ -24,12 +24,14 @@ const Carousel = ({ data, isSmall }: any) => {
         className="gap-x-10 flex"
       >
         {data.map((nft: any) => (
-          <SmallCard
-            description={nft.description}
-            idNumber={nft.idNumber}
-            pictureUrl={nft.pictureUrl}
-            title={nft.title}
-          />
+          <div className="mx-4">
+            <SmallCard
+              description={nft.description}
+              idNumber={nft.idNumber}
+              pictureUrl={nft.pictureUrl}
+              title={nft.title}
+            />
+          </div>
         ))}
       </Slider>
     </div>
