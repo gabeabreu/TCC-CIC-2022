@@ -7,17 +7,17 @@ import * as Actions from './actions';
 const INITIAL_STATE: UserState = {
   loading: false,
   data: {
-    address: "",
-    name: "",
-    bio: "",
-    discord: "",
-    website: "",
-    twitter: "",
-    instagram: "",
+    address: '',
+    name: '',
+    bio: '',
+    discord: '',
+    website: '',
+    twitter: '',
+    instagram: '',
     isVerified: false,
-    profilePictureUrl: "",
-    bannerPictureUrl: "",
-  }
+    profilePictureUrl: '',
+    bannerPictureUrl: '',
+  },
 };
 
 const reducer: Reducer<UserState> = (state = INITIAL_STATE, { type, payload }) => {
@@ -26,8 +26,8 @@ const reducer: Reducer<UserState> = (state = INITIAL_STATE, { type, payload }) =
       return INITIAL_STATE;
 
     case UserTypes.SET_USER_DATA:
-      return {...state, data: payload.data};
-      
+      return { ...state, data: payload.data };
+
     default:
       return state;
   }

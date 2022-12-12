@@ -12,7 +12,7 @@ const ItemsSection = () => {
   const dispatch = useDispatch();
   const { collection } = useSelector((state) => state);
   const { collection: collectionData } = collection;
-  console.log(collectionData?.data?.nfts);
+
   return (
     <div className="flex mt-10 relative flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] z-10 duration-500">
       <Tabs current="Items" data={[{ icon: 'fa-cards-blank', src: '#', label: 'Items' }]} />

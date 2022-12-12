@@ -3,15 +3,12 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
 import Layout from '../../components/Layout';
 import { useEffect, useState } from 'react';
-import TrendindSection from '../../components/explore/TrendingSection';
-import VerifiedSection from '../../components/explore/VerifiedSection';
-import NotableSection from '../../components/explore/NotableSection';
-import ProfileSection from '../../components/account/ProfileSection/ProfileSection';
 import UserTabsSection from '@/components/account/UserTabsSection';
 import { useDispatch } from 'react-redux';
 import { useRouter } from 'next/router';
 import axios, { AxiosResponse } from 'axios';
 import { useSelector } from '@/redux/hooks';
+import AnotheProfileSection from '@/components/account/AnotherProfileSection/AnotheProfileSection';
 
 const Account: NextPage = () => {
   const dispatch = useDispatch();
@@ -64,7 +61,7 @@ const Account: NextPage = () => {
 
       <Layout>
         <div className="mb-32">
-          <ProfileSection />
+          <AnotheProfileSection />
           <UserTabsSection />
         </div>
       </Layout>

@@ -11,6 +11,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     discord,
     profilePictureUrl,
     bannerPictureUrl,
+    isVerified,
   } = req.query;
   const user = await fetch('http://localhost:8001/users', {
     method: 'PUT',
@@ -24,7 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       discord: discord,
       profilePictureUrl,
       bannerPictureUrl,
-      isVerified: false,
+      isVerified: isVerified,
     }),
     headers: {
       Accept: 'application/json, text/plain, /',

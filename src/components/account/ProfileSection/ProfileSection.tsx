@@ -24,12 +24,12 @@ const ProfileSection = () => {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const initialValues: any = {
-    name: status === 'connected' ? user.data.name : '',
-    bio: status === 'connected' ? user.data.bio : '',
-    instagram: status === 'connected' ? user.data.instagram : '',
-    twitter: status === 'connected' ? user.data.twitter : '',
-    website: status === 'connected' ? user.data.website : '',
-    discord: status === 'connected' ? user.data.discord : '',
+    name: status === 'connected' ? user?.data?.name : '',
+    bio: status === 'connected' ? user?.data?.bio : '',
+    instagram: status === 'connected' ? user?.data?.instagram : '',
+    twitter: status === 'connected' ? user?.data?.twitter : '',
+    website: status === 'connected' ? user?.data?.website : '',
+    discord: status === 'connected' ? user?.data?.discord : '',
   };
 
   useEffect(() => {
@@ -172,11 +172,11 @@ const ProfileSection = () => {
       </Modal>
 
       <div className="relative flex flex-col w-full">
-        <div className="overflow-hidden relative w-screen h-[25rem]">
-          <div className="z-30 absolute cursor-pointer right-4 bottom-2">
+        <div className="group bg-mds-black overflow-hidden relative w-screen h-[25rem]">
+          <div className="z-50 opacity-0 group-hover:opacity-100 absolute flex right-14 bottom-5 duration-300">
             <label
               htmlFor="bannerPic"
-              className="bg-[#000000aa] px-2 py-1 flex items-center justify-center rounded-xl"
+              className="bg-[#000000aa] cursor-pointer px-2 py-1 flex items-center justify-center rounded-xl"
             >
               <i className="fa-light fa-pen-to-square text-white text-2xl ml-[0.1rem] mb-[0.1rem]" />
             </label>
@@ -191,7 +191,7 @@ const ProfileSection = () => {
           <Image
             src={
               address
-                ? user.data.bannerPictureUrl || '/assets/accountPage/banner.svg'
+                ? user?.data?.bannerPictureUrl || '/assets/accountPage/banner.svg'
                 : '/assets/accountPage/banner.svg'
             }
             layout="fill"
@@ -202,11 +202,11 @@ const ProfileSection = () => {
         <div className="h-1 w-screen overflow-hidden bg-gradient-to-r from-[#8D32E6] to-[#5A0068] via-[#7319A7] " />
         <div className="flex flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] z-10 duration-500">
           <div className="absolute top-[14.8rem] shadow-xl">
-            <div className="overflow-hidden relative w-52 h-52 rounded-3xl border-[0.5rem] border-mds-gray-300">
-              <div className="z-30 absolute cursor-pointer right-2 bottom-2">
+            <div className="group bg-mds-gray-500 overflow-hidden relative w-52 h-52 rounded-3xl border-[0.5rem] border-mds-gray-300">
+              <div className="z-50 opacity-0 group-hover:opacity-100 absolute flex right-2 bottom-2 duration-300">
                 <label
                   htmlFor="profilePic"
-                  className="bg-[#000000aa] px-2 py-1 flex items-center justify-center rounded-xl"
+                  className="bg-[#000000aa] cursor-pointer px-2 py-1 flex items-center justify-center rounded-xl"
                 >
                   <i className="fa-light fa-pen-to-square text-white text-xl ml-[0.1rem] mb-[0.1rem]" />
                 </label>
@@ -221,26 +221,24 @@ const ProfileSection = () => {
               <Image
                 src={
                   address
-                    ? user.data.profilePictureUrl || '/assets/accountPage/profilePicture.svg'
+                    ? user?.data?.profilePictureUrl || '/assets/accountPage/profilePicture.svg'
                     : '/assets/accountPage/profilePicture.svg'
                 }
                 layout="fill"
                 objectFit="cover"
                 alt="Background image"
+                className="opacity-100 group-hover:opacity-70 duration-300"
               />
             </div>
           </div>
           <div className="flex mt-20 justify-between ">
             <div>
-              <div className="flex items-center gap-x-3">
+              <div className="flex items-end gap-x-3">
                 <span className="font-semibold text-4xl text-mds-white">
-                  {isTrulyConnected ? user.data.name || 'Unnamed' : 'Connect your wallet'}
+                  {isTrulyConnected ? user?.data?.name || 'Unnamed' : 'Connect your wallet'}
                 </span>
-                {isTrulyConnected && user.data.isVerified && (
-                  <div className="relative -mb-1">
-                    <i className="fa-solid fa-certificate text-mds-purple text-3xl" />
-                    <i className="fa-solid fa-check text-mds-black text-xl absolute left-[0.33rem] top-[0.28rem]" />
-                  </div>
+                {isTrulyConnected && user?.data?.isVerified && (
+                  <i className="fa-solid fa-badge-check text-mds-purple text-2xl mb-[0.2rem]" />
                 )}
               </div>
             </div>
@@ -248,7 +246,7 @@ const ProfileSection = () => {
               <a
                 target="blank"
                 href={
-                  address ? user.data.discord || 'https://discord.com/' : 'https://discord.com/'
+                  address ? user?.data?.discord || 'https://discord.com/' : 'https://discord.com/'
                 }
               >
                 <i className="fa-brands fa-discord text-mds-white text-2xl cursor-pointer" />
@@ -257,7 +255,7 @@ const ProfileSection = () => {
                 target="blank"
                 href={
                   address
-                    ? user.data.website || 'https://www.google.com.br/'
+                    ? user?.data?.website || 'https://www.google.com.br/'
                     : 'https://www.google.com.br/'
                 }
               >
@@ -267,7 +265,7 @@ const ProfileSection = () => {
                 target="blank"
                 href={
                   address
-                    ? user.data.twitter || 'https://twitter.com/home'
+                    ? user?.data?.twitter || 'https://twitter.com/home'
                     : 'https://twitter.com/home'
                 }
               >
@@ -277,7 +275,7 @@ const ProfileSection = () => {
                 target="blank"
                 href={
                   address
-                    ? user.data.instagram || 'https://www.instagram.com/'
+                    ? user?.data?.instagram || 'https://www.instagram.com/'
                     : 'https://www.instagram.com/'
                 }
               >
@@ -307,9 +305,11 @@ const ProfileSection = () => {
               />
             </div>
           )}
-          <p className="font-medium text-lg text-mds-gray-200 max-w-full mt-4">
-            {status === 'connected' ? user.data.bio : ''}
-          </p>
+          {status === 'connected' && user?.data?.bio && (
+            <p className="font-medium text-lg text-mds-gray-200 max-w-full mt-4">
+              {user?.data?.bio}
+            </p>
+          )}
         </div>
       </div>
     </>

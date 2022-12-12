@@ -76,8 +76,7 @@ const RedeemSection = () => {
       setRedeemModalOpen(true);
     }, 500);
   }
-
-  //0xe6f6f753bf16f0f9d86c720dba320aa7cc25a7db003
+  console.log([fromAddress, address, tokenId]);
   // APPROVE TOKENS HOOK CALLS
   const { config: transferConfig, status: transferStatus } = usePrepareContractWrite({
     address: selectedNetworkConfig.midasFactoryAddress,

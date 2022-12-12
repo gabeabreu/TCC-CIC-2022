@@ -19,50 +19,46 @@ const Footer = () => {
             <i className="fa-brands fa-instagram text-mds-white text-2xl" />
           </div>
         </div>
-        <div className="flex gap-x-28">
+        <div className="flex gap-x-28 mt-2 pr-5">
           <div className="flex flex-col">
-            <span className="text-mds-white text-2xl font-semibold">Explore</span>
+            <span className="text-mds-white text-xl font-semibold">Explore</span>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Terms</span>
+              <span className="text-mds-white font-light text-lg">Terms</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Privacy</span>
+              <span className="text-mds-white font-light text-lg">Privacy</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Security</span>
+              <span className="text-mds-white font-light text-lg">Security</span>
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="text-mds-white text-2xl font-semibold">Mint</span>
+            <span className="text-mds-white text-xl font-semibold">Mint</span>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Docs</span>
+              <span className="text-mds-white font-light text-lg">Docs</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">API</span>
+              <span className="text-mds-white font-light text-lg">API</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Status</span>
+              <span className="text-mds-white font-light text-lg">Status</span>
             </div>
           </div>
           <div className="flex flex-col">
-            <span className="text-mds-white text-2xl font-semibold">About</span>
+            <span className="text-mds-white text-xl font-semibold">About</span>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Contact us</span>
+              <span className="text-mds-white font-light text-lg">Contact</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Blog</span>
-            </div>
-            <div className="flex items-center gap-x-2">
-              <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">About us</span>
+              <span className="text-mds-white font-light text-lg">Blog</span>
             </div>
           </div>
         </div>
