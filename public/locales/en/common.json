@@ -27,5 +27,10 @@
   "FORM_ERROR_MUST_BE_GREATER": "Field must be greater than {{maxNum}} characters",
   "FORM_ERROR_MUST_BE_LESS": "Field must be less than {{maxNum}} characters",
   "FORM_ERROR_ONLY_LETTERS": "Field must have only letters",
-  "FORM_ERROR_REQUIRED": "Field required"
+  "FORM_ERROR_REQUIRED": "Field required",
+  "REDEEM_SECTION_TITLE1": "Redeem",
+  "REDEEM_SECTION_TITLE2": "Token",
+  "REDEEM_SECTION_SUBTITLE": "Redeem a company Token",
+  "REDEEM_SECTION_DESCRIPTION1": "You can redeem tokens from companies that have provided a redemption code sold with the products.",
+  "REDEEM_SECTION_DESCRIPTION2": "Read more about redeem tokens"
 }

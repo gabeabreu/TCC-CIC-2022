@@ -1,14 +1,20 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+// 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, MyCol,  10, comLink, rarLink, srarLink, epcLink, lgnLink
+// 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, Collection, 10, https://gateway.pinata.cloud/ipfs/QmZBeXNzrTnuk7EYEZhKGiyQPmWdrfu6E5tt7TpkkVpjtv, [4,3,1,1,1], [https://gateway.pinata.cloud/ipfs/QmZsbkdNUiAAJE9j4yVVfS2cwSdozkZk5STiY8tDV7oe4j,https://gateway.pinata.cloud/ipfs/Qmao3QxDsPaf5Tjb6AfLXLLQjsTid51d1967jdWUSQ6PLC,https://gateway.pinata.cloud/ipfs/QmZiCTwr7YvcYUyEo9HuHPcEMGHncf11NUPVKu1g79GZA1,https://gateway.pinata.cloud/ipfs/Qmcw3PDeDVG9iQ8Cg6QswXpvoBd1X8ujgn4bTMJKPYr1FH,https://ipfs.io/ipfs/QmXL8JS8dRY8NarE2CkWet6429YQpKggUJjhKHwZnyn8dR]
+
+// 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, Collection, 2, https://gateway.pinata.cloud/ipfs/QmZBeXNzrTnuk7EYEZhKGiyQPmWdrfu6E5tt7TpkkVpjtv, [2,0,0,0,0], [https://gateway.pinata.cloud/ipfs/QmZsbkdNUiAAJE9j4yVVfS2cwSdozkZk5STiY8tDV7oe4j,https://gateway.pinata.cloud/ipfs/Qmao3QxDsPaf5Tjb6AfLXLLQjsTid51d1967jdWUSQ6PLC,https://gateway.pinata.cloud/ipfs/QmZiCTwr7YvcYUyEo9HuHPcEMGHncf11NUPVKu1g79GZA1,https://gateway.pinata.cloud/ipfs/Qmcw3PDeDVG9iQ8Cg6QswXpvoBd1X8ujgn4bTMJKPYr1FH,https://ipfs.io/ipfs/QmXL8JS8dRY8NarE2CkWet6429YQpKggUJjhKHwZnyn8dR]
+// 0x73b5d22e8013939cd6303e1176643db87b97ce42, 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2, 0
+
+// 0xAb8483F64d9C6d1EcF9b849Ae677dD3315835cb2, Collection, 2, https://gateway.pinata.cloud/ipfs/QmZBeXNzrTnuk7EYEZhKGiyQPmWdrfu6E5tt7TpkkVpjtv, [2,0,0,0,0], [https://gateway.pinata.cloud/ipfs/QmZsbkdNUiAAJE9j4yVVfS2cwSdozkZk5STiY8tDV7oe4j,https://gateway.pinata.cloud/ipfs/Qmao3QxDsPaf5Tjb6AfLXLLQjsTid51d1967jdWUSQ6PLC,https://gateway.pinata.cloud/ipfs/QmZiCTwr7YvcYUyEo9HuHPcEMGHncf11NUPVKu1g79GZA1,https://gateway.pinata.cloud/ipfs/Qmcw3PDeDVG9iQ8Cg6QswXpvoBd1X8ujgn4bTMJKPYr1FH,https://ipfs.io/ipfs/QmXL8JS8dRY8NarE2CkWet6429YQpKggUJjhKHwZnyn8dR]
+// 0x5C9eb5D6a6C2c1B3EFc52255C0b356f116f6f66D, 0x4B20993Bc481177ec7E8f571ceCaE8A9e22C02db, 0
+
 import 'erc721a/contracts/ERC721A.sol';
 import './ERC721AURIStorage.sol';
 import '@openzeppelin/contracts/utils/Counters.sol';
 import '@openzeppelin/contracts/access/Ownable.sol';
 import 'hardhat/console.sol';
-
-// 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, MyCol,  10, comLink, rarLink, srarLink, epcLink, lgnLink
-// 0x5B38Da6a701c568545dCfcB03FcB875f56beddC4, Collection, 10, https://gateway.pinata.cloud/ipfs/QmZBeXNzrTnuk7EYEZhKGiyQPmWdrfu6E5tt7TpkkVpjtv, [4,3,1,1,1], [https://gateway.pinata.cloud/ipfs/QmZsbkdNUiAAJE9j4yVVfS2cwSdozkZk5STiY8tDV7oe4j,https://gateway.pinata.cloud/ipfs/Qmao3QxDsPaf5Tjb6AfLXLLQjsTid51d1967jdWUSQ6PLC,https://gateway.pinata.cloud/ipfs/QmZiCTwr7YvcYUyEo9HuHPcEMGHncf11NUPVKu1g79GZA1,https://gateway.pinata.cloud/ipfs/Qmcw3PDeDVG9iQ8Cg6QswXpvoBd1X8ujgn4bTMJKPYr1FH,https://ipfs.io/ipfs/QmXL8JS8dRY8NarE2CkWet6429YQpKggUJjhKHwZnyn8dR]
 
 contract MidasToken is ERC721A, ERC721AURIStorage, Ownable {
     uint256 public constant COMMON = 0;

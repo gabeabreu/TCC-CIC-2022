@@ -24,6 +24,7 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
+import { ethers } from 'ethers';
 
 import Button from '../../Button';
 import FileInput from '../../FileInput';
@@ -54,6 +55,20 @@ const CreateSection = () => {
   const [isCreatingModalOpen, setCreatingModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
 
+  // const provider = new ethers.providers.WebSocketProvider(
+  //   'wss://eth-goerli.g.alchemy.com/v2/o5IHGB5-jXxR18g78HUulEHEAA2jOeLx'
+  // );
+
+  // const contract = new ethers.Contract(
+  //   selectedNetworkConfig.midasFactoryAddress,
+  //   factoryABI,
+  //   provider
+  // );
+
+  // contract.on('NewCollection', (addr) => {
+  //   console.log(addr);
+  // });
+
   useEffect(() => {
     // @ts-ignore
     if (chain) setSelectedNetworkConfig(networkConfig[chain.id]);
@@ -62,7 +77,7 @@ const CreateSection = () => {
   const initialValues: any = {
     collectionImage: '',
     name: 'MyTestCollection',
-    itemSupply: 100,
+    itemSupply: 5,
     itemName: 'MyTestNFT',
   };
 
@@ -143,20 +158,21 @@ const CreateSection = () => {
       }
     );
 
-    const itensIPFS = [];
+    // const itensIPFS = [];
+    const itensIPFS = ['', '', '', '', ''];
 
-    for (let i = 0; i < Number(data.item?.images?.length); i++) {
-      const { data: itemMetadata }: AxiosResponse = await axios.get('/api/pinata/pinningMetadata', {
-        params: {
-          name: data.item?.name,
-          description: data.item?.description,
-          image: data.item?.images?.[i].src,
-          external_link: data.item?.externalLink,
-          rarity: data.item?.images?.[i].rarity,
-        },
-      });
-      itensIPFS.push(`https://gateway.pinata.cloud/ipfs/${itemMetadata.IpfsHash}`);
-    }
+    // for (let i = 0; i < Number(data.item?.images?.length); i++) {
+    //   const { data: itemMetadata }: AxiosResponse = await axios.get('/api/pinata/pinningMetadata', {
+    //     params: {
+    //       name: data.item?.name,
+    //       description: data.item?.description,
+    //       image: data.item?.images?.[i].src,
+    //       external_link: data.item?.externalLink,
+    //       rarity: data.item?.images?.[i].rarity,
+    //     },
+    //   });
+    //   itensIPFS.push(`https://gateway.pinata.cloud/ipfs/${itemMetadata.IpfsHash}`);
+    // }
 
     const itemQuantities = getRandomRarity(data.item?.supply as number);
 
@@ -165,7 +181,8 @@ const CreateSection = () => {
       data.name,
       data.item?.supply,
       `https://gateway.pinata.cloud/ipfs/${collectionMetadata.IpfsHash}`,
-      [4, 3, 1, 1, 1],
+      // [4, 3, 1, 1, 1],
+      itemQuantities,
       [itensIPFS[0], itensIPFS[1], itensIPFS[2], itensIPFS[3], itensIPFS[3]],
     ]);
 
@@ -204,7 +221,7 @@ const CreateSection = () => {
     });
 
     const newGeneratedImages = [...generatedImages];
-    console.log(data);
+
     setGeneratedImages(
       newGeneratedImages.map((image) => {
         return { ...image, src: data[image.id - 1] };
@@ -235,9 +252,6 @@ const CreateSection = () => {
     data: trasactionData,
   } = useWaitForTransaction({
     hash: newCollectionData?.hash,
-    onSuccess(data) {
-      console.log('Success', data);
-    },
   });
 
   useEffect(() => {
@@ -253,17 +267,15 @@ const CreateSection = () => {
     }
   }, [status]);
 
-  // useContractEvent({
-  //   address: selectedNetworkConfig.midasFactoryAddress,
-  //   abi: factoryABI,
-  //   eventName: 'NewCollection',
-  //   chainId: 5,
-  //   listener(node, label, owner) {
-  //     console.log(node, label, owner);
-  //     //TODO CREATE COLLECTION BE
-  //     //newCollectionArgs[3]   ---- url foto da coleção para mandar pro be
-  //   },
-  // });
+  useContractEvent({
+    address: selectedNetworkConfig.midasFactoryAddress,
+    abi: factoryABI,
+    eventName: 'NewCollection',
+    listener(node) {
+      // node é o valor retornado
+      console.log(node);
+    },
+  });
 
   return (
     <div className="flex flex-col">
