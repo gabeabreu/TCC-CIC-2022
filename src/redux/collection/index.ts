@@ -10,6 +10,10 @@ const INITIAL_STATE: CollectionState = {
     data: undefined,
     loading: false,
   },
+  collection: {
+    data: undefined,
+    loading: false,
+  },
 };
 
 const reducer: Reducer<CollectionState> = (state = INITIAL_STATE, { type, payload }) => {
@@ -22,6 +26,15 @@ const reducer: Reducer<CollectionState> = (state = INITIAL_STATE, { type, payloa
         ...state,
         createData: {
           ...state.createData,
+          data: payload.data,
+        },
+      };
+
+    case CollectionTypes.SET_COLLECTION_DATA:
+      return {
+        ...state,
+        collection: {
+          ...state.collection,
           data: payload.data,
         },
       };

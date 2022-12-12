@@ -1,6 +1,7 @@
 export enum CollectionTypes {
   RESET_STATE = '@Collection/RESET_STATE',
   SET_CREATE_DATA = '@Collection/SET_CREATE_DATA',
+  SET_COLLECTION_DATA = '@Collection/SET_COLLECTION_DATA',
 }
 
 export interface ResetState {
@@ -12,12 +13,21 @@ export interface SetCreateData {
   payload: { data: NFTCollection };
 }
 
-export type CollectionActionTypes = ResetState | SetCreateData;
+export interface SetCollectionData {
+  type: CollectionTypes.SET_COLLECTION_DATA;
+  payload: { data: any };
+}
+
+export type CollectionActionTypes = ResetState | SetCreateData | SetCollectionData;
 
 export interface CollectionState {
   loading: boolean;
   createData: {
     data?: NFTCollection;
+    loading: boolean;
+  };
+  collection: {
+    data?: any;
     loading: boolean;
   };
 }

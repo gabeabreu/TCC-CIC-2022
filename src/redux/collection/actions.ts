@@ -8,3 +8,7 @@ export function resetStateCollection(): CollectionActionTypes {
 export function setCreateData(data: NFTCollection): CollectionActionTypes {
   return action(CollectionTypes.SET_CREATE_DATA, { data });
 }
+
+export function setCollectionData(data: any): CollectionActionTypes {
+  return action(CollectionTypes.SET_COLLECTION_DATA, { data });
+}
