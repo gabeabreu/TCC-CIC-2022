@@ -24,7 +24,7 @@ import {
   usePrepareContractWrite,
   useWaitForTransaction,
 } from 'wagmi';
-import { ethers } from 'ethers';
+// import { ethers } from 'ethers';
 
 import Button from '../../Button';
 import FileInput from '../../FileInput';
@@ -32,6 +32,7 @@ import InputFormik from '../../InputFormik';
 import RarityCardImage from '../RarityCardImage';
 import formSchema from './formSchema';
 import { storage } from '@/config/firebase';
+import tokenABI from '@/utils/contractInterfaces/tokenABI';
 
 const CreateSection = () => {
   const { t } = useTranslation();
@@ -52,8 +53,11 @@ const CreateSection = () => {
 
   const [selectedNetworkConfig, setSelectedNetworkConfig] = useState(networkConfig[0]);
   const [enableNewCollection, setEnableNewCollection] = useState(false);
+  const [enableApprove, setEnableApprove] = useState(false);
   const [isCreatingModalOpen, setCreatingModalOpen] = useState(false);
+  const [collectionDeployAddress, setCollectionDeployAddress] = useState('');
   const [isLoading, setLoading] = useState(false);
+  const [generalStatus, setGeneralStatus] = useState('idle');
 
   // const provider = new ethers.providers.WebSocketProvider(
   //   'wss://eth-goerli.g.alchemy.com/v2/o5IHGB5-jXxR18g78HUulEHEAA2jOeLx'
@@ -212,6 +216,8 @@ const CreateSection = () => {
     setCreatingModalOpen(true);
     setLoading(true);
 
+    setGeneralStatus('uploadingIPFS');
+
     sendMetadataToIPFS(data);
   }
 
@@ -229,11 +235,8 @@ const CreateSection = () => {
     );
   }
 
-  const {
-    config: newCollectionConfig,
-    status: newCollectionStatus,
-    data,
-  } = usePrepareContractWrite({
+  // NEW COLLECTION HOOK CALLS
+  const { config: newCollectionConfig, status: newCollectionStatus } = usePrepareContractWrite({
     address: selectedNetworkConfig.midasFactoryAddress,
     abi: factoryABI,
     functionName: 'newCollection',
@@ -245,37 +248,65 @@ const CreateSection = () => {
     newCollectionConfig as any
   );
 
-  const {
-    isLoading: isTxLoading,
-    isSuccess,
-    status,
-    data: trasactionData,
-  } = useWaitForTransaction({
+  const { status: newCollectionTxStatus, data: newCollectionTxData } = useWaitForTransaction({
     hash: newCollectionData?.hash,
   });
 
-  useEffect(() => {
-    if (newCollectionStatus === 'success' && enableNewCollection) {
-      newCollectionWrite?.();
-    }
-  }, [newCollectionStatus, enableNewCollection]);
+  // APPROVE TOKENS HOOK CALLS
+  const { config: approveConfig, status: approveStatus } = usePrepareContractWrite({
+    address: collectionDeployAddress,
+    abi: tokenABI,
+    functionName: 'setApprovalForAll',
+    args: [selectedNetworkConfig.midasFactoryAddress, true],
+    enabled: enableApprove,
+  });
 
-  useEffect(() => {
-    if (status === 'success' || status === 'error') {
-      setLoading(false);
-      setEnableNewCollection(false);
-    }
-  }, [status]);
+  const { data: approveData, write: approveWrite } = useContractWrite(approveConfig as any);
 
+  const { status: approveTxStatus, data: approveTxData } = useWaitForTransaction({
+    hash: approveData?.hash,
+  });
+
+  // LISTENERS
   useContractEvent({
     address: selectedNetworkConfig.midasFactoryAddress,
     abi: factoryABI,
     eventName: 'NewCollection',
     listener(node) {
       // node é o valor retornado
+      setCollectionDeployAddress(node);
       console.log(node);
     },
   });
+
+  useEffect(() => {
+    if (newCollectionStatus === 'success' && enableNewCollection) {
+      newCollectionWrite?.();
+      setGeneralStatus('deployngCollection');
+    }
+  }, [newCollectionStatus, enableNewCollection]);
+
+  useEffect(() => {
+    if (approveStatus === 'success' && enableApprove) {
+      approveWrite?.();
+      setGeneralStatus('settingApprovals');
+    }
+  }, [approveStatus, enableApprove]);
+
+  useEffect(() => {
+    if (newCollectionTxStatus === 'success' || newCollectionTxStatus === 'error') {
+      setEnableNewCollection(false);
+      setEnableApprove(true);
+    }
+  }, [newCollectionTxStatus]);
+
+  useEffect(() => {
+    if (approveTxStatus === 'success' || approveTxStatus === 'error') {
+      setLoading(false);
+      setEnableApprove(false);
+      setGeneralStatus('success');
+    }
+  }, [approveTxStatus]);
 
   return (
     <div className="flex flex-col">
@@ -286,12 +317,15 @@ const CreateSection = () => {
         data={{
           name: createData.data?.name || '',
           image: (createData.data?.image as string) || '',
-          status,
+          status: generalStatus,
           details: [
             { name: 'Item name', value: createData.data?.item?.name },
             { name: 'Supply', value: createData.data?.item?.supply },
             { name: 'Royalty', value: `${createData.data?.royaltyAmount}%` },
-            { name: 'Network fee', value: trasactionData?.gasUsed?.toString() || 'Calculating...' },
+            {
+              name: 'Network fee',
+              value: newCollectionTxData?.gasUsed?.toString() || 'Calculating...',
+            },
           ],
         }}
       />

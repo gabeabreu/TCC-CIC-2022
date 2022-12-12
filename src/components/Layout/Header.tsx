@@ -109,7 +109,7 @@ const Header = ({ props }: any) => {
               </Link>
               <div className="items-center hidden md:flex">
                 <Link passHref href="/explore">
-                  <a className="text-lg text-mds-gray-100 hover:text-mds-white duration-300 mr-5">
+                  <a className="text-lg text-mds-gray-100 hover:text-mds-white duration-300 mr-4">
                     Explore
                   </a>
                 </Link>

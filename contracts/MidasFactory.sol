@@ -44,31 +44,26 @@ contract MidasFactory is Ownable {
         emit NewCollection(addr);
     }
 
-    // function redeemToken(
-    //     address _tokenContractAddr,
-    //     address _toAddr,
-    //     uint256 _tokenId
-    // ) external {
-    //     address fromAddr = collections[_tokenContractAddr];
+    function redeemToken(
+        address _tokenContractAddr,
+        address _toAddr,
+        uint256 _tokenId
+    ) external {
+        address fromAddr = collections[_tokenContractAddr];
 
-    //     console.log(fromAddr);
-    //     console.log(_toAddr);
-    //     console.log(_tokenId);
+        // (bool success, bytes memory data) = _tokenContractAddr.call(
+        //     abi.encodeWithSignature(
+        //         "transferFrom(address,address,uint256)",
+        //         fromAddr,
+        //         _toAddr,
+        //         _tokenId
+        //     )
+        // );
 
-    //     // (bool success, bytes memory data) = _tokenContractAddr.call(
-    //     //     abi.encodeWithSignature(
-    //     //         "transferFrom(address,address,uint256)",
-    //     //         fromAddr,
-    //     //         _toAddr,
-    //     //         _tokenId
-    //     //     )
-    //     // );
+        IERC721A(_tokenContractAddr).transferFrom(fromAddr, _toAddr, _tokenId);
 
-    //     // IERC20(_token) this will initialize the contract
-    //     IERC721A(_tokenContractAddr).transferFrom(fromAddr, _toAddr, _tokenId);
-
-    //     emit TokenRedeemd(fromAddr, _toAddr, _tokenId);
-    // }
+        emit TokenRedeemd(fromAddr, _toAddr, _tokenId);
+    }
 
     // function getOwnerAndAprovall(
     //     address _tokenContractAddr,
