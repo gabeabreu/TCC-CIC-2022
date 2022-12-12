@@ -5,6 +5,7 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import BigCard from './BigCard';
 import useWindowSize from '../../hooks/useWindowSize';
+import VerifiedCard from './VerifiedCard';
 
 interface Props {
   data: any;
@@ -44,13 +45,11 @@ const Carousel = ({ data, isSmall }: any) => {
         slidesToScroll={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
       >
         {data.map((user: any) => (
-          <BigCard
-            company={user.company}
+          <VerifiedCard
+            title={user.name}
             availableNfts={user.availableNfts}
-            likesNumber={user.likesNumber}
-            description={user.description}
-            pictureUrl={user.pictureUrl}
-            title={user.title}
+            description={user.bio}
+            pictureUrl={user.profilePictureUrl}
           />
         ))}
       </Slider>

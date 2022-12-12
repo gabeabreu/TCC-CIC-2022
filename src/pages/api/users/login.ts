@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { address, name, bio, instagram, twitter, website, discord } = req.query;
+  const { address, name, bio, instagram, twitter, website, discord, collectionsMinted } = req.query;
   const user = await fetch('http://localhost:8001/users', {
     method: 'POST',
     body: JSON.stringify({
@@ -13,6 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       website: '',
       discord: '',
       isVerified: false,
+      collectionsMinted: [],
     }),
     headers: {
       Accept: 'application/json, text/plain, /',
