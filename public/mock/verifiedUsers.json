@@ -2,15 +2,17 @@
         {
             "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
             "title": "Rolex",
-            "description": "lorem ipsum",
+            "description": "lorem ipsum A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real.",
             "availableNfts": 123,
+            "company": "rolex",
             "totalMinted": 234,
             "pictureUrl": "/mockImages/rolex.svg"
         },
         {
             "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
             "title": "Nike",
-            "description": "lorem ipsum",
+            "description": "A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real.",
+            "company": "compania teste",
             "availableNfts": 345,
             "totalMinted": 567,
             "pictureUrl": "/mockImages/nike.svg"
@@ -18,7 +20,8 @@
         {
             "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
             "title": "Rolex",
-            "description": "lorem ipsum",
+            "description": "A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real.",
+            "company": "eu nao aguento mais",
             "availableNfts": 123,
             "totalMinted": 234,
             "pictureUrl": "/mockImages/rolex.svg"
@@ -26,8 +29,9 @@
         {
             "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
             "title": "Nike",
-            "description": "lorem ipsum",
+            "description": "lorem ipsum A expressão Lorem ipsum em design gráfico e editoração é um texto padrão em latim utilizado na produção gráfica para preencher os espaços de texto em publicações para testar e ajustar aspectos visuais antes de utilizar conteúdo real.",
             "availableNfts": 345,
+            "company": "compania",
             "totalMinted": 567,
             "pictureUrl": "/mockImages/nike.svg"
         }

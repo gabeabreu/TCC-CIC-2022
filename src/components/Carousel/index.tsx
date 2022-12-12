@@ -21,15 +21,13 @@ const Carousel = ({ data, isSmall }: any) => {
         speed={400}
         slidesToShow={windowSize?.width && windowSize.width < 1536 ? 3 : 4}
         slidesToScroll={windowSize?.width && windowSize.width < 1536 ? 3 : 4}
-        className="gap-x-10"
+        className="gap-x-10 flex"
       >
         {data.map((nft: any) => (
           <SmallCard
-            likesNumber={nft.likesNumber}
             description={nft.description}
             idNumber={nft.idNumber}
             pictureUrl={nft.pictureUrl}
-            price={nft.price}
             title={nft.title}
           />
         ))}
@@ -45,6 +43,7 @@ const Carousel = ({ data, isSmall }: any) => {
       >
         {data.map((user: any) => (
           <BigCard
+            company={user.company}
             availableNfts={user.availableNfts}
             likesNumber={user.likesNumber}
             description={user.description}

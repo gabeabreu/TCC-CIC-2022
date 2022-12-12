@@ -33,7 +33,7 @@ const Home: NextPage = () => {
       </Head>
 
       <Layout>
-        <div className="mb-96">
+        <div className="mb-32">
           <ProfileSection />
           <UserTabsSection />
         </div>

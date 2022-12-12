@@ -22,9 +22,11 @@ const HeroSection = ({ offsetY }: { offsetY: number }) => {
               {t('EXPLORE')}
             </Button>
           </Link>
-          <Button className="font-semibold px-14" isOutline>
-            {t('CREATE')}
-          </Button>
+          <Link passHref href="/create">
+            <Button className="font-semibold px-14" isOutline>
+              {t('CREATE')}
+            </Button>
+          </Link>
         </div>
       </div>
       <div

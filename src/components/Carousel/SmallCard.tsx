@@ -10,7 +10,7 @@ interface Props {
 
 const SmallCard = ({ pictureUrl, idNumber, title, description, key }: Props) => {
   return (
-    <div key={key} className="flex flex-col w-[18rem]">
+    <div key={key} className="flex flex-col w-[19rem] mx-4">
       <div className="px-5 pt-5 pb-6 flex bg-mds-white bg-opacity-20 bg-clip-padding rounded-t-2xl border-t-4 border-x-4 border-[#fdfdfd44]">
         <div className="w-full h-[10.5rem] rounded-xl relative overflow-hidden">
           <Image layout="fill" objectFit="cover" src={pictureUrl} alt="nft image" />
