@@ -17,8 +17,13 @@
   .create-section-description {
     @apply text-mds-gray-100 mt-2 text-xl;
   }
+
   .create-section-description a {
     @apply text-mds-cyan ml-2 cursor-pointer;
+  }
+
+  .explore-page-title {
+    @apply font-extrabold text-[2.5rem] mb-6 text-mds-white;
   }
 }
 

@@ -7,6 +7,7 @@ import { setCreateData } from '@/redux/collection/actions';
 import { NFTCollection } from '@/redux/collection/types';
 import { useSelector } from '@/redux/hooks';
 import factoryABI from '@/utils/contractInterfaces/factoryABI';
+import tokenABI from '@/utils/contractInterfaces/tokenABI';
 import { networkConfig } from '@/utils/networkConfig';
 import axios, { AxiosResponse } from 'axios';
 import BN from 'bn.js';
@@ -48,9 +49,13 @@ const RedeemSection = () => {
   const [newCollectionArgs, setNewCollectionArgs] = useState<any>([]);
 
   const [selectedNetworkConfig, setSelectedNetworkConfig] = useState(networkConfig[0]);
-  const [enableNewCollection, setEnableNewCollection] = useState(false);
+  const [enableTransfer, setEnableTransfer] = useState(false);
+  const [generalStatus, setGeneralStatus] = useState('idle');
   const [isRedeemModalOpen, setRedeemModalOpen] = useState(false);
   const [isLoading, setLoading] = useState(false);
+
+  const [fromAddress, setFromAddress] = useState('');
+  const [tokenId, setTokenId] = useState(0);
 
   useEffect(() => {
     // @ts-ignore
@@ -61,55 +66,47 @@ const RedeemSection = () => {
     tokenHash: '',
   };
 
-  function handleSubmit(values: any) {
-    console.log(values);
+  function handleSubmit(value: string) {
+    setFromAddress(value.substring(0, 42));
+    setTokenId(Number(value.substring(42)));
 
-    // dispatch(setCreateData(data));
-
-    // setCreatingModalOpen(true);
-    // setLoading(true);
+    setTimeout(() => {
+      setEnableTransfer(true);
+      setLoading(true);
+      setRedeemModalOpen(true);
+    }, 500);
   }
 
-  const {
-    config: newCollectionConfig,
-    status: newCollectionStatus,
-    data,
-  } = usePrepareContractWrite({
+  //0xe6f6f753bf16f0f9d86c720dba320aa7cc25a7db003
+  // APPROVE TOKENS HOOK CALLS
+  const { config: transferConfig, status: transferStatus } = usePrepareContractWrite({
     address: selectedNetworkConfig.midasFactoryAddress,
     abi: factoryABI,
-    functionName: 'newCollection',
-    args: [...newCollectionArgs],
-    enabled: enableNewCollection,
+    functionName: 'redeemToken',
+    args: [fromAddress, address, tokenId],
+    enabled: enableTransfer,
   });
 
-  const { data: newCollectionData, write: newCollectionWrite } = useContractWrite(
-    newCollectionConfig as any
-  );
+  const { data: transferData, write: transferWrite } = useContractWrite(transferConfig as any);
 
-  const {
-    isLoading: isTxLoading,
-    isSuccess,
-    status,
-    data: trasactionData,
-  } = useWaitForTransaction({
-    hash: newCollectionData?.hash,
-    onSuccess(data) {
-      console.log('Success', data);
-    },
+  const { status: transferTxStatus, data: transferTxData } = useWaitForTransaction({
+    hash: transferData?.hash,
   });
 
   useEffect(() => {
-    if (newCollectionStatus === 'success' && enableNewCollection) {
-      newCollectionWrite?.();
+    if (transferStatus === 'success' && enableTransfer) {
+      transferWrite?.();
+      setGeneralStatus('transfering');
     }
-  }, [newCollectionStatus, enableNewCollection]);
+  }, [transferStatus, enableTransfer]);
 
   useEffect(() => {
-    if (status === 'success' || status === 'error') {
+    if (transferTxStatus === 'success' || transferTxStatus === 'error') {
       setLoading(false);
-      setEnableNewCollection(false);
+      setEnableTransfer(false);
+      setGeneralStatus('success');
     }
-  }, [status]);
+  }, [transferTxStatus]);
 
   return (
     <div className="flex flex-col">
@@ -117,7 +114,7 @@ const RedeemSection = () => {
         isLoading={isLoading}
         showModal={isRedeemModalOpen}
         onCloseModal={() => setRedeemModalOpen(false)}
-        data={{ name: 'Test', image: '/assets/coinbase.svg', status: 'loading' }}
+        data={{ name: 'Test', image: '/assets/coinbase.svg', status: generalStatus }}
       />
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
         <span className="absolute -top-[2.45rem] left-[6.5rem] w-[29.6rem] lg:left-[5.45rem] lg:w-[20.5rem] xl:left-[7.1rem] xl:w-[26.75rem] 2xl:left-[8.7rem] 2xl:w-[32.5rem] h-10 px-4 bg-mds-gray-500 duration-500" />
@@ -149,7 +146,7 @@ const RedeemSection = () => {
               label="Redeem hash"
               placeholder="e4fa1555ad877bf0...0a93eff2f95a6198"
               withButton
-              onSubmit={(value: any) => setRedeemModalOpen(true)}
+              onSubmit={(value: any) => handleSubmit(value)}
             />
           </Form>
         </Formik>

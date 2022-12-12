@@ -10,8 +10,11 @@ import Modal from './Modal';
 interface StatusColor {
   error: string;
   idle: string;
+  transfering: string;
+  uploadingIPFS: string;
+  deployngCollection: string;
+  settingApprovals: string;
   success: string;
-  loading: string;
 }
 
 interface Props {
@@ -33,8 +36,11 @@ const TransactionModal = ({ data, isLoading, showModal, onCloseModal }: Props) =
   const statusColor: StatusColor = {
     error: '#F2A2A2',
     idle: '#A1A1A1',
+    transfering: '#F2CDA2',
+    uploadingIPFS: '#F2CDA2',
+    deployngCollection: '#F2CDA2',
+    settingApprovals: '#F2CDA2',
     success: '#C5F2A2',
-    loading: '#F2CDA2',
   };
 
   return (
