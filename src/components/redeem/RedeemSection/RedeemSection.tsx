@@ -80,9 +80,6 @@ const RedeemSection = () => {
     functionName: 'newCollection',
     args: [...newCollectionArgs],
     enabled: enableNewCollection,
-    onSuccess(data) {
-      console.log('data', data);
-    },
   });
 
   const { data: newCollectionData, write: newCollectionWrite } = useContractWrite(
