@@ -24,45 +24,45 @@ const Footer = () => {
             <span className="text-mds-white text-2xl font-semibold">Explore</span>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">Terms</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">Privacy</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">Security</span>
             </div>
           </div>
           <div className="flex flex-col">
             <span className="text-mds-white text-2xl font-semibold">Mint</span>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">Docs</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">API</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">Status</span>
             </div>
           </div>
           <div className="flex flex-col">
             <span className="text-mds-white text-2xl font-semibold">About</span>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">Contact us</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">Blog</span>
             </div>
             <div className="flex items-center gap-x-2">
               <i className="fa-solid fa-circle text-mds-white text-[0.4rem]" />
-              <span className="text-mds-white text-xl">Lorem</span>
+              <span className="text-mds-white text-xl">About us</span>
             </div>
           </div>
         </div>
