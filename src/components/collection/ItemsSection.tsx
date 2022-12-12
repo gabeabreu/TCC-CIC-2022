@@ -41,7 +41,7 @@ const ItemsSection = () => {
               idNumber={nft.tokenId}
               description={nft.description || ''}
               title={nft.title || ''}
-              pictureUrl={nft.media[0].gateway || '/assets/accountPage/profilePicture.svg'}
+              pictureUrl={nft.media?.[0]?.gateway || '/assets/accountPage/profilePicture.svg'}
             />
           ))}
       </div>
