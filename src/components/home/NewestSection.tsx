@@ -3,7 +3,7 @@ import React from 'react';
 import Carousel from '../Carousel';
 import nfts from '../../../public/mock/nfts.json';
 
-const TrendingSection = ({ offsetY }: { offsetY: number }) => {
+const NewestSection = ({ offsetY }: { offsetY: number }) => {
   return (
     <div className="flex flex-col w-full mb-40 relative">
       <div className="z-20 flex flex-col">
@@ -59,4 +59,4 @@ const TrendingSection = ({ offsetY }: { offsetY: number }) => {
   );
 };
 
-export default TrendingSection;
+export default NewestSection;
