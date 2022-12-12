@@ -266,7 +266,7 @@ const CreateSection = () => {
       setEnableNewCollection(false);
     }
   }, [status]);
-  // 0xE467E465bBe36E6035a315163f0E317C898aAE16
+
   useContractEvent({
     address: selectedNetworkConfig.midasFactoryAddress,
     abi: factoryABI,
