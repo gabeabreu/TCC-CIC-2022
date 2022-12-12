@@ -1,12 +1,13 @@
+import axios from 'axios';
 import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const collections = await fetch('http://localhost:8001/collections', {
-    method: 'GET',
+  const { data } = await axios.get('http://localhost:8001/collections', {
     headers: {
-      Accept: 'application/json, text/plain, /',
       'Content-Type': 'application/json',
+      Accept: 'application/json, text/plain',
     },
-  }).then((res) => res.json());
-  return res.json(collections);
+  });
+
+  return res.json(data);
 }

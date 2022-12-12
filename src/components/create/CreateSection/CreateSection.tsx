@@ -37,7 +37,7 @@ import tokenABI from '@/utils/contractInterfaces/tokenABI';
 const CreateSection = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { collection } = useSelector((state) => state);
+  const { collection, user } = useSelector((state) => state);
   const { createData } = collection;
   const { chain } = useNetwork();
   const { address } = useAccount();
@@ -58,6 +58,7 @@ const CreateSection = () => {
   const [collectionDeployAddress, setCollectionDeployAddress] = useState('');
   const [isLoading, setLoading] = useState(false);
   const [generalStatus, setGeneralStatus] = useState('idle');
+  const [collectionImage, setCollectionImage] = useState('');
 
   // const provider = new ethers.providers.WebSocketProvider(
   //   'wss://eth-goerli.g.alchemy.com/v2/o5IHGB5-jXxR18g78HUulEHEAA2jOeLx'
@@ -84,6 +85,22 @@ const CreateSection = () => {
     itemSupply: 5,
     itemName: 'MyTestNFT',
   };
+
+  async function createDatabaseCollection(
+    collectionAddress: string,
+    userOwnerAddress: string,
+    userOwnerName: string,
+    imageUrl: string
+  ) {
+    const { data }: AxiosResponse = await axios.get('/api/collection/create', {
+      params: {
+        address: collectionAddress.toUpperCase(),
+        userOwnerAddress,
+        userOwnerName,
+        imageUrl,
+      },
+    });
+  }
 
   function getRandomRarity(quantity: number) {
     let common = 0;
@@ -149,6 +166,8 @@ const CreateSection = () => {
         },
       }
     );
+
+    setCollectionImage(`https://gateway.pinata.cloud/ipfs/${collectionImageData.IpfsHash}`);
 
     const { data: collectionMetadata }: AxiosResponse = await axios.get(
       '/api/pinata/pinningMetadata',
@@ -273,9 +292,8 @@ const CreateSection = () => {
     abi: factoryABI,
     eventName: 'NewCollection',
     listener(node) {
-      // node é o valor retornado
+      createDatabaseCollection(node, address || '', user.data.name, collectionImage);
       setCollectionDeployAddress(node);
-      console.log(node);
     },
   });
 
