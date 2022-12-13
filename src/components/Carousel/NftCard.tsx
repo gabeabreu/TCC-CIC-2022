@@ -13,7 +13,7 @@ interface Props {
   key?: number;
 }
 
-const SmallCard = ({ size = 'normal', pictureUrl, idNumber, title, description, key }: Props) => {
+const NftCard = ({ size = 'normal', pictureUrl, idNumber, title, description, key }: Props) => {
   return (
     <div key={key} className={`${size === 'normal' ? 'w-[19rem]' : 'w-[17rem]'} flex flex-col`}>
       {/* <Modal>
@@ -38,4 +38,4 @@ const SmallCard = ({ size = 'normal', pictureUrl, idNumber, title, description, 
   );
 };
 
-export default SmallCard;
+export default NftCard;

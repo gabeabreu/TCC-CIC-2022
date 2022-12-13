@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { useAccount, useConnect } from 'wagmi';
 import verifiedUsers from '../../../public/mock/nfts.json';
 import Button from '../Button';
-import SmallCard from '../Carousel/SmallCard';
 import EmptyState from '../EmptyState';
+import NftCard from '../Carousel/NftCard';
 import Tabs from '../Tabs';
 import CollectionCard from './CollectionCard';
 
@@ -171,7 +171,7 @@ const UserTabsSection = () => {
                   />
                 ) : (
                   redeemedTokens?.map((nft: any) => (
-                    <SmallCard
+                    <NftCard
                       key={nft.tokenId}
                       idNumber={nft.tokenId}
                       description={nft.description || ''}

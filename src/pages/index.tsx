@@ -2,11 +2,11 @@
 import type { NextPage } from 'next';
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Head from 'next/head';
-import NewestSection from '../components/home/NewestSection';
 import HeroSection from '../components/home/HeroSection';
 import Layout from '../components/Layout';
 import { useEffect, useState } from 'react';
 import AboutSection from '../components/home/AboutUsSection';
+import NewestSection from '@/components/home/NewestSection';
 
 const Home: NextPage = () => {
   const [offsetY, setOffsetY] = useState(0);

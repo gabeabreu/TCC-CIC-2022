@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import verifiedUsers from '../../../public/mock/nfts.json';
 import Button from '../Button';
-import SmallCard from '../Carousel/SmallCard';
+import NftCard from '../Carousel/NftCard';
 import Tabs from '../Tabs';
 import CollectionCard from './CollectionCard';
 
@@ -36,7 +36,7 @@ const ItemsSection = () => {
       <div className="mt-12 flex gap-x-[15rem] xl:gap-x-[6.5rem] 2xl:gap-x-[2.9rem] gap-y-10 flex-wrap duration-500">
         {collectionData?.data?.nfts &&
           collectionData?.data?.nfts?.map((nft: any) => (
-            <SmallCard
+            <NftCard
               key={nft.tokenId}
               idNumber={nft.tokenId}
               description={nft.description || ''}
