@@ -1,19 +1,17 @@
 /* eslint-disable react/jsx-key */
 import Slider from 'react-slick';
+import SmallCard from './SmallCard';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import BigCard from './BigCard';
 import useWindowSize from '../../hooks/useWindowSize';
-import VerifiedCard from './VerifiedCard';
-import CollectionCard from './CollectionCard';
-import NftCard from './NftCard';
 
 interface Props {
   data: any;
-  isSmall?: boolean;
-  isVerified?: boolean;
+  isSmall: boolean;
 }
 
-const Carousel = ({ data, isSmall = false, isVerified = false }: Props) => {
+const Carousel = ({ data, isSmall }: any) => {
   const windowSize = useWindowSize();
 
   return isSmall ? (
@@ -27,7 +25,7 @@ const Carousel = ({ data, isSmall = false, isVerified = false }: Props) => {
       >
         {data.map((nft: any) => (
           <div className="mx-4">
-            <NftCard
+            <SmallCard
               description={nft.description}
               idNumber={nft.idNumber}
               pictureUrl={nft.pictureUrl}
@@ -39,41 +37,23 @@ const Carousel = ({ data, isSmall = false, isVerified = false }: Props) => {
     </div>
   ) : (
     <div className="w-full">
-      {isVerified ? (
-        <Slider
-          infinite={true}
-          speed={400}
-          slidesToShow={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
-          slidesToScroll={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
-        >
-          {data.map((user: any) => (
-            <VerifiedCard
-              title={user.name}
-              availableNfts={user.availableNfts}
-              description={user.bio}
-              pictureUrl={user.profilePictureUrl}
-            />
-          ))}
-        </Slider>
-      ) : (
-        <Slider
-          infinite={true}
-          speed={400}
-          slidesToShow={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
-          slidesToScroll={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
-        >
-          {data.map((collection: any) => (
-            <CollectionCard
-              company={collection.userOwnerName}
-              pictureUrl={collection.imageUrl}
-              // title={} -- alchemy nome da collection
-              // availableNfts={} -- alchemy
-              // description={} -- alchemy
-              //
-            />
-          ))}
-        </Slider>
-      )}
+      <Slider
+        infinite={true}
+        speed={400}
+        slidesToShow={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
+        slidesToScroll={windowSize?.width && windowSize.width < 1536 ? 2 : 3}
+      >
+        {data.map((user: any) => (
+          <BigCard
+            company={user.company}
+            availableNfts={user.availableNfts}
+            likesNumber={user.likesNumber}
+            description={user.description}
+            pictureUrl={user.pictureUrl}
+            title={user.title}
+          />
+        ))}
+      </Slider>
     </div>
   );
 };

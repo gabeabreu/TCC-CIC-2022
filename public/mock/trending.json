@@ -1,34 +1,38 @@
 [
   {
     "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
-    "title": "Rolex",
-    "description": "Lorem ipsum dolum hams Lorem ipsum dolum hams...",
-    "availableNfts": 1020,
-    "totalMinted": 234,
-    "pictureUrl": "/mockImages/rolex.svg"
-  },
-  {
-    "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
+    "company": "Air Legends",
     "title": "Nike",
     "description": "Lorem ipsum dolum hams Lorem ipsum dolum hams...",
-    "availableNfts": 345,
+    "availableNfts": 5,
     "totalMinted": 567,
-    "pictureUrl": "/mockImages/nike.svg"
+    "pictureUrl": "/mockImages/sneaker2.png"
   },
   {
     "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
-    "title": "Adidas",
+    "company": "Rolex",
+    "title": "Rolex summer",
     "description": "Lorem ipsum dolum hams Lorem ipsum dolum hams...",
-    "availableNfts": 123,
+    "availableNfts": 30,
     "totalMinted": 234,
-    "pictureUrl": "/mockImages/adidas.svg"
+    "pictureUrl": "/mockImages/rolex.jpg"
   },
   {
     "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
-    "title": "Porsche",
+    "company": "Versace",
+    "title": "Versace v2",
     "description": "Lorem ipsum dolum hams Lorem ipsum dolum hams...",
-    "availableNfts": 40,
+    "availableNfts": 255,
     "totalMinted": 234,
-    "pictureUrl": "/mockImages/porsche.svg"
+    "pictureUrl": "/mockImages/versace.jpg"
+  },
+  {
+    "walletAddress": "0x0DdBfcBF44c94f8D6391CB0E1A537672dCe29ADd",
+    "company": "Nike",
+    "title": "Nike Future",
+    "description": "Lorem ipsum dolum hams Lorem ipsum dolum hams...",
+    "availableNfts": 10,
+    "totalMinted": 234,
+    "pictureUrl": "/mockImages/sneaker1.jpg"
   }
 ]

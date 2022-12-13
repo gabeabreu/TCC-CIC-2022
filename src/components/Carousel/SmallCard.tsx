@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import TokenDetailsModal from '../TokenDetailsModal';
 
 interface Props {
   size?: 'normal' | 'xs';
@@ -7,28 +6,21 @@ interface Props {
   idNumber: number;
   title: string;
   description: string;
-  rarity?: string;
-  collectionAddress?: string;
-  collectionName?: string;
   key?: number;
 }
 
-const NftCard = ({ size = 'normal', pictureUrl, idNumber, title, description, key }: Props) => {
+const SmallCard = ({ size = 'normal', pictureUrl, idNumber, title, description, key }: Props) => {
   return (
     <div
       key={key}
       className={`${size === 'normal' ? 'w-[19rem]' : 'w-[17rem]'} flex flex-col group`}
     >
-      {/* <Modal>
-        <TokenDetailsModal />
-      </Modal> */}
-
       <div className="px-5 pt-5 pb-6 flex bg-mds-white bg-opacity-20 bg-clip-padding rounded-t-2xl border-t-4 border-x-4 border-[#fdfdfd44]">
         <div className="w-full h-[10.5rem] rounded-xl relative overflow-hidden">
           <Image
             layout="fill"
             objectFit="cover"
-            src={pictureUrl || '/assets/accountPage/profilePicture.svg'}
+            src={pictureUrl}
             alt="nft image"
             className="group-hover:scale-105 duration-500"
           />
@@ -39,7 +31,7 @@ const NftCard = ({ size = 'normal', pictureUrl, idNumber, title, description, ke
           <span className="font-semibold text-2xl">{`#${idNumber} ${title}`}</span>
           <span className="truncate max-w-[13.5rem] h-16">{description}</span>
         </div>
-        <button className="px-6 py-1 bg-black hover:bg-mds-purple text-mds-white duration-300 rounded-xl w-full">
+        <button className="px-6 py-2 bg-black hover:bg-mds-purple text-mds-white duration-300 rounded-xl w-full">
           <span className="font-semibold ">See details</span>
         </button>
       </div>
@@ -47,4 +39,4 @@ const NftCard = ({ size = 'normal', pictureUrl, idNumber, title, description, ke
   );
 };
 
-export default NftCard;
+export default SmallCard;
