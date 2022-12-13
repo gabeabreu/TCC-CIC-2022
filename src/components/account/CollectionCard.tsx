@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import verifiedUsers from '../../../public/mock/nfts.json';
 import Button from '../Button';
-import SmallCard from '../Carousel/SmallCard';
+import NftCard from '../Carousel/NftCard';
 
 interface Props {
   key: string;
@@ -69,7 +69,7 @@ const CollectionCard = ({
           {verifiedUsers
             .slice(0, width && width < 1280 ? 1 : width && width < 1536 ? 2 : 3)
             .map((item, idx) => (
-              <SmallCard
+              <NftCard
                 size="xs"
                 key={idx}
                 description={item.description}

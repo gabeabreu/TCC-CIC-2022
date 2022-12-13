@@ -292,7 +292,7 @@ const CreateSection = () => {
     abi: factoryABI,
     eventName: 'NewCollection',
     listener(node) {
-      createDatabaseCollection(node, address || '', user.data.name, collectionImage);
+      createDatabaseCollection(node, address || '', user.data?.name, collectionImage);
       setCollectionDeployAddress(node);
     },
   });
