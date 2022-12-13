@@ -22,7 +22,12 @@ const NftCard = ({ size = 'normal', pictureUrl, idNumber, title, description, ke
 
       <div className="px-5 pt-5 pb-6 flex bg-mds-white bg-opacity-20 bg-clip-padding rounded-t-2xl border-t-4 border-x-4 border-[#fdfdfd44]">
         <div className="w-full h-[10.5rem] rounded-xl relative overflow-hidden">
-          <Image layout="fill" objectFit="cover" src={pictureUrl} alt="nft image" />
+          <Image
+            layout="fill"
+            objectFit="cover"
+            src={pictureUrl || '/assets/accountPage/profilePicture.svg'}
+            alt="nft image"
+          />
         </div>
       </div>
       <div className="bg-mds-white px-5 py-6 w-full rounded-b-2xl flex flex-col justify-center items-center">

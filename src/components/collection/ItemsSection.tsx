@@ -1,6 +1,6 @@
 import { useSelector } from '@/redux/hooks';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import verifiedUsers from '../../../public/mock/nfts.json';
 import Button from '../Button';

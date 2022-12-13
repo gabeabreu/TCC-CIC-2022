@@ -59,7 +59,6 @@ const UserTabsSection = () => {
     const { data: collections }: AxiosResponse = await axios.get('/api/collection/all');
     const contractFilter = collections.map((collection: any) => collection.address.toLowerCase());
 
-    console.log(contractFilter);
     if (contractFilter.length) {
       const { data: collectionsArray }: AxiosResponse = await axios.get(
         '/api/alchemy/getContractsFromOwner',
@@ -71,17 +70,33 @@ const UserTabsSection = () => {
         }
       );
 
-      const { data: collectionsBackEnd }: AxiosResponse = await axios.get(
-        '/api/collection/specific',
-        {
-          params: {
-            address: collectionsArray[0].address,
-          },
-        }
-      );
+      for (let i = 0; i < collectionsArray.length; i++) {
+        const { data: collectionsBackEnd }: AxiosResponse = await axios.get(
+          '/api/collection/specific',
+          {
+            params: {
+              address: collectionsArray[i].address,
+            },
+          }
+        );
 
-      console.log(collectionsArray);
-      console.log(collectionsBackEnd);
+        const { data: nftsArray }: AxiosResponse = await axios.get(
+          '/api/alchemy/getCollectionNFTs',
+          {
+            params: {
+              address: collectionsArray[i].address,
+            },
+          }
+        );
+
+        collectionsArray[i] = {
+          ...collectionsArray[i],
+          image: collectionsBackEnd.imageUrl,
+          ownerName: collectionsBackEnd.userOwnerName,
+          ownerAddress: collectionsBackEnd.userOwnerAddress,
+          nfts: nftsArray.nfts,
+        };
+      }
 
       setUserCollections(collectionsArray);
       setLoading(false);
@@ -101,8 +116,9 @@ const UserTabsSection = () => {
   }, [address]);
 
   useEffect(() => {
-    if (userData) {
+    if (userData && !isLoading) {
       if (userData?.isVerified) {
+        setLoading(true);
         getCollections();
         setCurrentTab(String(tab) != 'Details' ? 'Collections' : String(tab));
         setTabs([
@@ -123,7 +139,7 @@ const UserTabsSection = () => {
   useEffect(() => {
     if (tab) setCurrentTab(String(tab));
   }, [router.query]);
-  // console.log(userCollections);
+  console.log(userCollections?.[0]);
   return (
     <div className="flex mt-10 relative flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] z-10 duration-500">
       {currentTab && (
@@ -199,10 +215,13 @@ const UserTabsSection = () => {
                         key={collection.address}
                         address={collection.address}
                         name={collection.name}
+                        image={collection.image}
+                        ownerName={collection.ownerName}
+                        ownerAddress={collection.ownerAddress}
                         description={collection.description}
                         totalSupply={Number(collection.totalBalance)}
                         totalRedeemed={Number(collection.totalSupply) - collection.totalBalance}
-                        // nfts={[]}
+                        nfts={collection.nfts}
                       />
                     ))}
                   </div>

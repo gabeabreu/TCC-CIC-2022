@@ -56,6 +56,7 @@ const RedeemSection = () => {
 
   const [fromAddress, setFromAddress] = useState('');
   const [tokenId, setTokenId] = useState(0);
+  const [nftMetadata, setNftMetadata] = useState<any>();
 
   useEffect(() => {
     // @ts-ignore
@@ -66,7 +67,15 @@ const RedeemSection = () => {
     tokenHash: '',
   };
 
-  function handleSubmit(value: string) {
+  async function handleSubmit(value: string) {
+    const { data }: AxiosResponse = await axios.get('/api/alchemy/getNFTMetadata', {
+      params: {
+        address: value.substring(0, 42),
+        tokenId: value.substring(42),
+      },
+    });
+
+    setNftMetadata(data);
     setFromAddress(value.substring(0, 42));
     setTokenId(Number(value.substring(42)));
 
@@ -76,7 +85,7 @@ const RedeemSection = () => {
       setRedeemModalOpen(true);
     }, 500);
   }
-  console.log([fromAddress, address, tokenId]);
+
   // APPROVE TOKENS HOOK CALLS
   const { config: transferConfig, status: transferStatus } = usePrepareContractWrite({
     address: selectedNetworkConfig.midasFactoryAddress,
@@ -106,14 +115,23 @@ const RedeemSection = () => {
       setGeneralStatus('success');
     }
   }, [transferTxStatus]);
-
+  console.log(nftMetadata);
   return (
     <div className="flex flex-col">
       <TransactionModal
         isLoading={isLoading}
         showModal={isRedeemModalOpen}
         onCloseModal={() => setRedeemModalOpen(false)}
-        data={{ name: 'Test', image: '/assets/coinbase.svg', status: generalStatus }}
+        data={{
+          name: nftMetadata?.metadata?.name,
+          image: nftMetadata?.metadata?.image || '/assets/accountPage/profilePicture.svg',
+          status: generalStatus,
+          details: [
+            { name: 'Collection name', value: nftMetadata?.contractMetadata?.name },
+            { name: 'Collection address', value: formatAddres(nftMetadata?.contract?.address) },
+            { name: 'Token id', value: Number(nftMetadata?.id?.tokenId) },
+          ],
+        }}
       />
       <div className="flex flex-col p-[5rem] my-32 border-gradient">
         <span className="absolute -top-[2.45rem] left-[6.5rem] w-[29.6rem] lg:left-[5.45rem] lg:w-[20.5rem] xl:left-[7.1rem] xl:w-[26.75rem] 2xl:left-[8.7rem] 2xl:w-[32.5rem] h-10 px-4 bg-mds-gray-500 duration-500" />

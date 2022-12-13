@@ -31,6 +31,12 @@ const Collection: NextPage = () => {
       }
     );
 
+    const { data: collectionBackEnd }: AxiosResponse = await axios.get('/api/collection/specific', {
+      params: {
+        address,
+      },
+    });
+
     const { data: nftsArray }: AxiosResponse = await axios.get('/api/alchemy/getCollectionNFTs', {
       params: {
         address,
@@ -39,7 +45,12 @@ const Collection: NextPage = () => {
 
     dispatch(
       setCollectionData({
-        contract: { ...collectionMetadata },
+        contract: {
+          ...collectionMetadata,
+          image: collectionBackEnd.imageUrl,
+          ownerName: collectionBackEnd.userOwnerName,
+          ownerAddress: collectionBackEnd.userOwnerAddress,
+        },
         nfts: nftsArray.nfts,
       })
     );

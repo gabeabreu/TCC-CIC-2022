@@ -56,7 +56,7 @@ const DataSection = () => {
         <div className="h-1 w-screen overflow-hidden bg-mds-gray-300" />
         <div className="flex relative flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] z-10 duration-500">
           <div className="absolute -top-[10.2rem] shadow-2xl">
-            <div className="overflow-hidden relative w-52 h-52 rounded-3xl border-[0.5rem] border-mds-gray-300">
+            <div className="bg-mds-gray-500 overflow-hidden relative w-52 h-52 rounded-3xl border-[0.5rem] border-mds-gray-300">
               <Image
                 src={
                   collectionData?.data?.contract?.image || '/assets/accountPage/profilePicture.svg'
@@ -74,8 +74,13 @@ const DataSection = () => {
                   {collectionData?.data?.contract?.name || 'Unnamed'}
                 </span>
                 <div className="mb-[0.4rem] w-[0.2rem] bg-[#3E3E3E] h-7 rounded-full" />
-                <span className="flex gap-x-2 font-semibold text-2xl text-mds-gray-100 items-end">
-                  {collectionData?.data?.contract?.owner || 'Nike'}
+                <span className="flex gap-x-2 font-semibold text-2xl text-mds-gray-100 hover:text-mds-white items-end duration-500">
+                  <a
+                    className="cursor pointer"
+                    href={`/account/${collectionData?.data?.contract?.ownerAddress}`}
+                  >
+                    {collectionData?.data?.contract?.ownerName || ''}
+                  </a>
                   <i className="fa-solid fa-badge-check text-mds-purple text-lg mb-[0.2rem]" />
                 </span>
               </div>

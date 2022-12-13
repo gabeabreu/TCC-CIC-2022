@@ -33,6 +33,7 @@ import RarityCardImage from '../RarityCardImage';
 import formSchema from './formSchema';
 import { storage } from '@/config/firebase';
 import tokenABI from '@/utils/contractInterfaces/tokenABI';
+import { useRouter } from 'next/router';
 
 const CreateSection = () => {
   const { t } = useTranslation();
@@ -41,6 +42,8 @@ const CreateSection = () => {
   const { createData } = collection;
   const { chain } = useNetwork();
   const { address } = useAccount();
+
+  const router = useRouter();
 
   const [generatedImages, setGeneratedImages] = useState([
     { id: 1, rarity: 'Common', src: '' },
@@ -79,11 +82,17 @@ const CreateSection = () => {
     if (chain) setSelectedNetworkConfig(networkConfig[chain.id]);
   }, [chain]);
 
+  // const initialValues: any = {
+  //   collectionImage: '',
+  //   name: 'MyTestCollection',
+  //   itemSupply: 5,
+  //   itemName: 'MyTestNFT',
+  // };
   const initialValues: any = {
     collectionImage: '',
-    name: 'MyTestCollection',
-    itemSupply: 5,
-    itemName: 'MyTestNFT',
+    name: '',
+    itemSupply: '',
+    itemName: '',
   };
 
   async function createDatabaseCollection(
@@ -181,30 +190,33 @@ const CreateSection = () => {
       }
     );
 
-    // const itensIPFS = [];
-    const itensIPFS = ['', '', '', '', ''];
+    const itensIPFS = [];
 
-    // for (let i = 0; i < Number(data.item?.images?.length); i++) {
-    //   const { data: itemMetadata }: AxiosResponse = await axios.get('/api/pinata/pinningMetadata', {
-    //     params: {
-    //       name: data.item?.name,
-    //       description: data.item?.description,
-    //       image: data.item?.images?.[i].src,
-    //       external_link: data.item?.externalLink,
-    //       rarity: data.item?.images?.[i].rarity,
-    //     },
-    //   });
-    //   itensIPFS.push(`https://gateway.pinata.cloud/ipfs/${itemMetadata.IpfsHash}`);
-    // }
+    for (let i = 0; i < Number(data.item?.images?.length); i++) {
+      const { data: itemMetadata }: AxiosResponse = await axios.get('/api/pinata/pinningMetadata', {
+        params: {
+          name: data.item?.name,
+          description: data.item?.description,
+          image: data.item?.images?.[i].src,
+          external_link: data.item?.externalLink,
+          rarity: data.item?.images?.[i].rarity,
+        },
+      });
+      itensIPFS.push(`https://gateway.pinata.cloud/ipfs/${itemMetadata.IpfsHash}`);
+    }
 
     const itemQuantities = getRandomRarity(data.item?.supply as number);
+    itemQuantities[4] = 1;
+    itemQuantities[3] = 1;
+    itemQuantities[2] = 1;
+    itemQuantities[1] = 2;
+    itemQuantities[0] -= 5;
 
     setNewCollectionArgs([
       address,
       data.name,
       data.item?.supply,
       `https://gateway.pinata.cloud/ipfs/${collectionMetadata.IpfsHash}`,
-      // [4, 3, 1, 1, 1],
       itemQuantities,
       [itensIPFS[0], itensIPFS[1], itensIPFS[2], itensIPFS[3], itensIPFS[3]],
     ]);
@@ -331,7 +343,10 @@ const CreateSection = () => {
       <TransactionModal
         isLoading={isLoading}
         showModal={isCreatingModalOpen}
-        onCloseModal={() => setCreatingModalOpen(false)}
+        onCloseModal={() => {
+          setCreatingModalOpen(false);
+          router.push('/account');
+        }}
         data={{
           name: createData.data?.name || '',
           image: (createData.data?.image as string) || '',

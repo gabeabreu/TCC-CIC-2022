@@ -7,7 +7,9 @@ const nextConfig = {
   i18n,
   images: {
     domains: [
+      'gateway.pinata.cloud',
       'ipfs.io',
+      'nft-cdn.alchemy.com',
       'firebasestorage.googleapis.com',
       'oaidalleapiprodscus.blob.core.windows.net',
       '',

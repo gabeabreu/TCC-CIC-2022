@@ -51,7 +51,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
               //@ts-ignore
               pattern === 'style-based'
                 ? `a ${styles[i as keyof Styles]} of ${prompt}`
-                : `${prompt} with ${tons[i as keyof Styles]} tint`,
+                : `a digital art ${prompt} with ${tons[i as keyof Styles]} tint`,
             n: 1,
             size: '512x512',
           },
