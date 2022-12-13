@@ -94,7 +94,7 @@ const CreateSection = () => {
   ) {
     const { data }: AxiosResponse = await axios.get('/api/collection/create', {
       params: {
-        address: collectionAddress.toUpperCase(),
+        address: collectionAddress.toLowerCase(),
         userOwnerAddress,
         userOwnerName,
         imageUrl,

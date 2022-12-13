@@ -7,6 +7,7 @@ import { useAccount, useConnect } from 'wagmi';
 import verifiedUsers from '../../../public/mock/nfts.json';
 import Button from '../Button';
 import SmallCard from '../Carousel/SmallCard';
+import EmptyState from '../EmptyState';
 import Tabs from '../Tabs';
 import CollectionCard from './CollectionCard';
 
@@ -56,8 +57,9 @@ const UserTabsSection = () => {
 
   async function getCollections() {
     const { data: collections }: AxiosResponse = await axios.get('/api/collection/all');
-    const contractFilter = collections.map((collection: any) => collection.address.toUpperCase());
+    const contractFilter = collections.map((collection: any) => collection.address.toLowerCase());
 
+    console.log(contractFilter);
     if (contractFilter.length) {
       const { data: collectionsArray }: AxiosResponse = await axios.get(
         '/api/alchemy/getContractsFromOwner',
@@ -78,6 +80,7 @@ const UserTabsSection = () => {
         }
       );
 
+      console.log(collectionsArray);
       console.log(collectionsBackEnd);
 
       setUserCollections(collectionsArray);
@@ -120,7 +123,7 @@ const UserTabsSection = () => {
   useEffect(() => {
     if (tab) setCurrentTab(String(tab));
   }, [router.query]);
-
+  // console.log(userCollections);
   return (
     <div className="flex mt-10 relative flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] z-10 duration-500">
       {currentTab && (
@@ -157,7 +160,16 @@ const UserTabsSection = () => {
           <div>
             {currentTab === 'Redeemed' && (
               <div className="mt-12 flex gap-x-[15rem] xl:gap-x-[6.5rem] 2xl:gap-x-[2.9rem] gap-y-10 flex-wrap duration-500">
-                {redeemedTokens &&
+                {!redeemedTokens.length ? (
+                  <EmptyState
+                    onClickLink={() => router.push('redeem')}
+                    title={
+                      routerAddress ? "This user don't have tokens" : 'You don’t have tokens yet'
+                    }
+                    showLink={routerAddress === ''}
+                    link="Redeem token"
+                  />
+                ) : (
                   redeemedTokens?.map((nft: any) => (
                     <SmallCard
                       key={nft.tokenId}
@@ -168,23 +180,33 @@ const UserTabsSection = () => {
                         nft.media?.[0]?.gateway || '/assets/accountPage/profilePicture.svg'
                       }
                     />
-                  ))}
+                  ))
+                )}
               </div>
             )}
             {currentTab === 'Collections' && (
               <div className="mt-12 flex flex-col duration-500">
-                {userCollections &&
-                  userCollections?.map((collection: any) => (
-                    <CollectionCard
-                      key={collection.address}
-                      address={collection.address}
-                      name={collection.name}
-                      description={collection.description}
-                      totalSupply={Number(collection.totalBalance)}
-                      totalRedeemed={Number(collection.totalSupply) - collection.totalBalance}
-                      // nfts={[]}
-                    />
-                  ))}
+                {!userCollections.length ? (
+                  <EmptyState
+                    onClickLink={() => router.push('create')}
+                    title="You don’t have collections yet."
+                    link="Create collection"
+                  />
+                ) : (
+                  <div className="flex flex-col gap-y-10">
+                    {userCollections?.map((collection: any) => (
+                      <CollectionCard
+                        key={collection.address}
+                        address={collection.address}
+                        name={collection.name}
+                        description={collection.description}
+                        totalSupply={Number(collection.totalBalance)}
+                        totalRedeemed={Number(collection.totalSupply) - collection.totalBalance}
+                        // nfts={[]}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             )}
             {currentTab === 'Details' && (

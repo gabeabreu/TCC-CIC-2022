@@ -7,3 +7,4 @@ export { default as FileInput } from './FileInput';
 export { default as LoadingSpinner } from './LoadingSpinner';
 export { default as TransactionModal } from './TransactionModal';
 export { default as Tabs } from './Tabs';
+export { default as EmptyState } from './EmptyState';

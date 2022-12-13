@@ -64,7 +64,7 @@ const CollectionCard = ({
         </div>
       </div>
       {/* right side */}
-      <div className="flex items-center flex-col w-full gap-y-10 py-12 rounded-r-3xl from-[#ffffff55] to-[#ffffff22] bg-gradient-to-br">
+      <div className="flex items-center flex-col w-full gap-y-8 py-10 rounded-r-3xl from-[#ffffff55] to-[#ffffff22] bg-gradient-to-br">
         <div className="flex gap-x-6">
           {verifiedUsers
             .slice(0, width && width < 1280 ? 1 : width && width < 1536 ? 2 : 3)
