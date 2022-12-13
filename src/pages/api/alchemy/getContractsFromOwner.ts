@@ -18,7 +18,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse) {
 
     if (data?.contracts) {
       data = data.contracts.filter((contract: any) =>
-        String(contractFilter).split(',').includes(contract.address.toUpperCase())
+        String(contractFilter).split(',').includes(contract.address.toLowerCase())
       );
     }
     res.status(200).json(data);

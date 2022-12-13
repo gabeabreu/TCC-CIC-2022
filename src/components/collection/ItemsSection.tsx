@@ -33,7 +33,7 @@ const ItemsSection = () => {
           <i className="fa-solid fa-magnifying-glass text-white text-lg" />
         </div>
       </div>
-      <div className="mt-12 flex gap-10 flex-wrap justify-between">
+      <div className="mt-12 flex gap-x-[15rem] xl:gap-x-[6.5rem] 2xl:gap-x-[2.9rem] gap-y-10 flex-wrap duration-500">
         {collectionData?.data?.nfts &&
           collectionData?.data?.nfts?.map((nft: any) => (
             <NftCard
