@@ -25,12 +25,9 @@ const VerifiedCard = ({ pictureUrl, title, description, availableNfts, key }: Pr
           <span className="line-clamp-2 w-full mt-4">{description}</span>
         </div>
         <div className="flex justify-between w-full mt-[3.25rem]">
-          <button className="px-6 py-1 bg-black rounded-xl">
+          <button className="w-full py-1 bg-black rounded-xl">
             <span className="font-semibold text-mds-white">View more</span>
           </button>
-          <div className="flex items-center gap-x-1">
-            <span className="font-semibold">{`Available NFT's: ${availableNfts}`}</span>
-          </div>
         </div>
       </div>
     </div>

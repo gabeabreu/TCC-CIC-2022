@@ -2,7 +2,6 @@ import Image from 'next/image';
 
 interface Props {
   pictureUrl: string;
-  likesNumber: number;
   title: string;
   company: string;
   description: string;
@@ -10,7 +9,7 @@ interface Props {
   key?: number;
 }
 
-const BigCard = ({ pictureUrl, company, title, description, availableNfts, key }: Props) => {
+const CollectionCard = ({ pictureUrl, company, title, description, availableNfts, key }: Props) => {
   return (
     <div key={key} className="flex flex-col mt-10 mx-4">
       <div className="px-5 pt-5 pb-6 flex bg-mds-white bg-opacity-20 bg-clip-padding rounded-t-2xl border-t-4 border-x-4 border-[#fdfdfd44]">
@@ -40,4 +39,4 @@ const BigCard = ({ pictureUrl, company, title, description, availableNfts, key }
   );
 };
 
-export default BigCard;
+export default CollectionCard;

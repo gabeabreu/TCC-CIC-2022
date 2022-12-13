@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import verifiedUsers from '../../../public/mock/nfts.json';
 import Button from '../Button';
-import SmallCard from '../Carousel/SmallCard';
+import NftCard from '../Carousel/NftCard';
 
 const CollectionCard = () => {
   return (
@@ -35,7 +35,7 @@ const CollectionCard = () => {
       <div className="items-end flex flex-col w-full gap-y-10 py-12 pr-12 pl-20 rounded-r-3xl from-[#ffffff55] to-[#ffffff22] bg-gradient-to-br">
         <div className="flex justify-between w-full">
           {verifiedUsers.slice(0, 3).map((item, idx) => (
-            <SmallCard
+            <NftCard
               key={idx}
               description={item.description}
               idNumber={item.idNumber}

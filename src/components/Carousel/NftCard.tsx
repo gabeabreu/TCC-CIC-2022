@@ -9,7 +9,7 @@ interface Props {
   key?: number;
 }
 
-const SmallCard = ({ size = 'normal', pictureUrl, idNumber, title, description, key }: Props) => {
+const NftCard = ({ size = 'normal', pictureUrl, idNumber, title, description, key }: Props) => {
   return (
     <div key={key} className={`${size === 'normal' ? 'w-[19rem]' : 'w-[17rem]'} flex flex-col`}>
       <div className="px-5 pt-5 pb-6 flex bg-mds-white bg-opacity-20 bg-clip-padding rounded-t-2xl border-t-4 border-x-4 border-[#fdfdfd44]">
@@ -30,4 +30,4 @@ const SmallCard = ({ size = 'normal', pictureUrl, idNumber, title, description, 
   );
 };
 
-export default SmallCard;
+export default NftCard;
