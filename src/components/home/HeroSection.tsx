@@ -8,7 +8,7 @@ const HeroSection = ({ offsetY }: { offsetY: number }) => {
   const { t } = useTranslation();
 
   return (
-    <div className="flex flex-col w-full h-[53.37rem] relative">
+    <div className="flex mt-14 flex-col w-full h-[53.37rem] relative">
       <div className="flex flex-col">
         <span className="w-[41.37rem] mt-[12rem] text-5xl font-extrabold text-mds-white p:inline p:text-mds-cyan">
           <Trans>{t('HERO_SECTION_TITLE')}</Trans>

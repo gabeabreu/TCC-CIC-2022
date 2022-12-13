@@ -7,6 +7,7 @@ import Layout from '../components/Layout';
 import { useEffect, useState } from 'react';
 import AboutSection from '../components/home/AboutUsSection';
 import NewestSection from '@/components/home/NewestSection';
+import Image from 'next/image';
 
 const Home: NextPage = () => {
   const [offsetY, setOffsetY] = useState(0);
@@ -34,6 +35,17 @@ const Home: NextPage = () => {
       <span className="absolute z-10 top-[53.37rem] w-full bg-gradient-to-r from-[#8F33E7] to-[#5A0068] h-[0.25rem]"></span>
 
       <Layout>
+        <div className="absolute flex bottom-[10rem] left-0 items-center w-screen">
+          <div className="selectDisable overflow-hidden relative w-screen h-[230rem]">
+            {/* <div className=" absolute w-full h-[4.2rem] bottom-[-4rem] right-[3rem] duration-200"> */}
+            <Image
+              src="/assets/landingPage/lastregion.svg"
+              alt="just aesthetical image"
+              layout="fill"
+              priority
+            />
+          </div>
+        </div>
         <div className="flex flex-col mx-auto w-[18.75rem] sm:w-[25.75rem] md:w-[37.375rem] md:px-0 lg:w-[53.375rem] xl:w-[70rem] 2xl:w-[85rem] mb-32 z-10 duration-500">
           <HeroSection offsetY={offsetY} />
           <NewestSection offsetY={offsetY} />

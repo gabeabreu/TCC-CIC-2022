@@ -329,19 +329,34 @@ const Header = ({ props }: any) => {
           </Transition>
         </Popover>
       ) : (
-        <Popover className="z-50 relative">
-          <div className={` z-50 flex flex-col w-full duration-300`}>
-            <header className="mx-auto flex py-2 min-w-[18.75rem] sm:min-w-[25.75rem] md:min-w-[37.375rem] md:px-0 lg:min-w-[53.375rem] xl:min-w-[70rem] 2xl:min-w-[85.5rem] justify-between items-center duration-500">
+        <Popover className="z-50 relative bg-white">
+          <div className={` z-50 flex flex-col w-full absolute bg-transparent duration-300`}>
+            <header className="mx-auto flex pt-5 py-2 min-w-[18.75rem] sm:min-w-[25.75rem] md:min-w-[37.375rem] md:px-0 lg:min-w-[53.375rem] xl:min-w-[70rem] 2xl:min-w-[85.5rem] justify-between duration-500">
               <Link passHref href="/">
-                <span className="font-extrabold text-[3rem] text-mds-white cursor-pointer">
+                <span className="font-extrabold text-[2.2rem] text-mds-white cursor-pointer">
                   MIDAS
                 </span>
               </Link>
               <div className="items-center hidden md:flex">
+                <Link passHref href="/explore">
+                  <a className="text-lg text-mds-white hover:text-mds-gray-100 duration-300 mr-4">
+                    Explore
+                  </a>
+                </Link>
+                <Link passHref href="/create">
+                  <a className="text-lg text-mds-white hover:text-mds-gray-100 duration-300 mr-4">
+                    Create
+                  </a>
+                </Link>
+                <Link passHref href="/redeem">
+                  <a className="text-lg text-mds-white hover:text-mds-gray-100 duration-300 mr-4">
+                    Redeem
+                  </a>
+                </Link>
                 <div className="hidden lg:flex">
                   <Input
                     placeholder="Search items, collections or accounts"
-                    className="text-lg rounded-full bg-mds-white w-[27rem] py-[0.8rem]"
+                    className="placeholder:text-sm rounded-full bg-mds-white w-[22.5rem] py-[0.35rem]"
                     icon={<i className="fa-solid fa-magnifying-glass text-[#c5c5c5]" />}
                   />
                 </div>
@@ -353,12 +368,12 @@ const Header = ({ props }: any) => {
                         <>
                           <Popover.Button
                             className={
-                              'group flex rounded-full ring-0 outline-none hover:ring-2 hover:ring-mds-purple duration-300 absolute -top-3 -right-20'
+                              'group flex rounded-full ring-0 outline-none hover:ring-2 hover:ring-mds-purple duration-300'
                             }
                           >
-                            <div className="h-[4.2rem] w-[4.2rem]">
+                            <div className="h-[2.2rem] w-[2.2rem]">
                               <Image
-                                src="/assets/user-avatar.svg"
+                                src="/assets/user-avatar-white.svg"
                                 alt="user-avatar"
                                 layout="fill"
                               />
@@ -376,24 +391,31 @@ const Header = ({ props }: any) => {
                           >
                             <Popover.Panel
                               focus
-                              className="absolute cursor-auto -right-16 top-16 origin-top-right transform transition w-[20rem]"
+                              className="absolute cursor-auto right-0 top-12 origin-top-right transform transition w-[20rem]"
                             >
                               <div className="divide-y-2 divide-gray-50 rounded-lg bg-white shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="relative px-6 pt-5 pb-6">
                                   <Popover.Button className="absolute top-5 right-6 outline-none">
                                     <i className="fa-solid fa-xmark text-mds-gray-200 text-2xl cursor-pointer" />
                                   </Popover.Button>
-                                  {/* <div className="flex relative h-full w-full"></div> */}
+
                                   <div className="mt-2 mr-12">
                                     <nav className="grid gap-y-5">
                                       {userDropdownOptions.map((item) => (
                                         <a
                                           key={item.name}
-                                          href={item.href}
-                                          className="-m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
+                                          onClick={() => {
+                                            if (address) {
+                                              router.push(item.href);
+                                            } else {
+                                              // setLoginModalOpen(true);
+                                              setLoginModalOpen(true);
+                                            }
+                                          }}
+                                          className="cursor-pointer -m-3 flex items-center rounded-md p-3 hover:bg-gray-50"
                                         >
                                           <i
-                                            className={`${item.icon} fa-solid text-mds-black text-2xl cursor-pointer`}
+                                            className={`${item.icon} fa-solid text-mds-black text-2xl`}
                                           />
 
                                           <span className="ml-3 text-base font-semibold text-mds-black">
@@ -406,20 +428,7 @@ const Header = ({ props }: any) => {
                                 </div>
                                 <div className="py-6 px-5">
                                   <div className="md:hidden mb-6 grid grid-cols-2 gap-y-4 gap-x-8">
-                                    <a
-                                      href="#"
-                                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                                    >
-                                      Pricing
-                                    </a>
-
-                                    <a
-                                      href="#"
-                                      className="text-base font-medium text-gray-900 hover:text-gray-700"
-                                    >
-                                      Docs
-                                    </a>
-                                    {headerPages.map((item) => (
+                                    {userDropdownOptions.map((item) => (
                                       <a
                                         key={item.name}
                                         href={item.href}
@@ -466,6 +475,7 @@ const Header = ({ props }: any) => {
                 </Popover.Button>
               </div>
             </header>
+            {/* <div className="h-1 w-full bg-gradient-to-r from-[#8D32E6] to-[#5A0068] via-[#7319A7] " /> */}
           </div>
 
           <Transition
@@ -512,7 +522,7 @@ const Header = ({ props }: any) => {
                 </div>
                 <div className="space-y-6 py-6 px-5">
                   <div className="grid grid-cols-2 gap-y-4 gap-x-8">
-                    {headerPages.map((item) => (
+                    {userDropdownOptions.map((item) => (
                       <a
                         key={item.name}
                         href={item.href}
@@ -525,16 +535,23 @@ const Header = ({ props }: any) => {
                   <div>
                     <a
                       href="#"
-                      className="flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                      className={`${
+                        address
+                          ? 'bg-mds-red hover:bg-mds-dark-red'
+                          : 'bg-mds-purple hover:bg-mds-dark-purple '
+                      } flex w-full items-center justify-center rounded-md border border-transparent px-4 py-2 text-base font-medium text-white shadow-sm duration-300`}
+                      onClick={() => {
+                        if (address) {
+                          disconnect();
+                        } else {
+                          close();
+                          setLoginModalOpen(true);
+                          // fetchUser();
+                        }
+                      }}
                     >
-                      Sign up
+                      {t(address ? 'DISCONNECT' : 'CONNECT')}
                     </a>
-                    <p className="mt-6 text-center text-base font-medium text-gray-500">
-                      Existing customer?{' '}
-                      <a href="#" className="text-indigo-600 hover:text-indigo-500">
-                        Sign in
-                      </a>
-                    </p>
                   </div>
                 </div>
               </div>
